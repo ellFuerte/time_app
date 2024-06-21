@@ -1,0 +1,48 @@
+
+.modal1 {
+  height: 100%;
+  width: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease; /* Убираем transition для width */
+}
+
+.modal1.active {
+  width: 100%;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalContent1 {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  height: 90%; /* Примерная высота, можете изменить на ваше усмотрение */
+  width: 40%; /* Ширина модального окна (пример: 50% от ширины страницы) */
+  max-width: 1000px;
+  overflow-y: auto; /* Добавляем вертикальный скролл */
+  transform: translateX(100%);
+  transition: transform 0.5s ease; /* Анимация смещения */
+  margin-top: 80px;
+}
+
+.modal1.active .modalContent1 {
+  transform: translateX(0);
+}
+
+.closeModal1 {
+  text-align: right;
+  font-weight: bold;
+}
+
+.closeModal1 span {
+  cursor: pointer;
+}

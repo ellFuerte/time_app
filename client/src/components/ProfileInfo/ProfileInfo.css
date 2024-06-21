@@ -1,0 +1,318 @@
+
+div{
+  border-color: black;
+  font-size: 16px;
+
+}
+.vr{
+  display: inline;
+  height: 20px;
+  border-left: 2px solid #d0d0d0;
+  margin-top: 17px;
+
+}
+.ProfileName{
+  font-size: 24px;
+}
+
+.ModalButtonDelete{
+  margin-top: 350px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+
+.pass{
+  display: inline-flex;
+  width: 20px;
+  cursor:default;
+}
+
+
+.profileInfo{
+  margin-top: 100px;
+  width: 100%;
+  border-radius: 10px;
+
+
+}
+
+.employeePI{
+  padding: 0px 20px 50px 20px;
+}
+
+.employeePI.start{
+  background-color: rgb(32, 175, 32);
+  border-radius: 10px;
+}
+
+.employeePI.end{
+  background-color: rgb(250, 53, 53);
+  border-radius: 10px;
+}
+
+.employeePI.vacation{
+  background-color:dodgerblue ;
+  border-radius: 10px;
+}
+
+.employeePI.deleted{
+  opacity: 0.5;
+  border-radius: 10px;
+}
+
+.employeePI.other{
+  background-color: chocolate;
+  border-radius: 10px;
+}
+.employeePI.sick_leave{
+  background-color: yellow;
+  border-radius: 10px;
+}
+.employeePI.time_off{
+  background-color: dodgerblue;
+  border-radius: 10px;
+}
+
+.employeePI:first-child{
+  padding-top: 20px;
+
+}
+
+
+.link{
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+
+}
+.link:hover{
+  text-decoration: none;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+
+}
+.status{
+  height: 25px;
+  min-width: 75px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 2px;
+
+}
+
+.status.start{
+  background-color: rgb(32, 175, 32);
+}
+
+.status.end{
+  background-color: rgb(229, 38, 38);
+}
+
+.department{
+  font-size: 16px;
+}
+
+.ProfileInfoCard{
+  font-size: 20px;
+  text-align: left;
+}
+
+.isFatching{
+  padding: 20px;
+}
+
+.modalLoginBox{
+  height: 450px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ModalInput{
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  font-weight:bold;
+}
+
+.ModalInputUpdate{
+  width: 100%;
+  margin-bottom: 10px;
+  height: 25px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  font-weight:bold;
+}
+.ModalInputUpdateSelect{
+  margin-bottom: 10px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  font-weight:bold;
+  width: 101%;
+}
+
+.ModalInput:focus{
+  outline: none;
+}
+
+
+.changePass{
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  background-image: linear-gradient(
+          to right,
+          #54b3d6,
+          #000 50%,
+          #000 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+
+
+}
+.changePass:before {
+  background: #54b3d6;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+.changePass:hover{
+  background-position: 0;
+}
+.changePass:hover::before {
+  width: 100%;
+}
+
+.modalError{
+  font-size: 20px;
+  color: coral;
+}
+
+.vote{
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+
+}
+.button{
+  margin-top: 30px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+.inputVote{
+  font-size: 18px;
+  display: flex;
+  padding-top: 10px;
+}
+
+.text{
+  padding-top: 50px;
+}
+
+.select{
+  height: 20px;
+  margin-left: 20px;
+  margin-top: 35px;
+}
+
+
+
+.div{
+  display: flex;
+}
+
+
+.di{
+  display:grid;
+
+}
+
+.hr1{
+display: inline;
+}
+
+.voteContainer {
+  display: flex;
+  flex-direction: column; /* Элементы располагаются в столбец */
+}
+
+.voteItem {
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+}
+
+.inputVote {
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+}
+
+.imagesProfile{
+  height: 50px;
+  width: 50px;
+  float: right;
+}
+
+.PaddingDiv{
+  display: inline-block;
+  width: 20px;
+}
+
+.inputChangePassword{
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  font-weight:bold;
+}
+
+.ModalButtonRePasswordUser{
+  margin-top: 350px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}

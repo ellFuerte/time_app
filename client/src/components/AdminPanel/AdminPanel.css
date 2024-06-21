@@ -1,0 +1,44 @@
+.admin-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+}
+
+
+.main-content {
+    margin-top: 100px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* Дополнительные стили для вашего основного контента */
+}
+
+.adminDiv{
+    margin: 20px;
+    /*margin-top: 100px;------надпись тест в feed*/
+    background: white;
+    min-height: 115px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.tiles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 100px; /* Устанавливаем одинаковое расстояние между плитками */
+}
+
+.tile {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    width: 250px;
+
+
+}
+

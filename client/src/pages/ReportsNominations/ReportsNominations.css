@@ -1,0 +1,25 @@
+.column{
+    opacity: 0.5;
+}
+.column:hover{
+    opacity: 1;
+}
+.column1{
+    opacity: 0.5;
+}
+.column1:hover{
+    opacity: 1;
+}
+.column2{
+    opacity: 0.5;
+}
+.column2:hover{
+    opacity: 1;
+}
+.column3{
+    opacity: 0.5;
+}
+.column3:hover{
+    opacity: 1;
+}
+

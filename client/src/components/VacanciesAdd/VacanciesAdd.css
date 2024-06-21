@@ -1,0 +1,137 @@
+.InputVacation::-webkit-outer-spin-button,
+.InputVacation::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.InputVacation {
+    -moz-appearance: textfield;
+}
+
+.VacationsAdd {
+    background-color: rgb(233, 232, 232);
+    height: 100%;
+    max-width: 100%;
+    padding: 20px 100px 20px 100px; /* добавляем отступы от краёв страницы */
+}
+.VacationsContainerAdd {
+    justify-content: center;
+    display: flex;
+    margin: 100px auto -80px; /* используем "auto" для центрирования по горизонтали */
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* добавляем тень */
+}
+
+
+.VacationsMainAdd{
+    text-align: center;
+
+}
+
+.SelectVacation{
+    margin-top: 20px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 14px;
+    font-weight: bold;
+    width: 750px; /* Общая ширина с учетом border и padding */
+    box-sizing: border-box; /* Учитываем border и padding в общей ширине */
+}
+
+.InputVacation{
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 14px;
+    font-weight: bold;
+    width: 750px; /* Общая ширина с учетом border и padding */
+    box-sizing: border-box; /* Учитываем border и padding в общей ширине */
+}
+
+.Pagination {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.label{
+    text-decoration: none;
+    color: black;
+}
+
+.userSearchContainer {
+    position: relative;
+    width: 300px; /* Ширина вашего контейнера */
+}
+
+.userListContainer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.userItem {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.userItem:hover {
+    background-color: #f0f0f0;
+}
+.inputDiv {
+
+    position: relative;
+    display: inline-block;
+
+}
+.divSelect{
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
+    text-align: left;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-top: none;
+    cursor: pointer;
+}
+
+.selectNameDiv{
+    padding-top: 10px;
+
+}
+
+.selectNameDiv:hover{
+    border-radius: 10px;
+    background-color: #d4d0d0;
+    cursor: pointer;
+}
+
+.InputVacationAdd{
+    resize:none;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 14px;
+    font-weight: bold;
+    width: 750px; /* Общая ширина с учетом border и padding */
+    box-sizing: border-box; /* Учитываем border и padding в общей ширине */
+}
+
+.InputLabel{
+    margin-top: 10px;
+}
+
+.InputLabelName{
+    margin-top: 30px;
+}

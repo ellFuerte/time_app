@@ -1,0 +1,172 @@
+.ModalInputVacancies{
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    font-weight:bold;
+    width: 100%;
+}
+
+.filtersButton{
+    height: 30px;
+    width: 130px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+
+}
+
+
+.filtersButtonReserve{
+    border: 1px solid black;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.filtersButtonSelection{
+    border: 1px solid black;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: yellow;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.filtersButtonSecurely{
+    border: 1px solid black;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+    background-color:rgb(32, 175, 32);
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.filtersButtonFinalist{
+    border: 1px solid black;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: Red;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.filtersButtonLiquidated{
+    border: 1px solid black;
+    height: 30px;
+    width: 120px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+    opacity: 0.8;
+}
+.Vacations {
+    margin-top: 108px;
+    width: 100%;
+    background-color: rgb(233, 232, 232);
+    box-sizing: border-box; /* Учитываем padding в ширине */
+}
+
+.VacationsContainer {
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
+
+}
+
+.VacationsContainerTop {
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
+}
+
+/* Медиа-запрос для экранов с максимальной шириной 768px */
+@media (max-width: 768px) {
+    .Vacations,
+    .VacationsContainer,
+    .VacationsContainerTop {
+        max-width: 80%; /* Для маленьких экранов не устанавливаем максимальную ширину */
+        margin: 10px; /* Уменьшаем отступы для маленьких экранов */
+    }
+}
+
+
+.depsView{
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 14px;
+    font-weight:bold;
+    width: 650px;
+}
+
+.Pagination {
+    text-align: center;
+}
+
+.label{
+    text-decoration: none;
+    color: black;
+}
+
+.VacationsMain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.inputsContainer {
+    display: flex;
+}
+
+
+.textDescription{
+
+margin-top: 10px;
+width:100%;
+height:200px;
+resize:none;
+border-radius: 10px;
+border: 1px solid gray;
+font-size: 18px;
+
+}
+.divHistory{
+    text-align: center;
+    background-color: #d4d0d0;
+    opacity: 0.8;
+    border-radius: 10px; /* Устанавливаем закругление углов */
+    padding: 20px;
+    margin: 20px;
+}
+
+.divNameVacancies{
+text-align: center;
+}
+

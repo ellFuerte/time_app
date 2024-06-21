@@ -1,0 +1,28 @@
+.RepostsLong{
+    border: 1px solid grey;
+    text-align: center;
+    width: 10px;
+}
+.infotablestart{
+    border: 1px solid grey;
+    text-align: center;
+}
+.infotableend {
+    border: 1px solid grey;
+    text-align: center;
+
+}
+
+.number {
+    border: 1px solid grey;
+    width: 30px;
+}
+
+.infotableComment {
+    text-align: left;
+    min-width: 100px;
+    word-break: break-all;
+    border: 1px solid grey;
+    width: 70vh;
+}
+

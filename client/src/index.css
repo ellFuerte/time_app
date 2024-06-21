@@ -1,0 +1,15 @@
+/*div{
+  border: 1px solid black;
+}*/
+
+
+
+*{
+  margin: 0;
+}
+html{
+  overflow-x:hidden;
+  overflow-y: scroll;
+  background-color: rgb(233, 232, 232);
+}
+

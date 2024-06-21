@@ -1,0 +1,85 @@
+
+.staff{
+  /*margin-top: 100px;------надпись тест в feed*/
+  background: white;
+  min-height: 115px;
+  width: 100%;
+  border-radius: 10px;
+
+}
+
+.isFetching{
+  padding: 0 20px 20px 20px;
+}
+
+.emptyStaff{
+  padding: 0 20px 20px 20px;
+}
+
+.filterButtons{
+  padding: 20px;
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.filterButton{
+  height: 30px;
+  width: 100px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.employeeWrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  padding-top: 20px;
+}
+
+.btnStaff{
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 20px 20px 0 20px;
+}
+
+.changeDepsContainer{
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+.changeDeps{
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+.changeDepsNames{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.ModalButtonDepartment{
+  margin-top: 350px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}

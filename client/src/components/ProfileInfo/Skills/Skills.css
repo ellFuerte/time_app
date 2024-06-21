@@ -1,0 +1,45 @@
+.MainContainer {
+display: inline-flex;
+gap: 10px;
+
+}
+
+.WrapperContainer{
+border: 2px solid black;
+font-size: 14px;
+cursor: pointer;
+padding: 5px;
+border-radius:4px;
+user-select: none;
+}
+
+.selected {
+    border-color: #1775ee;
+}
+
+.skills-table {
+    width: 100%; /* Ширина таблицы по ширине родительского контейнера */
+}
+
+.skills-header th, .skill-item td {
+    padding: 15px; /* Добавляем отступы вокруг текста */
+    text-align: center; /* Выравниваем текст по центру */
+    vertical-align: middle; /* Вертикальное выравнивание по центру */
+    border-bottom: 1px solid #ccc; /* Горизонтальная линия между строками */
+}
+
+.skills-header th {
+    font-weight: bold; /* Полужирный шрифт для заголовков */
+}
+
+.skills-item td {
+    border-bottom: 1px solid #ccc; /* Горизонтальная линия между строками */
+}
+
+.SkillButton {
+    padding: 5px 10px; /* Добавляем отступы вокруг кнопки */
+    cursor: pointer; /* Меняем указатель мыши на руку при наведении */
+    border: none;
+    background-color: #1775ee;
+    color: white;
+}

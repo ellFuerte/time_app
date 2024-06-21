@@ -1,0 +1,68 @@
+.InfoPosts{
+  /* padding-bottom: 20px; */
+}
+
+.infoPostTable.on{
+  background-color: rgb(241, 239, 239);
+}
+
+/* .InfoPost{
+  display: flex;
+  justify-content: space-between;
+}
+
+.titlesPost{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+} */
+
+.infoPostTable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoPostTableBlock{
+  flex: 2.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-top: none;
+  border-right: none;
+  font-size: 18px;
+  min-height: 50px;
+}
+
+.infoPostTableBlock.Data{
+  border-left: none;
+}
+
+.infoPostTableBlock.Start{
+  
+}
+
+.infoPostTableBlock.End{
+
+}
+
+.infoPostTableBlock.Time{
+
+}
+
+.infoPostTableBlock.Health{
+
+}
+.vacationpost{
+  border:1px solid grey;
+  text-align: center;
+}
+
+.vacationpostComment{
+border:1px solid grey;
+  text-align: left;
+  min-width: 300px;
+  width: 100vh;
+
+}

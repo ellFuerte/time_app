@@ -1,0 +1,98 @@
+/**{
+
+  border: 1px solid black;
+
+}*/
+.modal {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalContent {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  width: 100%;
+  max-width: 1000px; /* Максимальная ширина модального окна */
+  max-height: 100%;
+  overflow: auto;
+  transform: scale(0.5);
+  transition: 0.4s all;
+}
+
+.modalContent.active {
+  transform: scale(1);
+}
+
+.closeModal {
+  text-align: right;
+  font-weight: bold;
+}
+
+.closeModal span {
+  cursor: pointer;
+}
+
+/*
+.modal {
+  height: 100%;
+  width: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: stretch; !* Растягиваем по высоте *!
+  justify-content: flex-end; !* Выравниваем контент справа *!
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.5s ease, opacity 0.5s ease; !* Анимация ширины и прозрачности *!
+}
+
+.modal.active {
+  width: 100%;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalContent {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  height: 100%; !* Растягиваем по высоте *!
+  width: 20%; !* Ширина модального окна (пример: 50% от ширины страницы) *!
+  max-width: 1000px;
+  overflow: auto;
+  transform: translateX(100%);
+  transition: transform 0.5s ease; !* Анимация смещения *!
+}
+
+.modal.active .modalContent {
+  transform: translateX(0);
+}
+
+.closeModal {
+  text-align: right;
+  font-weight: bold;
+}
+
+.closeModal span {
+  cursor: pointer;
+}*/

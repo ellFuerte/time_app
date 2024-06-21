@@ -1,0 +1,131 @@
+.ReportsContainer{
+    width: 50%;
+    margin-left: 28%;
+    margin-right: 25%;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 600px;
+}
+
+
+.ReportsMainText{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+
+.infoDate{
+    font-style: italic;
+    flex: 2;
+}
+
+.infoText{
+    flex: 10;
+    font-size: 18px;
+}
+
+.infoText h3{
+    font-size: 20px;
+}
+
+.infoText p{
+    margin-bottom: 10px;
+}
+
+.Repostsinfopost{
+border: 1px solid grey;
+}
+.RepostsinfopostLong{
+    border: 1px solid grey;
+    text-align: center;
+}
+.historyinfoFIO{
+    width: 200px;
+    border: 1px solid grey;
+    text-align: center;
+}
+
+.historyinstart{
+    border: 1px solid grey;
+    min-width: 120px;
+    text-align: center;
+
+}
+.historyinfoend{
+    border: 1px solid grey;
+    min-width: 120px;
+    text-align: center;
+}
+.historyinfoNumber{
+    cursor: pointer;
+    border: 1px solid grey;
+    width: 300px;
+}
+.RepostsinfoComment{
+    min-width: 100px;
+    border: 1px solid grey;
+    width: 70vh;
+    text-align: center;
+
+}
+
+.report{
+    display: inline-block;
+    cursor: pointer;
+    opacity: .3;
+}
+
+.report:hover{
+    transition: transform .2s;
+    transform: rotate(180deg);
+    cursor: pointer;
+    opacity: 1;
+}
+.user_name{
+    opacity: 0.5;
+}
+.user_name:hover{
+    opacity: 1;
+}
+.workstart{
+    opacity: 0.5;
+}
+.workstart:hover{
+    opacity: 1;
+}
+.workend{
+    opacity: 0.5;
+}
+.workend:hover{
+    opacity: 1;
+}
+.worklong{
+    opacity: 0.5;
+}
+.worklong:hover{
+    opacity: 1;
+}
+.comment{
+    opacity: 0.5;
+}
+.comment:hover{
+    opacity: 1;
+}
+
+.historyButton{
+    margin-left: 10px;
+    height: 30px;
+    min-width: 200px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1775ee;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}

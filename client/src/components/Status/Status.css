@@ -1,0 +1,156 @@
+.statusBtn{
+  background-color: rgb(32, 175, 32);
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  min-width: 150px;
+  border: none;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.statusBtn1{
+  background-color:  rgb(32, 175, 32);
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  min-width: 150px;
+  border: none;
+  height: 50px;
+  border-radius: 10px;
+}
+
+
+table{
+  width: 400px;
+}
+
+
+.statusBtn:hover{
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+}
+
+.modalError{
+  font-size: 20px;
+  color: coral;
+}
+
+.statusBtn.start{
+  background-color: rgb(250, 53, 53);
+}
+
+.statusBtn.end{
+  background-color:  rgb(32, 175, 32);
+}
+
+.place{
+  background-color:  rgb(32, 175, 32);
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 2em;
+  grid-gap: .5em;
+
+}
+.placeButton{
+  cursor: pointer;
+  margin-left: 165px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+}
+
+.divreserve{
+  height: 350px;
+  overflow: auto;
+}
+
+.divreserve::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selectwork{
+  width: 350px;
+  font-size: 20px;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ModalInputDate{
+font-size: 20px;
+}
+
+.statusCheckbox{
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 30%;
+  margin-left: 35%;
+  margin-top: 30px;
+}
+
+.statusRezerv{
+  background-color: rgb(32, 175, 32);
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  min-width: 150px;
+  border: none;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.isNotstatusRezerv{
+  background-color: rgb(250, 53, 53);
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+  width: 150px;
+  min-width: 150px;
+  border: none;
+  height: 50px;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.ModalButton{
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 101%;
+}
+.ModalButtonChangePassword{
+  margin-top: 200px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+.ModalInputStatus{
+  margin-top: 100px;
+  margin-bottom: 200px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-size: 18px;
+  font-weight:bold;
+}

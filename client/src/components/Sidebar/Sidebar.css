@@ -1,0 +1,53 @@
+.sidebar{
+  /*flex: 4.5;*/
+  max-width: 55vh;
+}
+
+.depsUser{
+
+  text-decoration: none;
+  color: black;
+}
+
+.sidebarWrapper{
+  padding: 20px;
+  margin-top: 100px;
+  line-height: 1.5;
+  width: 45vh;
+
+}
+.tree{
+  background-color: white;
+  min-height: 115px;
+  width: 100%;
+  border-radius: 10px;
+  /*max-height: calc(100vh - 120px);*/
+  overflow-y: auto;
+  position: sticky;
+  top: 50px;
+  margin-left: -5px;
+}
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-track{
+  background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb{
+  background-color: #a8a7a7;
+}
+.treeWrapper{
+  padding: 20px;
+}
+
+.node{
+  text-decoration: none;
+  margin-bottom: 100px;
+}
+
+.level1{
+color: black;
+text-decoration: none;
+font-weight: bold;
+  }
+
