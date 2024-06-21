@@ -24,8 +24,6 @@ const ModalVacanciesItem =({allDateUser})=> {
                 const date = moment(allDateUser.planned_release_date).format('YYYY-MM-DD')
                 setPlannedReleaseDate(date)
             }
-
-            console.log('allDateUser.planned_release_date=',plannedReleaseDate)
         } else {
             console.log('allDateUser или allDateUser.vacancies_name не определен');
         }

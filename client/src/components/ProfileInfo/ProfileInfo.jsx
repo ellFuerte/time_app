@@ -11,7 +11,6 @@ import ModalVacanciesItem from "../VacanciesItem/ModalVacanciesItem/ModalVacanci
 import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies";
 
 
-
 export default function ProfileInfo() {
     const [timeZone, setTimeZone] = useState([])
     const [selectedOption, setSelectedOption] = useState({});
@@ -748,11 +747,11 @@ export default function ProfileInfo() {
                             {localUse.isAdmin === true && localUse._id === user.id ? <Link to={`/AdminPanel`}><ErrorIcon
                                 style={{cursor: 'pointer', color: 'black', fontSize: 'large'}}/></Link> : ''}
                         </div>
-                    {user.vacancy_code === null ? '' :
+
                         <div>
                             <label style={{cursor:'pointer'}} onClick={getChangeVacancies} className='ProfileLinkVacancies'>{user.vacancy_code}</label>
                         </div>
-                    }
+
                         {/*                {
                     <Message style={{cursor: 'pointer', fontSize: 'large'}} />
                 }*/}
@@ -980,6 +979,9 @@ export default function ProfileInfo() {
                     </button>
                 </form>
             </Modal>
+
+
+
             <Modal active={modalActiveVote} setActive={setModalActiveVote}>
                 <h1>Номинации:</h1>
                 {er && <div className='modalError'>{er}</div>}
@@ -1040,6 +1042,9 @@ export default function ProfileInfo() {
 
                 </div>
                 <button className="button" type="submit" disabled={isFetching} onClick={button}>Проголосовать</button>
+
+
+
             </Modal>
             <Modal active={modalVote} setActive={setModalVote}>
                 <h1>Закрепить номинацию:</h1>

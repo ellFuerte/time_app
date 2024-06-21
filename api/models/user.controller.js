@@ -126,7 +126,6 @@ class userController {
         const id = req.params.id
             const user = await client.query('SELECT users.planned_release_date,users.nomination_status, users.user_name,users.email,users.department_id,COALESCE(users.main_department, users.department_id) AS main_department,users.isadmin,users.id,users.admin_department_id,users.status,users.see_child,users.phone_number,users.additional_contact,users.distribution_group,users.activity_profile,users.city_id,users.place_of_residence, vacancies.vacancy_code,vacancies.id as vacancy_id,vacancies.grade,vacancies.description,vacancies.status_id as vacancies_status_id,vacancies.company_id,vacancies.name as vacancies_name,vacancies.project_id,vacancies.team_id as vacancies_department_id FROM users LEFT JOIN vacancies ON users.vacancy_id = vacancies.id WHERE users.id = $1', [id])
             res.json(user.rows[0])
-
     }
 
     async getupdateUser(req, res) {
