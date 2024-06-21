@@ -158,6 +158,8 @@ export default function Topbar() {
     setIsHovered(false);
   };
 
+
+
   return (
       <div>
         <div className='topbarContainer'>
@@ -165,7 +167,7 @@ export default function Topbar() {
             <Status/>
           </div>
           <div className="topbarCenter">
-            {localUser.isAdmin === true ?
+            {localUser.isAdmin  ?
               <div className='statistics'>
                 <Link className="topbarLinkCount" onClick={() => window.location.href = `/all_users/`}
                       title="Всего сотрудников">{countAll_users}</Link> /
@@ -181,8 +183,7 @@ export default function Topbar() {
                       title="Сегодня в отпуске">{countVacation_today}</Link>/
                 <Link className="topbarLinkCount" onClick={() => window.location.href = `/vacation_yesterday/`}
                       title="Вчера в отпуске">{countVacation_yesterday}</Link>
-              </div> :
-              <div></div>
+              </div> : ''
           }
 
           </div>
