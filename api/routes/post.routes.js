@@ -17,22 +17,15 @@ router.get('/workplace_logs_get/:id' , postController.workplace_logs_get)
 router.post('/workplace_logs_post/' , postController.workplace_logs_post)
 router.post('/workplace_logs_clear/' , postController.workplace_logs_clear)
 router.get('/office_get/' , postController.office_get)
-
-
 router.post('/Vacations_function/' , postController.Vacancies_get_function)
-
-
 router.get('/Vacations/' , postController.Vacancies_get)
 router.get('/Cities/' , postController.Cities_get)
-
-
 router.get('/Skills/' , postController.Skills)
 router.get('/Skills/:id' , postController.Skills)
 router.post('/Skills/' , postController.Skills)
-
-
 router.put('/Vacations/' , postController.Vacancies_update)
 router.post('/Vacations/' , postController.Vacancies_post)
+router.get('/typework_status/' , postController.Typework_status)
 
 
 module.exports = router

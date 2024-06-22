@@ -21,6 +21,12 @@ cron.schedule('0 */4 * * *', async () => {
 
 class PostController {
 
+    async Typework_status(req,res) {
+       const getTypework = await client.query('SELECT user_typework()')
+        res.json(getTypework.rows[0])
+    }
+
+
     //Добовление данных по кнопке начать
     async CreatePost(req, res) {
         const {userId, healthStart, workStart, commentStart, typework_id, status} = req.body

@@ -136,7 +136,7 @@ const VacanciesItem =({department,vacancies,status})=> {
             description: inputValueDescription,
             grade: inputValueGrade,
             statuses: statusRef.current.value,
-            users: userId,
+            users: (userId.length===0 ? old_user : userId),
             search: searchTerm,
             old_user: old_user,
             deps: selectDep,
@@ -145,7 +145,6 @@ const VacanciesItem =({department,vacancies,status})=> {
             project_id: projectItem,
             planned_release_date:(plannedReleaseDate==='' ? null : plannedReleaseDate)
         }
-
         if (statusRef.current.value === '3' && old_user===null && userId.length<1) {
             setMessage('Сотрудник не назначен')
         }

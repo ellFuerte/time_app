@@ -27,7 +27,13 @@ export default function Topbar() {
       res.data.sort((a, b) => a.user_name.localeCompare(b.user_name))
       let filterUsers = filterUser(res.data)
       setAllUsers(filterUsers)
+
     }
+
+    const typework = async () => {
+      const res = await axios.get('/api/typework_status/')
+    }
+
 
     const fetchUserName = async () => {
       const res = await axios.get('/api/user/' + localUser._id)
@@ -87,7 +93,7 @@ export default function Topbar() {
         }
       }
     }
-
+    typework()
     get_statistics_all_users()
     fetchUserName()
     fetchUser()

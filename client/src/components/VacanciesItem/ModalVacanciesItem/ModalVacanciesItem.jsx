@@ -140,8 +140,6 @@ const ModalVacanciesItem =({allDateUser})=> {
 
     }
 
-
-
     const ChangeDataButton = async () => {
 
         const ChangeData = {
@@ -170,7 +168,6 @@ const ModalVacanciesItem =({allDateUser})=> {
             setMessage('Сохранено')
             window.location.reload()
         }
-
     }
     const handleInputChange = (e) => {
         const term = e.target.value;
