@@ -8,11 +8,8 @@ import React from "react";
 export default function  AdminPanel() {
 
        return (
-
-           <div className="admin-panel">
-               <Topbar />
                <div className="content">
-                   <Sidebar />
+
                    <div className="main-content">
                        <div className='adminDiv'>
                            <div className="tiles-container">
@@ -28,7 +25,6 @@ export default function  AdminPanel() {
                            </div>
                        </div>
                    </div>
-               </div>
            </div>
     )
 }

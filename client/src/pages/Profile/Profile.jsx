@@ -8,12 +8,12 @@ export default function Profile() {
     const username=useParams()
   return (
     <>
-      <Topbar/>
-      <div className="profile">
-        <Sidebar/>
+
+
+
         <Home username={username}/>
-        <div style={{flex:'2'}}></div>
-      </div>
+
+
     </>
   )
 }

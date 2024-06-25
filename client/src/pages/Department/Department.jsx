@@ -7,11 +7,11 @@ export default function Department () {
 
   return (
     <>
-      <Topbar/>
-      <div className="mainContainer">
-        <Sidebar/>
+
+
+
         <Feed/>
-      </div>
+
     </>
   )
 }

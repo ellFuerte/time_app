@@ -172,7 +172,7 @@ export default function Topbar() {
             <Status/>
           </div>
           <div className="topbarCenter">
-            {localUser.isAdmin  ?
+            {localUser.isAdmin ?
               <div className='statistics'>
                 <Link className="topbarLinkCount" onClick={() => window.location.href = `/all_users/`}
                       title="Всего сотрудников">{countAll_users}</Link> /

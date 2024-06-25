@@ -137,7 +137,7 @@ div{
     border: 1px solid grey;
     min-width: 300px;
     text-align: center;
-    width: 70vh;
+    width: 100%;
 }
 
 .historycomment{

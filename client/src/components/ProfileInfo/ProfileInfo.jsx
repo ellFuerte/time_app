@@ -764,11 +764,17 @@ export default function ProfileInfo() {
                     <div style={{border: '3px dashed black',padding:'10px'}}>
                     <div className='ProfileInfoCard'>Email: {name.charAt(0).toUpperCase() + name.slice(1)}</div>
                     <div className='ProfileInfoCard'>Телефон: {user.phone_number}</div>
-                    <div className='ProfileInfoCard'>{localUse.isAdmin !== false ? 'Доп.Контакт: ' : ''}{localUse.isAdmin !== false ? user.additional_contact : ''}</div>
+                    <div className='ProfileInfoCard'>
+                        {localUse.isAdmin !== false || localUse._id===username.username? 'Доп.Контакт: ' : ''}
+                        {localUse.isAdmin !== false || localUse._id===username.username? user.additional_contact : ''}
+                    </div>
                     <div className='ProfileInfoCard'>Группа рассылки: {user.distribution_group}</div>
                     <div className='ProfileInfoCard'>Профиль деятельности: {user.activity_profile}</div>
                     <div className='ProfileInfoCard'>Город проживания: {cityName}</div>
-                    <div className='ProfileInfoCard'>{localUse.isAdmin !== false ? 'Адрес фактического проживания: ' : ''}{localUse.isAdmin !== false ? user.place_of_residence : ''}</div>
+                    <div className='ProfileInfoCard'>
+                        {localUse.isAdmin !== false  || localUse._id===username.username ? 'Адрес фактического проживания: ' : ''}
+                        {localUse.isAdmin !== false || localUse._id===username.username ? user.place_of_residence : ''}
+                    </div>
                     <div className='ProfileInfoCard'>Подразделение: {depsName}</div>
                     </div>
 

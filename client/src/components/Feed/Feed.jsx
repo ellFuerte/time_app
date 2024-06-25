@@ -11,7 +11,7 @@ export default function Feed() {
       </div>
       <div className="feedWrapper">
 
-        <Staff user={"user"} dep={"depppp"} func={(xz)=>{console.log(xz)}}/>
+        <Staff/>
       </div>
 
         <div className="circle-container">
