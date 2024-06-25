@@ -41,14 +41,14 @@ function App() {
           <Route path="/login">
             {authUser ? <Redirect to={`/department/${authUser.main_department}`} /> : <Login />}
           </Route>
+          <Route path="/reportsnominations">
+            {authUser ? <ReportsNominations /> : <Login />}
+          </Route>
+          <Route path="/reportshistory">
+            {authUser ? <ReportsHistory /> : <Login />}
+          </Route>
           <Route path="/register">
             {authUser ? <Redirect to="/" /> : <Register />}
-          </Route>
-          <Route path="/profile/:username">
-            {authUser ? <Layout><Profile authUser={authUser} /></Layout> : <Login />}
-          </Route>
-          <Route path="/department/:username">
-            {authUser ? <Layout><Department /></Layout> : <Login />}
           </Route>
           <Route path="/information">
             {authUser ? <Information /> : <Login />}
@@ -56,17 +56,31 @@ function App() {
           <Route path="/reports">
             {authUser ? <Reports /> : <Login />}
           </Route>
-          <Route path="/reportsnominations">
-            {authUser ? <ReportsNominations /> : <Login />}
+          <Route path="/message">
+            {authUser ? <Message /> : <Login />}
           </Route>
-          <Route path="/reportshistory">
-            {authUser ? <ReportsHistory /> : <Login />}
+
+          <Route path="/vacanciesadd">
+            {authUser ? <VacanciesAdd /> : <Login />}
+          </Route>
+          <Route path="/adminpanel">
+            {authUser ?  <Layout><AdminPanel /></Layout> : <Login />}
+          </Route>
+
+
+
+          <Layout>
+          <Route path="/profile/:username">
+            {authUser ? <Profile authUser={authUser} /> : <Login />}
+          </Route>
+          <Route path="/department/:username">
+            {authUser ? <Department /> : <Login />}
           </Route>
           <Route path="/all_users">
             {authUser ? <Department /> : <Login />}
           </Route>
           <Route path="/not_working_today">
-            {authUser ? <Department /> : <Login />}
+            {authUser ? <Department />: <Login />}
           </Route>
           <Route path="/not_worked_yesterday">
             {authUser ? <Department /> : <Login />}
@@ -81,20 +95,12 @@ function App() {
             {authUser ? <Department /> : <Login />}
           </Route>
           <Route path="/vacation_yesterday">
-            {authUser ? <Department /> : <Login />}
+            {authUser ? <Department />: <Login />}
           </Route>
-          <Route path="/message">
-            {authUser ? <Message /> : <Login />}
-          </Route>
-          <Route path="/vacanciesview">
-            {authUser ? <VacanciesView /> : <Login />}
-          </Route>
-          <Route path="/vacanciesadd">
-            {authUser ? <VacanciesAdd /> : <Login />}
-          </Route>
-          <Route path="/adminpanel">
-            {authUser ?  <Layout><AdminPanel /></Layout> : <Login />}
-          </Route>
+            <Route path="/vacanciesview">
+              {authUser ? <VacanciesView /> : <Login />}
+            </Route>
+          </Layout>
           <Route path="*">
             <Error />
           </Route>

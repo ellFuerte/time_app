@@ -221,9 +221,7 @@ function VacanciesView(departId) {
 
     return (
         <>
-            <Topbar/>
-            <div className="mainContainer">
-                <Sidebar/>
+
                 <div className='Vacations'>
                     {isAddingVacancies ?
                         <button className='btnStaff' onClick={clickBackButton}>Назад</button>:''
@@ -360,7 +358,6 @@ function VacanciesView(departId) {
                         </>
                     )}
                 </div>
-            </div>
         </>
     )
 }
