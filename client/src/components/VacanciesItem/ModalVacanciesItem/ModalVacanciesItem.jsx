@@ -25,7 +25,7 @@ const ModalVacanciesItem =({allDateUser})=> {
                 setPlannedReleaseDate(date)
             }
         } else {
-            console.log('allDateUser или allDateUser.vacancies_name не определен');
+
         }
 
 
@@ -135,8 +135,6 @@ const ModalVacanciesItem =({allDateUser})=> {
 
     const DataCurrent = () => {
         setPlannedReleaseDate(DateReleaseRef.current.value)
-        console.log('DateReleaseRef.current.valu=',DateReleaseRef.current.value)
-
 
     }
 

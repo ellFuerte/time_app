@@ -1,4 +1,4 @@
-import {useContext,useState} from "react";
+import {useContext,useEffect,useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,19 +22,11 @@ import VacanciesAdd from "./components/VacanciesAdd/VacanciesAdd"
 import AdminPanel from './components/AdminPanel/AdminPanel'
 
 
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
 
-  function ProfileRoute({ authUser }) {
 
-    let  username = useParams()
-
-    if (authUser.isAdmin===false && authUser._id !== username.username) {
-
-      return <Error />
-    }
-
-    return <Profile/>
-  }
   const {user} = useContext(AuthContext)
   const userStorage = JSON.parse(localStorage.getItem('user'))
 
@@ -42,73 +34,73 @@ function App() {
 
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path='/'>
-          { authUser ? <Redirect to={`/department/${authUser.main_department}`}/> : <Redirect to='/login'/>}
-        </Route>
-        <Route path='/login'>
-          { authUser ? <Redirect to={`/department/${authUser.main_department}`}/> : <Login/> }
-        </Route>
-        <Route path='/register'>
-          { authUser ? <Redirect to='/'/> : <Register/> }
-        </Route>
-        <Route path='/profile/:username'>
-          { authUser ? <ProfileRoute authUser={authUser} /> :<Login/>}
-        </Route>
-        <Route path='/department/:username'>
-          { authUser ? <Department/> : <Login/>}
-        </Route>
-        <Route path='/Information'>
-          { authUser ? <Information/> : <Login/> }
-        </Route>
-        <Route path='/Reports/'>
-          { authUser ? <Reports/> : <Login/> }
-        </Route>
-        <Route path='/ReportsNominations/'>
-          { authUser ? <ReportsNominations/> : <Login/> }
-        </Route>
-        <Route path='/ReportsHistory/'>
-          { authUser ? <ReportsHistory/> : <Login/> }
-        </Route>
-        <Route path='/all_users'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/not_working_today'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/not_worked_yesterday'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/sick_today'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/sick_yesterday'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/vacation_today'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/vacation_yesterday'>
-          { authUser ? <Department/> : <Login/> }
-        </Route>
-        <Route path='/Message'>
-          { authUser ? <Message/> : <Login/> }
-        </Route>
-        <Route path='/VacanciesView'>
-          { authUser ? <VacanciesView/> : <Login/> }
-        </Route>
-        <Route path='/VacanciesAdd/'>
-        { authUser ? <VacanciesAdd /> : <Login/> }
-      </Route>
-        <Route path='/AdminPanel'>
-          { authUser ? <AdminPanel/> : <Login/> }
-        </Route>
-        <Route path='/*'>
-          <Error/>
-        </Route>
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route exact path='/'>
+            { authUser ? <Redirect to={`/department/${authUser.main_department}`}/> : <Redirect to='/login'/>}
+          </Route>
+          <Route path='/login'>
+            { authUser ? <Redirect to={`/department/${authUser.main_department}`}/> : <Login/> }
+          </Route>
+          <Route path='/register'>
+            { authUser ? <Redirect to='/'/> : <Register/> }
+          </Route>
+          <Route path='/profile/:username'>
+            { authUser ? <Profile authUser={authUser} /> :<Login/>}
+          </Route>
+          <Route path='/department/:username'>
+            { authUser ? <Department/> : <Login/>}
+          </Route>
+          <Route path='/Information'>
+            { authUser ? <Information/> : <Login/> }
+          </Route>
+          <Route path='/Reports/'>
+            { authUser ? <Reports/> : <Login/> }
+          </Route>
+          <Route path='/ReportsNominations/'>
+            { authUser ? <ReportsNominations/> : <Login/> }
+          </Route>
+          <Route path='/ReportsHistory/'>
+            { authUser ? <ReportsHistory/> : <Login/> }
+          </Route>
+          <Route path='/all_users'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/not_working_today'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/not_worked_yesterday'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/sick_today'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/sick_yesterday'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/vacation_today'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/vacation_yesterday'>
+            { authUser ? <Department/> : <Login/> }
+          </Route>
+          <Route path='/Message'>
+            { authUser ? <Message/> : <Login/> }
+          </Route>
+          <Route path='/VacanciesView'>
+            { authUser ? <VacanciesView/> : <Login/> }
+          </Route>
+          <Route path='/VacanciesAdd/'>
+            { authUser ? <VacanciesAdd /> : <Login/> }
+          </Route>
+          <Route path='/AdminPanel'>
+            { authUser ? <AdminPanel/> : <Login/> }
+          </Route>
+          <Route path='/*'>
+            <Error/>
+          </Route>
+        </Switch>
+      </Router>
   );
 }
 

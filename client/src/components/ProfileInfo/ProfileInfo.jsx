@@ -738,8 +738,12 @@ export default function ProfileInfo() {
                         <div className='ProfileName' style={{ paddingTop: hasImage ? '30px' : '0px' }}>
                             {user.user_name}
 
-                            {localUser ? <Create style={{marginLeft: '5px', fontSize: 'large', cursor: 'pointer'}}
+
+
+                            {localUse.isAdmin || localUse._id===username.username ? <Create style={{marginLeft: '5px', fontSize: 'large', cursor: 'pointer'}}
                                                  onClick={() => setModalActive(true)}/> : ''}
+
+
 
                             {localUse.isAdmin ? <Delete style={{cursor: 'pointer', fontSize: 'large'}}
                                                         onClick={() => setModalActiveDelete(true)}/> : <></>}
@@ -768,29 +772,27 @@ export default function ProfileInfo() {
                     <div className='ProfileInfoCard'>Подразделение: {depsName}</div>
                     </div>
 
-                    <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>
 
-                    <div className='PaddingDiv'></div>
+
+                    {localUse.isAdmin || localUse._id===username.username ?
+                    <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>:''
+                    }
 
                     {localUse.isAdmin ?
                         <div className='changePass' onClick={() => setModalActiveResetPass(true)}>Сбросить
                             пароль</div> : ''}
 
-                    {localUse.isAdmin !== isAdmin || localUse._id !== user.id ? <div className='PaddingDiv'></div> : ''}
 
-                    {localUse.isAdmin !== isAdmin || localUse._id !== user.id ?
-                        <div className='changePass' onClick={() => setModalActiveReset(true)}>Закончить</div> : ''}
+                    {localUse.isAdmin ?
+                        <div className='changePass' onClick={() => setModalActiveReset(true)}>Закончить</div> :'' }
 
-                    {localUse._id === user.id ? <div className='PaddingDiv'></div> : ''}
 
                     {localUse._id === user.id ?
                         <div className='changePass' onClick={() => setModalActiveVote(true)}>Проголосовать</div> : ''}
 
-                    <div className='PaddingDiv'></div>
 
                     {localUse.isAdmin ? <div className="changePass" onClick={nextModal}>Закрепить номинацию</div> : ''}
 
-                    <div className='PaddingDiv'></div>
 
                     <div className="changePass" onClick={() => setModalActiveSkills(true)}>Навыки</div>
                     <Skills modalActiveSkills={modalActiveSkills} setModalActiveSkills={setModalActiveSkills} username={username.username} />

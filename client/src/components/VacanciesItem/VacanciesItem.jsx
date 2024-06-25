@@ -145,10 +145,11 @@ const VacanciesItem =({department,vacancies,status})=> {
             project_id: projectItem,
             planned_release_date:(plannedReleaseDate==='' ? null : plannedReleaseDate)
         }
+        console.log('log=',ChangeData)
+
         if (statusRef.current.value === '3' && old_user===null && userId.length<1) {
             setMessage('Сотрудник не назначен')
         }
-
 
         else {
             const res = await axios.put('/api/Vacations/', ChangeData)

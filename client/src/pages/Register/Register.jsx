@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import {Link, useHistory} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
+
 import "./Register.css";
 
 export default function Register() {
@@ -10,7 +11,7 @@ export default function Register() {
   const username = useRef()
   const firstname = useRef()
   const department = useRef()
-  const history = useHistory()
+  const history = useHistory();
   const telephone = useRef()
   const city = useRef()
   const additional_contact = useRef()
@@ -218,7 +219,6 @@ export default function Register() {
         else {
           console.log('log=',user)
           await axios.post('/api/Register/', user);
-
           history.push('/login');
         }
       }

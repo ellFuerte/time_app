@@ -1,10 +1,10 @@
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import './Employee.css'
 
 export default function Employee({user}) {
-
+  const history =useHistory()
   const [nominations, setNominations] = useState([])
   const [admin, setAdmin] = useState()
   const [date, setDate] = useState('')
@@ -76,6 +76,9 @@ export default function Employee({user}) {
 
   }, [user.id])
 
+  const handleClick = () => {
+    history.push(`/profile/${user.id}`);
+  };
 
 
   const images = {
@@ -94,73 +97,36 @@ export default function Employee({user}) {
 
   return (
       <>
-        {localUser.isAdmin ? (
-            <>
-              <Link to={`/profile/${user.id}`} className='name'>
-                <div className={'employee ' + (findStatus(user.status))}>
-                  <div className="angry-grid">
-                    <div id="item-0">
-                      <span className='name'>{user.user_name}{localUser.isAdmin ? admin:''}</span>
-                    </div>
-                    <div id="item-1">
-                      {user.status === 5 && <div className='vacationText'>Отпуск:{dateStart}-{dateEnd}</div>}
-                      {user.status === 6 && <div className='vacationText'>Отгул:{dateStart}-{dateEnd}</div>}
-                      {user.status === 7 && <div className='vacationText'>Другая причина:{dateStart}-{dateEnd}</div>}
-                      {user.status === 3 && <div className='vacationText'>Больничный:{dateStart}-{dateEnd}</div>}
-                      {user.status === 2 && <div className='vacationText'>{date} {time}</div>}
-                    </div>
-                    <div id="item-2">
-                      {Object.keys(images).map((key, id) => (
-                          (user.nomination_status === key || user.nomination_status === parseInt(key) || nominations===key || nominations===parseInt(key)) &&
-                          <img
-                              key={id}
-                              src={images[key].src}
-                              title={images[key].title}
-                              alt={`Image for ${key}`}
-                          />
-                      ))}
-                    </div>
-                  </div>
+        <div onClick={handleClick} className='name'>
+        <div className="searchBlockContainer">
+            <div className={'employee ' + (findStatus(user.status))}>
+              <div className="angry-grid">
+                <div id="item-0">
+                  <span className='searchName'>{user.user_name}{localUser.isAdmin ? admin : ''}</span>
                 </div>
-              </Link>
-            </>
-
-        ) : (
-                <div className={'employee_staff ' + (findStatus(user.status))}>
-                  <div className="angry-grid">
-                    <div id="item-0">
-                      <span className='name'>{user.user_name}{admin}</span>
-                    </div>
-                    <div id="item-1">
-                      {user.status === 5 && <div className='vacationText'>Отпуск:{dateStart}-{dateEnd}</div>}
-                      {user.status === 6 && <div className='vacationText'>Отгул:{dateStart}-{dateEnd}</div>}
-                      {user.status === 7 && <div className='vacationText'>Другая причина:{dateStart}-{dateEnd}</div>}
-                      {user.status === 3 && <div className='vacationText'>Больничный:{dateStart}-{dateEnd}</div>}
-                      {user.status === 2 && <div className='vacationText'>{date} {time}</div>}
-
-                    </div>
-                    <div id="item-2">
-
-                      {
-                        Object.keys(images).map((key, id) => (
-                            (user.nomination_status === key || user.nomination_status === parseInt(key) || nominations === key || nominations === parseInt(key) )
-
-                            &&
-                            <img
-                                key={id}
-                                src={images[key].src}
-                                title={images[key].title}
-                                alt={`Image for ${key}`}
-                                className='images'
-                            />
-                        ))
-                      }
-                    </div>
-                  </div>
+                <div id="item-1">
+                  {user.status === 5 && <div className='vacationText'>Отпуск:{dateStart}-{dateEnd}</div>}
+                  {user.status === 6 && <div className='vacationText'>Отгул:{dateStart}-{dateEnd}</div>}
+                  {user.status === 7 && <div className='vacationText'>Другая причина:{dateStart}-{dateEnd}</div>}
+                  {user.status === 3 && <div className='vacationText'>Больничный:{dateStart}-{dateEnd}</div>}
+                  {user.status === 2 && <div className='vacationText'>{date} {time}</div>}
                 </div>
-          )
-        }
-        </>
+                <div id="item-2">
+                  {Object.keys(images).map((key, id) => (
+                      (user.nomination_status === key || user.nomination_status === parseInt(key) || nominations === key || nominations === parseInt(key)) &&
+                      <img
+                          key={id}
+                          src={images[key].src}
+                          title={images[key].title}
+                          alt={`Image for ${key}`}
+                      />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
   )
 }
 

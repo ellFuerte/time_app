@@ -103,8 +103,6 @@ export default function SearchBlock({user}) {
     return (
         <>
             <div className="searchBlockContainer">
-            {
-                localUser.isAdmin ? (
                     <Link to={`/profile/${user.id}`} className='name'
                           onClick={() => window.location.href = `/profile/${user.id}`}>
                         <div className={'employee ' + (findStatus(user.status))}>
@@ -124,54 +122,20 @@ export default function SearchBlock({user}) {
                                 <div id="item-2">
 
                                     {Object.keys(images).map((key, id) => (
-
                                         (user.nomination_status === key || user.nomination_status === parseInt(key) || nominations===key || nominations===parseInt(key)) &&
+
                                         <img
                                             key={id}
                                             src={images[key].src}
                                             title={images[key].title}
                                             alt={`Image for ${key}`}
                                         />
+
                                     ))}
                                 </div>
                             </div>
                         </div>
                     </Link>
-                ) : (
-                    <div className={'employee ' + (findStatus(user.status))}>
-                        <div className="angry-grid">
-                            <div id="item-0">
-                                <span className='searchName'>{user.user_name}{admin}</span>
-                            </div>
-                            <div id="item-1">
-                                {user.status === 5 && <div className='vacationText'>Отпуск:{dateStart}-{dateEnd}</div>}
-                                {user.status === 6 && <div className='vacationText'>Отгул:{dateStart}-{dateEnd}</div>}
-                                {user.status === 7 && <div className='vacationText'>Другая причина:{dateStart}-{dateEnd}</div>}
-                                {user.status === 3 && <div className='vacationText'>Больничный:{dateStart}-{dateEnd}</div>}
-                                {user.status === 2 && <div className='vacationText'>{date} {time}</div>}
-
-                            </div>
-                            <div id="item-2">
-
-                                {
-                                    Object.keys(images).map((key, id) => (
-                                        (user.nomination_status === key || user.nomination_status === parseInt(key) || nominations === key || nominations === parseInt(key) )
-
-                                        &&
-                                        <img
-                                            key={id}
-                                            src={images[key].src}
-                                            title={images[key].title}
-                                            alt={`Image for ${key}`}
-                                            className='images'
-                                        />
-                                    ))
-                                }
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
             </div>
         </>
     )

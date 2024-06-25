@@ -30,6 +30,7 @@ text-align: center;
 }
 
 .name{
+  cursor:pointer;
   text-align: left;
   text-decoration: none;
   color: black;

@@ -285,44 +285,52 @@ class PostController {
             planned_release_date
         } = req.body
 
-        if (users.length > 1) {
-            const update_status = await client.query('SELECT vacancy_id FROM users WHERE id=$1', [users])
+        if (users === null) {
+            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id])
+            res.json(postVacation.rows)
+        } else {
 
-            const update = await client.query('UPDATE vacancies SET status_id = 30 WHERE id = $1', [update_status.rows[0]['vacancy_id']])
+            if (users.length > 1) {
+
+                const update_status = await client.query('SELECT vacancy_id FROM users WHERE id=$1', [users])
+                const update = await client.query('UPDATE vacancies SET status_id = 30 WHERE id = $1', [update_status.rows[0]['vacancy_id']])
+
+            }
+
+            if (search === null || users.length > 0) {
+                const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
+
+            }
+
+            if (users.length > 0) {
+                const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
+                const update_vacanciy_id = await client.query('UPDATE users SET vacancy_id = $1 WHERE id = $2', [namevacanciesId, users])
+
+            }
+
+            if (old_user === null) {
+
+                const update_user_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
+
+            }
+
+            if (search === null && users.length > 0) {
+                const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
+                const update_vacanciy_id = await client.query('UPDATE users SET vacancy_id = $1 WHERE id = $2', [namevacanciesId, users])
+            }
+
+            if (users.length === 0 && old_user > 0 || planned_release_date || planned_release_date === null) {
+                const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, old_user])
+            }
+            if (old_user === null && users.length > 0 || planned_release_date || planned_release_date === null) {
+                const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, users])
+            }
+
+            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id])
+
+
+            res.json(postVacation.rows)
         }
-
-        if (search === null || users.length > 0) {
-            const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
-
-        }
-
-        if (users.length > 0) {
-            const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
-            const update_vacanciy_id = await client.query('UPDATE users SET vacancy_id = $1 WHERE id = $2', [namevacanciesId, users])
-
-        }
-
-        if (old_user === null) {
-
-            const update_user_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
-
-        }
-
-        if (search === null && users.length > 0) {
-            const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
-            const update_vacanciy_id = await client.query('UPDATE users SET vacancy_id = $1 WHERE id = $2', [namevacanciesId, users])
-        }
-
-        const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id])
-
-
-        if (users.length === 0 && old_user > 0 || planned_release_date || planned_release_date===null) {
-            const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, old_user])
-        }
-        if (old_user === null && users.length > 0 || planned_release_date || planned_release_date===null) {
-            const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, users])
-        }
-        res.json(postVacation.rows)
     }
 
     async Vacancies_get_function(req, res) {
