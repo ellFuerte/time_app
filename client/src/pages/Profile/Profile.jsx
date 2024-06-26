@@ -8,12 +8,7 @@ export default function Profile() {
     const username=useParams()
   return (
     <>
-
-
-
         <Home username={username}/>
-
-
     </>
   )
 }

@@ -103,7 +103,6 @@ export default function ReportsNominations() {
 
     return (
         <>
-            <Topbar/>
             <div className='Reports'>
                 <div className="ReportsContainer">
                     <h2 className='ReportsMainText'>Отчет по номинациям</h2>

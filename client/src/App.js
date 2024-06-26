@@ -41,21 +41,11 @@ function App() {
           <Route path="/login">
             {authUser ? <Redirect to={`/department/${authUser.main_department}`} /> : <Login />}
           </Route>
-          <Route path="/reportsnominations">
-            {authUser ? <ReportsNominations /> : <Login />}
-          </Route>
-          <Route path="/reportshistory">
-            {authUser ? <ReportsHistory /> : <Login />}
-          </Route>
           <Route path="/register">
             {authUser ? <Redirect to="/" /> : <Register />}
           </Route>
-          <Route path="/information">
-            {authUser ? <Information /> : <Login />}
-          </Route>
-          <Route path="/reports">
-            {authUser ? <Reports /> : <Login />}
-          </Route>
+
+
           <Route path="/message">
             {authUser ? <Message /> : <Login />}
           </Route>
@@ -63,9 +53,7 @@ function App() {
           <Route path="/vacanciesadd">
             {authUser ? <VacanciesAdd /> : <Login />}
           </Route>
-          <Route path="/adminpanel">
-            {authUser ?  <Layout><AdminPanel /></Layout> : <Login />}
-          </Route>
+
 
 
 
@@ -99,6 +87,21 @@ function App() {
           </Route>
             <Route path="/vacanciesview">
               {authUser ? <VacanciesView /> : <Login />}
+            </Route>
+            <Route path="/adminpanel">
+              {authUser ?  <AdminPanel />: <Login />}
+            </Route>
+            <Route path="/reports">
+              {authUser ? <Reports /> : <Login />}
+            </Route>
+            <Route path="/information">
+              {authUser ? <Information /> : <Login />}
+            </Route>
+            <Route path="/reportsnominations">
+              {authUser ? <ReportsNominations /> : <Login />}
+            </Route>
+            <Route path="/reportshistory">
+              {authUser ? <ReportsHistory /> : <Login />}
             </Route>
           </Layout>
           <Route path="*">

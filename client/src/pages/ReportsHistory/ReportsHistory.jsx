@@ -110,7 +110,7 @@ export default function ReportsHistory() {
 
     return (
         <>
-            <Topbar/>
+
             <div className='Reports'>
                 <div className="ReportsContainer">
                     <h2 className='ReportsMainText'>Отчет по истории</h2>

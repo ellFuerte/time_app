@@ -7,11 +7,11 @@ import './MainPage.css'
 export default function MainPage() {
     return (
     <>
-      <Topbar/>
+{/*      <Topbar/>
       <div className="mainContainer">
         <Sidebar/>
         <Feed/>
-      </div>
+      </div>*/}
 
     </>
   )

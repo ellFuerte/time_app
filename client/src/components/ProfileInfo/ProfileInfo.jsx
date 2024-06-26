@@ -12,6 +12,7 @@ import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies";
 
 
 export default function ProfileInfo() {
+
     const [timeZone, setTimeZone] = useState([])
     const [selectedOption, setSelectedOption] = useState({});
     const [error, setError] = useState('')
@@ -247,6 +248,7 @@ export default function ProfileInfo() {
         user.distribution_group,
         user.activity_profile,
         user.place_of_residence,
+        username.username
     ])
 
     const handleEmailChange = (e) => {
@@ -1050,9 +1052,6 @@ export default function ProfileInfo() {
 
                 </div>
                 <button className="button" type="submit" disabled={isFetching} onClick={button}>Проголосовать</button>
-
-
-
             </Modal>
             <Modal active={modalVote} setActive={setModalVote}>
                 <h1>Закрепить номинацию:</h1>

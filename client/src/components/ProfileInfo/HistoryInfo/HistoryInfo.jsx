@@ -42,7 +42,6 @@ export default function HistoryInfo() {
 
 
     const [isJob, setIsJob] = useState(true)
-
     const [modalActive, setModalActive] = useState(false)
     const [modalName, setModalName] = useState(null)
     const modalComment = useRef()
@@ -92,12 +91,16 @@ export default function HistoryInfo() {
 
                 const fill = async () => {
                     const res = await axios.post('/api/post/filter',filter)
+                    console.log('res=',res.data)
+
                     setVacationPosts(res.data.sort((p1, p2) => {
                         return new Date(p2.workstart) - new Date(p1.workstart)
                     }))
+
                     setPosts(res.data.sort((p1, p2) => {
                         return new Date(p2.workstart) - new Date(p1.workstart)
                     }))
+
                     setError('')
                 }
                 fill()
@@ -134,6 +137,7 @@ export default function HistoryInfo() {
 
     const fetchUservacation = async () => {
         const res = await axios.get('/api/vacation?id='+localUser._id)
+        console.log('res=',res.data)
         setVacationPosts(res.data.sort((p1, p2) => {
             return new Date(p2.start) - new Date(p1.start)
         }))
@@ -156,6 +160,8 @@ export default function HistoryInfo() {
         }
 
 
+
+
         const vacation = {
             userId: localUser._id,
             status:modalName,
@@ -164,24 +170,8 @@ export default function HistoryInfo() {
             end: new Date(vacationEnd.current.value)
         }
 
-        /*    const newPost = {
-              userId: localUser._id,
-              healthEnd: 1,
-              workEnd: new Date(Date.now()),
-              workTime: new Date(Date.now()) - new Date(posts[0].workStart)
-            }*/
-
-        const isTrue = new Date(vacationStart.current.value) <= currentDay && currentDay.getDate() <= vacation.end.getDate()+1
-
         try {
             await axios.post('/api/vacation/',vacation)
-            /*      if (isTrue) {
-                   /!* await axios.put("/api/post/"+posts[0]._id, newPost)*!/
-                    await axios.put('/api/user/'+localUser._id, {status:3, userId: username})
-                    if (localUser._id === username) {
-                      localStorage.setItem('user', JSON.stringify({...localUser, status:3}))
-                    }
-                  }*/
             window.location.reload()
         } catch (error) {
             console.log(error);
@@ -275,6 +265,7 @@ export default function HistoryInfo() {
                 <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} currentPage={currentPage}/>:
                 <Pagination postsPerPage={postsPerPage} totalPosts={vacationPosts.length} paginate={paginate} currentPage={currentPage}/>
             }
+
             <Modal active={modalActive} setActive={setModalActive}>
                 <h1>Изменение информации:</h1>
                 <hr/>

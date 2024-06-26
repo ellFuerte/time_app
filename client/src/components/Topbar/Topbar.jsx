@@ -203,9 +203,7 @@ export default function Topbar() {
               </div>
               <div className='vr'></div>
 
-              <div className='topPage'><Link to={`/profile/${user.id}`}
-                                             onClick={() => window.location.href = `/profile/${user.id}`}
-                                             className="topbarLink">{localUser.username}</Link>
+              <div className='topPage'><Link to={`/profile/${user.id}`} className="topbarLink">{localUser.username}</Link>
 
               </div>
 
@@ -222,17 +220,6 @@ export default function Topbar() {
 
               <div className='vr'></div>
 
-             {/* <div className='topPageVacations' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <span className='link'>Вакансии</span>
-                  {isHovered && (
-                      <div className='vacationList'>
-                        <ul className='vacationListUl'>
-                          <li><Link to='/VacanciesAdd' className='LinkVacations'>Добавить вакансию</Link></li>
-                          <li><Link to='/VacanciesView' className='LinkVacations'>Просмотреть вакансии</Link></li>
-                        </ul>
-                      </div>
-                  )}
-              </div>*/}
               <div className='topPage'>
                 <Link to='/Information' className="topbarLink"><span className='link'>?</span></Link>
               </div>

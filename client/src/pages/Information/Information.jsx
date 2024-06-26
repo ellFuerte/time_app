@@ -6,7 +6,6 @@ import './Information.css'
 export default function Information() {
   return (
     <>
-      <Topbar/>
       <div className='information'>
         <div className="informationContainer">
           <h2 className='infoMainText'>Информация</h2>

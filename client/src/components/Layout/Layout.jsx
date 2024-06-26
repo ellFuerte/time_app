@@ -1,13 +1,13 @@
 import Topbar from '../Topbar/Topbar';
 import Sidebar from '../Sidebar/Sidebar';
-
+import './Layout.css'
 export default function Layout({ children }) {
     return (
         <>
             <Topbar />
-            <div className="mainContainer">
+            <div className="MainContainers">
                 <Sidebar />
-                <div className="content">
+                <div className="mainContent">
                     {children}
                 </div>
             </div>
