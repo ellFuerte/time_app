@@ -91,7 +91,6 @@ export default function HistoryInfo() {
 
                 const fill = async () => {
                     const res = await axios.post('/api/post/filter',filter)
-                    console.log('res=',res.data)
 
                     setVacationPosts(res.data.sort((p1, p2) => {
                         return new Date(p2.workstart) - new Date(p1.workstart)
@@ -137,7 +136,6 @@ export default function HistoryInfo() {
 
     const fetchUservacation = async () => {
         const res = await axios.get('/api/vacation?id='+localUser._id)
-        console.log('res=',res.data)
         setVacationPosts(res.data.sort((p1, p2) => {
             return new Date(p2.start) - new Date(p1.start)
         }))

@@ -7,20 +7,20 @@ import Modal from "../Templates/Modal/Modal";
 import './Topbar.css'
 import MessagePost from '../MessagePost/MessagePost'
 import SearchBlock from "../SearchBlock/SearchBlock";
+import Statistics from "./Statistics/Statistics";
 
 
 export default function Topbar() {
+  const [user, setUser] = useState([])
+  const [searchValue, setSearchValue] = useState("")
+  const [allUsers, setAllUsers] = useState([])
+  const [findUsers, setFindUsers] = useState([])
+  const [isBlock, setIsBlock] = useState(false)
   const localUser = JSON.parse(localStorage.getItem('user'))
-  const [countAll_users, setCountAll_users] = useState(0)
-  const [countWorked_today, setCountWorked_today] = useState(0)
-  const [countWorked_yesterday, setCountWorked_yesterday] = useState(0)
-  const [countSickLeave_today, setCountSickLeave_today] = useState(0)
-  const [countSick_yesterday, setCountSick_yesterday] = useState(0)
-  const [countVacation_today, setCountVacation_today] = useState(0)
-  const [countVacation_yesterday, setCountVacation_yesterday] = useState(0)
   const departId = useParams().username
-  useEffect(() => {
 
+
+  useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get('/api/user/')
       setNotificationCount(res.data)
@@ -40,61 +40,8 @@ export default function Topbar() {
       setUser(res.data)
     }
 
-    const get_statistics_all_users = async () => {
-      const getUsers = {
-        id: localUser._id
-      }
-      if (localUser.isAdmin === true) {
-        const res = await axios.post('/api/get_statistics_all_users', getUsers)
 
-
-        if(res.data[0]['get_statistics_all_users'][0]['all_users']===null){
-          res.data[0]['get_statistics_all_users'][0]['all_users']=0
-        }else{
-          setCountAll_users(res.data[0]['get_statistics_all_users'][0]['all_users'].length)
-        }
-
-        if(res.data[0]['get_statistics_all_users'][0]['not_working_today']===null){
-          res.data[0]['get_statistics_all_users'][0]['not_working_today']=0
-        }else{
-          setCountWorked_today(res.data[0]['get_statistics_all_users'][0]['not_working_today'].length)
-        }
-
-        if(res.data[0]['get_statistics_all_users'][0]['not_worked_yesterday']===null){
-          res.data[0]['get_statistics_all_users'][0]['not_worked_yesterday']=0
-        }else{
-          setCountWorked_yesterday(res.data[0]['get_statistics_all_users'][0]['not_worked_yesterday'].length)
-        }
-
-
-        if(res.data[0]['get_statistics_all_users'][0]['sick_today']===null){
-          res.data[0]['get_statistics_all_users'][0]['sick_today']=0
-        }else {
-          setCountSickLeave_today(res.data[0]['get_statistics_all_users'][0]['sick_today'].length)
-        }
-
-
-        if(res.data[0]['get_statistics_all_users'][0]['sick_yesterday']===null){
-          res.data[0]['get_statistics_all_users'][0]['sick_yesterday']=0
-        }else{
-          setCountSick_yesterday(res.data[0]['get_statistics_all_users'][0]['sick_yesterday'].length)
-        }
-
-        if(res.data[0]['get_statistics_all_users'][0]['vacation_today']===null){
-          res.data[0]['get_statistics_all_users'][0]['vacation_today']=0
-        }else{
-          setCountVacation_today(res.data[0]['get_statistics_all_users'][0]['vacation_today'].length)
-        }
-
-        if(res.data[0]['get_statistics_all_users'][0]['vacation_yesterday']===null){
-          res.data[0]['get_statistics_all_users'][0]['vacation_yesterday']=0
-        }else{
-          setCountVacation_yesterday(res.data[0]['get_statistics_all_users'][0]['vacation_yesterday'].length)
-        }
-      }
-    }
     typework()
-    get_statistics_all_users()
     fetchUserName()
     fetchUser()
 
@@ -109,12 +56,6 @@ export default function Topbar() {
         .concat(users.filter(user => user.status === 4))
   }
 
-  const [user, setUser] = useState([])
-  const [searchValue, setSearchValue] = useState("")
-  const [allUsers, setAllUsers] = useState([])
-  const [findUsers, setFindUsers] = useState([])
-  const [isBlock, setIsBlock] = useState(false)
-
   // выход
   const logOut = () => {
     localStorage.clear()
@@ -123,7 +64,6 @@ export default function Topbar() {
   }
 
 
-  // получение всех пользователей
 
 
   //Поиск пользователя
@@ -151,18 +91,11 @@ export default function Topbar() {
 
   const [notificationCount, setNotificationCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+
   const togglePopup = () => {
     setIsOpen(!isOpen);
+  }
 
-  };
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
 
   return (
@@ -171,35 +104,13 @@ export default function Topbar() {
           <div className="topbarLeft">
             <Status/>
           </div>
-          <div className="topbarCenter">
-            {localUser.isAdmin ?
-              <div className='statistics'>
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/all_users/`}
-                      title="Всего сотрудников">{countAll_users}</Link> /
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/not_working_today/`}
-                      title="Сегодня не работают">{countWorked_today}</Link> /
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/not_worked_yesterday/`}
-                      title="Вчера не работали">{countWorked_yesterday}</Link> /
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/sick_today/`}
-                      title="Сегодня болеют">{countSickLeave_today}</Link> /
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/sick_yesterday/`}
-                      title="Вчера болели">{countSick_yesterday}</Link> /
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/vacation_today/`}
-                      title="Сегодня в отпуске">{countVacation_today}</Link>/
-                <Link className="topbarLinkCount" onClick={() => window.location.href = `/vacation_yesterday/`}
-                      title="Вчера в отпуске">{countVacation_yesterday}</Link>
-              </div> : ''
-          }
-
-          </div>
+          <Statistics/>
           <div className="topbarRight">
             <div className="topbarLinks">
               <div>
                 <Link to={`/department/${user.main_department}`} className="topbarLink">
-                  <img src={'../images/VTB.png'}
-                   alt='VTB'
-                   width='150'
-                   height='50'/></Link>
+                  <img src={'../images/VTB.png'} alt='VTB' width='150' height='50'/>
+                </Link>
               </div>
               <div className='vr'></div>
 
@@ -207,21 +118,25 @@ export default function Topbar() {
 
               </div>
 
-              {localUser.isAdmin
-                  ? <div className='vr'></div>:''
+              {
+                localUser.isAdmin
+                    ? <div className='vr'></div>
+                    :''
               }
 
-              {localUser.isAdmin
-                  ?
+              {
+                localUser.isAdmin
+                    ?
                   <div className='topPage'>
                     <Link to='/Reports' className="topbarLink"><span className='link'>Отчеты</span></Link>
-
-                  </div> : ''}
+                  </div>
+                    : ''
+              }
 
               <div className='vr'></div>
 
               <div className='topPage'>
-                <Link to='/Information' className="topbarLink"><span className='link'>?</span></Link>
+                <Link to='/Information' className="topbarLink">?</Link>
               </div>
             </div>
 

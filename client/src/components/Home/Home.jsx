@@ -10,10 +10,11 @@ export default function Home(username) {
   return (
 
           <div className="homeWrapper">
-                  <ProfileInfo username={username.username.username}/>
+
+              <ProfileInfo username={username.username.username}/>
 
               {(localUser._id!==username.username.username && localUser.isAdmin) || localUser._id===username.username.username ?
-                  <HistoryInfo/> :''
+              <HistoryInfo/> :''
               }
 
           </div>

@@ -18,7 +18,7 @@ import ReportsHistory from "./pages/ReportsHistory/ReportsHistory";
 import Message from "./components/MessagePost/MessagePost";
 import VacanciesView from "./components/VacanciesView/VacanciesView"
 import VacanciesAdd from "./components/VacanciesAdd/VacanciesAdd"
-import AdminPanel from './components/AdminPanel/AdminPanel'
+import AdminPanel from './components/ProfileInfo/AdminPanel/AdminPanel'
 import Layout from "./components/Layout/Layout";
 
 
@@ -46,64 +46,54 @@ function App() {
           </Route>
 
 
-          <Route path="/message">
-            {authUser ? <Message /> : <Login />}
-          </Route>
-
-          <Route path="/vacanciesadd">
-            {authUser ? <VacanciesAdd /> : <Login />}
-          </Route>
-
-
-
-
-          <Layout>
-          <Route path="/profile/:username">
-            {authUser ? <Profile authUser={authUser} /> : <Login />}
-          </Route>
-          <Route path="/department/:username">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/all_users">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/not_working_today">
-            {authUser ? <Department />: <Login />}
-          </Route>
-          <Route path="/not_worked_yesterday">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/sick_today">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/sick_yesterday">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/vacation_today">
-            {authUser ? <Department /> : <Login />}
-          </Route>
-          <Route path="/vacation_yesterday">
-            {authUser ? <Department />: <Login />}
-          </Route>
+            <Route path="/profile/:username">
+              {authUser ? <Layout><Profile authUser={authUser} /></Layout>: <Login />}
+            </Route>
+            <Route path="/department/:username">
+              {authUser ? <Layout><Department /></Layout> : <Login />}
+            </Route>
+            <Route path="/all_users">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
+            <Route path="/not_working_today">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
+            <Route path="/not_worked_yesterday">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
+            <Route path="/sick_today">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
+            <Route path="/sick_yesterday">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
+            <Route path="/vacation_today">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> :<Error />}
+            </Route>
+            <Route path="/vacation_yesterday">
+              {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
+            </Route>
             <Route path="/vacanciesview">
-              {authUser ? <VacanciesView /> : <Login />}
+              {authUser && userStorage.isAdmin ? <Layout><VacanciesView /></Layout> : <Error />}
             </Route>
             <Route path="/adminpanel">
-              {authUser ?  <AdminPanel />: <Login />}
+              {authUser && userStorage.isAdmin ? <Layout><AdminPanel /></Layout> : <Error />}
             </Route>
             <Route path="/reports">
-              {authUser ? <Reports /> : <Login />}
+              {authUser && userStorage.isAdmin ? <Layout><Reports /></Layout> : <Error />}
             </Route>
             <Route path="/information">
-              {authUser ? <Information /> : <Login />}
+              {authUser ? <Layout><Information /></Layout> : <Error />}
             </Route>
             <Route path="/reportsnominations">
-              {authUser ? <ReportsNominations /> : <Login />}
+              {authUser && userStorage.isAdmin ? <Layout><ReportsNominations /></Layout> : <Error />}
             </Route>
             <Route path="/reportshistory">
-              {authUser ? <ReportsHistory /> : <Login />}
+              {authUser && userStorage.isAdmin ? <Layout><ReportsHistory /></Layout> : <Error />}
             </Route>
-          </Layout>
+          <Route path="/vacanciesadd">
+            {authUser && userStorage.isAdmin ? <Layout><VacanciesAdd /></Layout> : <Error />}
+          </Route>
           <Route path="*">
             <Error />
           </Route>

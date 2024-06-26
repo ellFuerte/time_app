@@ -96,6 +96,7 @@ border: 1px solid grey;
 }
 
 .linkReports {
+    cursor: pointer;
     border: 1px solid black;
     display: block;
     padding: 20px;

@@ -15,8 +15,7 @@ export default function Information() {
           </div>
           <hr />
           <div className="infoContainer">
-            <div className="infoDate">
-            </div>
+
             <div className="infoText">
 
               <h3>Кнопка Начать/Закончить</h3>
