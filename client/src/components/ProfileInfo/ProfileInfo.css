@@ -11,6 +11,7 @@ div{
 
 }
 .ProfileName{
+  padding-top: 10px;
   font-size: 24px;
   display: inline-flex;
   align-items: center;

@@ -3,7 +3,7 @@ import Modal from "../../Templates/Modal/Modal";
 import axios from "axios";
 
 
-function AddNomination({modalVote,setModalVote,username}) {
+function AddNomination({modalVote,setModalVote,username,updateNominationStatus}) {
 
     const [checkedItems, setCheckedItems] = useState({});
     const [check, setCheck] = useState();
@@ -18,6 +18,12 @@ function AddNomination({modalVote,setModalVote,username}) {
             const res = await axios.get('/api/user/' + username.username)
             setUser(res.data)
             setVote(rez.data)
+
+                // Инициализация состояния чекбоксов на основе текущего статуса номинации пользователя
+                setCheckedItems((prevCheckedItems) => ({
+                    ...prevCheckedItems,
+                    [user.nomination_status]: true
+                }));
 
         }
 
@@ -75,14 +81,13 @@ function AddNomination({modalVote,setModalVote,username}) {
             ...prevState,
             [id]: checked,
         }))
-
+        updateNominationStatus(id)
         setUser(prevState => ({
                 ...prevState,
                 nomination_status: checked ? voteId : null
             }
         ))
     }
-
 
 
     return (
