@@ -20,8 +20,6 @@ export default function Register() {
   const activity_profile=useRef()
   const place_of_residence=useRef()
   const companyName=useRef()
-/*  const grade=useRef()
-  const project=useRef()*/
 
   const [grade, setGrade] = useState([]);
 
@@ -309,6 +307,7 @@ export default function Register() {
                   onChange={handleChange}
                   value={inputValue}
               />
+              <div className="inputContainer">
               <input
                   placeholder="Город"
                   ref={city}
@@ -317,9 +316,8 @@ export default function Register() {
                   onChange={handleInputChangeCities}
                   onMouseDown={handleClickSubmit}
               />
-              <div className='center'>
                 {filteredCities.length > 0 && (
-                    <div className='divSelectRegister'>
+                    <div className="dropdown">
                       {filteredCities.map((city, id) => (
                           <div className='selectNameDiv' key={id} value={city.id} onClick={() => handleUserClickCities(city.city_name, city.id)}>
                             {city.city_name}
@@ -328,6 +326,7 @@ export default function Register() {
                     </div>
                 )}
               </div>
+
               <input
                   placeholder="Адрес фактического проживания"
                   type='text'
@@ -348,25 +347,32 @@ export default function Register() {
                   className="registerInput"
                   onMouseDown={handleClickSubmit}
               />
-              <input
-                  placeholder="Ссылка на вакансию"
-                  required ref={link_vacancies}
-                  className="registerInput"
-                  value={searchTerm}
-                  onChange={handleInputChangeVacancies}
-                  onMouseDown={handleClickSubmit}
-              />
-              <div className='center'>
+              <div className="inputContainer">
+                <input
+                    placeholder="Ссылка на вакансию"
+                    required
+                    ref={link_vacancies}
+                    className="registerInput"
+                    value={searchTerm}
+                    onChange={handleInputChangeVacancies}
+                    onMouseDown={handleClickSubmit}
+                />
                 {filteredVacancies.length > 0 && (
-                    <div className='divSelectRegister'>
+                    <div className="dropdown">
                       {filteredVacancies.map((vac, id) => (
-                          <div className='selectNameDiv' key={id} value={id} onClick={() => handleUserClick(vac.vacancy_code, vac.id)}>
+                          <div
+                              className="selectNameDiv"
+                              key={id}
+                              value={id}
+                              onClick={() => handleUserClick(vac.vacancy_code, vac.id)}
+                          >
                             {vac.vacancy_code}
                           </div>
                       ))}
                     </div>
                 )}
               </div>
+
               <input
                   placeholder="Профиль деятельности"
                   required ref={activity_profile}

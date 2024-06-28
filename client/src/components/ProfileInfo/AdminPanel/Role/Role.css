@@ -8,13 +8,18 @@
     width: 100px;
 }
 
-.divInputRole{
-    padding: 5px;
-    border-radius: 10px;
-    margin-top: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
-    text-align: left;
+.divInputRole1 {
+    border: none;
+    position: absolute;
     background-color: white;
-    border-top: none;
-    cursor: pointer;
+
+    z-index: 1000;
+    width: 100%;
+}
+.ModalInputUpdate1 {
+    position: relative;
+
+}
+.RoleWrapper{
+    position: relative;
 }

@@ -13,6 +13,7 @@
 }
 
 .registerWrapper {
+    position: relative;
   width: 35%;
   height: 70%;
   display: flex;
@@ -40,6 +41,7 @@
 }
 
 .registerInput {
+    position: relative; /* Убедитесь, что позиция установлена */
     font-size: 18px;
     height: 30px;
     border-radius: 10px;
@@ -100,23 +102,34 @@ input[type=number]::-webkit-outer-spin-button {
     width: 100%; /* Ширина равная 100% */
     box-sizing: border-box; /* Учет padding и border в общей ширине */
 }
-.center{
-    margin-right: 550px;
-}
+
 .divSelectRegister{
-    padding: 5px;
-    border-radius: 10px;
-    margin-top: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
     position: absolute;
+    right: 300px; /* Смещение влево на 50% */
+    z-index: 1000;
     background-color: white;
-    border-top: none;
+    width: 60%; /* Ширина 60% */
     cursor: pointer;
+    border-top: none;
+    border-radius: 20px;
 }
 
-.errorRegister{
-    color: coral;
-    text-align: center;
-    width: 100%;
-    font-size: 18px;
+.inputContainer {
+    position: relative;
+    width: 100%
+}
+
+.registerInput {
+    width: 100%; /* ширина инпута */
+    box-sizing: border-box; /* учитывает padding и border в общей ширине элемента */
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%; /* позиционирует выпадающий список непосредственно под инпутом */
+    left: 0;
+    width: 100%; /* делает ширину выпадающего списка такой же, как у контейнера */
+    background-color: #fff;
+    z-index: 1000; /* чтобы выпадающий список был поверх других элементов */
+    box-sizing: border-box; /* учитывает padding и border в общей ширине элемента */
 }

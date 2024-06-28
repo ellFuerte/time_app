@@ -1,0 +1,15 @@
+
+.divVoteNomination {
+    border: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    width: 90%;
+    top: 100% ;
+    left: 0;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    box-sizing: border-box;
+}

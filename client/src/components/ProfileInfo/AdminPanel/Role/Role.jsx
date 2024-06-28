@@ -59,20 +59,23 @@ function Roles() {
     return (
         <div className="ReportsButton">
             <div style={{ display: 'flex', gap: '200px' }}>
-                <div>
+                <div className='RoleWrapper'>
                     <label>Имя сотрудника</label>
-                    <input className="ModalInputUpdate" type="text"
-                           value={searchTermUsers}
-                           onChange={handleInputChangeUsers} />
-                    {filteredUsers.length > 0 && (
-                        <div className='divInputRole'>
-                            {filteredUsers.map((user, id) => (
-                                <div className='selectNameDiv' key={id} onClick={() => handleUserClickCities(user.user_name, user.id)}>
-                                    {user.user_name}
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <div className='inputRole'>
+                        <input className="ModalInputUpdate" type="text"
+                               value={searchTermUsers}
+                               onChange={handleInputChangeUsers} />
+
+                        {filteredUsers.length > 0 && (
+                            <div className='divInputRole1'>
+                                {filteredUsers.map((user, id) => (
+                                    <div className='selectNameDiv' key={id} onClick={() => handleUserClickCities(user.user_name, user.id)}>
+                                        {user.user_name}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div>
                     <label>Роль</label>
@@ -93,30 +96,32 @@ function Roles() {
                     :''
                 }
             </div>
-            <table className="skills-table">
-                <thead>
-                <tr className="skills-header">
-                    <th>Имя</th>
-                    <th>Роль</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tr className="skill-item">
-                    <td>
-                        {'Василенко Иван'}
-                    </td>
-                    <td>
-                        <select
+            <div>
+                <table className="skills-table">
+                    <thead>
+                    <tr className="skills-header">
+                        <th>Имя</th>
+                        <th>Роль</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr className="skill-item">
+                        <td>
 
-                        >
-                                <option >{'Специалист'}</option>
-                        </select>
-                    </td>
-                    <td><button  className='SkillButton'>Удалить</button></td>
-                </tr>
-                <tbody>
-                </tbody>
-            </table>
+                        </td>
+                        <td>
+                            <select>
+                                <option>
+
+                                </option>
+                            </select>
+                        </td>
+                        <td><button className='SkillButton'>Удалить</button></td>
+                    </tr>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

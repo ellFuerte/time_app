@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from "../../Templates/Modal/Modal";
 import axios from "axios";
-
+import './VoteNominations.css'
 
 function VoteNominations({modalActiveVote,setModalActiveVote,username}) {
     const [searchTermCities, setSearchTermCities] = useState('');
@@ -125,13 +125,7 @@ function VoteNominations({modalActiveVote,setModalActiveVote,username}) {
                                 className='select'
                             />
                             {selectedInputIndex === id + 1 && filteredCities.length > 0 && (
-                                <div className='divSelectRegister' style={{
-                                    position: 'absolute',
-                                    top: '100%',
-                                    left: 0,
-                                    zIndex: 1000,
-                                    marginLeft: '20px'
-                                }}>
+                                <div className='divVoteNomination'>
                                     {filteredCities.map((city, cityId) => (
                                         <div
                                             className='selectNameDiv'
