@@ -457,7 +457,6 @@ export default function Register() {
               minLength='6'
               onMouseDown={handleClickSubmit}
             />
-
               <div style={{width:'100%'}}>
             <button className="registerButton" type='submit'>Зарегистрироваться</button>
               </div>
