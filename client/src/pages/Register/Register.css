@@ -1,4 +1,3 @@
-
 .register {
   width: 100%;
   height: 100vh;
@@ -14,9 +13,15 @@
 
 .registerWrapper {
     position: relative;
-  width: 35%;
-  height: 70%;
-  display: flex;
+    width: 35%;
+    height: 70%;
+    display: flex;
+}
+
+@media screen and (max-height: 768px) {
+    .registerWrapper {
+        height: 80%;
+    }
 }
 
 .registerCenter {
@@ -32,7 +37,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: white;
+    /*background: linear-gradient(45deg, rgba(157, 208, 250, 0.7), rgba(51, 51, 51, 0.7));*/
+    background: white;
     border-radius: 10px;
     width: 100%;
     max-width: 800px; /* Примерная максимальная ширина */
@@ -119,6 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .registerInput {
+    padding: 10px;
     width: 100%; /* ширина инпута */
     box-sizing: border-box; /* учитывает padding и border в общей ширине элемента */
 }
@@ -128,7 +135,6 @@ input[type=number]::-webkit-outer-spin-button {
     top: 100%; /* позиционирует выпадающий список непосредственно под инпутом */
     left: 0;
     width: 100%; /* делает ширину выпадающего списка такой же, как у контейнера */
-    background-color: #fff;
     z-index: 1000; /* чтобы выпадающий список был поверх других элементов */
     box-sizing: border-box; /* учитывает padding и border в общей ширине элемента */
 }

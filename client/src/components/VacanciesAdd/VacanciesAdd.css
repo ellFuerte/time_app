@@ -107,16 +107,16 @@
 }
 
 .selectNameDiv{
+    background-color: azure;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid black;
-
-
 }
+
 
 .selectNameDiv:hover{
     border-radius: 10px;
-    background-color: #d4d0d0;
+    background-color: #ced4da;
     cursor: pointer;
 }
 

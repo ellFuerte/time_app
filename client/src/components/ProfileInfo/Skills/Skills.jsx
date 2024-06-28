@@ -168,6 +168,7 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                             <label style={{fontWeight: "bold"}}>Выберите умение:</label>
                         </div>
                         <div>
+                            <div className="inputContainer">
                             <input
                                 placeholder="Начните вводить умение"
                                 ref={skill}
@@ -175,10 +176,9 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                 value={searchTermSkills}
                                 onChange={handleInputChangeSkills}
                             />
-
                             <div>
                                 {filteredSkills.length > 0 && (
-                                    <div className='divSelectRegister'>
+                                    <div className="dropdown">
                                         {filteredSkills.map((skill, id) => (
                                             <div className='selectNameDiv' key={id} value={id} onClick={() => handleSkillsClick(skill.id,skill.name)}>
                                                 {skill.name}
@@ -186,6 +186,7 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                         ))}
                                     </div>
                                 )}
+                            </div>
                             </div>
 
                         </div>
