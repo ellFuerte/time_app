@@ -1,0 +1,20 @@
+.AddRole{
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1775ee;
+    color: white;
+    cursor: pointer;
+    width: 100px;
+}
+
+.divInputRole{
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
+    text-align: left;
+    background-color: white;
+    border-top: none;
+    cursor: pointer;
+}

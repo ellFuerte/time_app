@@ -55,6 +55,11 @@ class userController {
             project,
             companyName} = req.body
 
+        if(isadmin){
+
+        }
+
+
         const user = await client.query('SELECT * FROM users WHERE email = $1', [email])
 
         if (/^\d*$/.test(link_vacancies)) {
@@ -64,7 +69,7 @@ class userController {
             const vacanciesID = await client.query('SELECT id FROM users WHERE vacancy_id = $1', [link_vacancies])
 
             if(user.rowCount === 0 && vacanciesID.rowCount === 0){
-                const newUser = await client.query('INSERT INTO users (user_name, password,email,isadmin,department_id,status,phone_number,city_id,additional_contact,distribution_group,activity_profile,place_of_residence,vacancy_id) values ($1, $2, $3, $4,$5,2,$6,$7,$8,$9,$10,$11,$12) RETURNING *', [user_name, hashedPassword, email, isadmin, department_id, phone_number, city_id, additionalContact, distributionGroup, activityProfile, place_of_residence, link_vacancies])
+                const newUser = await client.query('INSERT INTO users (user_name, password,email,isadmin,department_id,status,phone_number,city_id,additional_contact,distribution_group,activity_profile,place_of_residence,vacancy_id,role_id) values ($1, $2, $3, $4,$5,2,$6,$7,$8,$9,$10,$11,$12,1) RETURNING *', [user_name, hashedPassword, email, isadmin, department_id, phone_number, city_id, additionalContact, distributionGroup, activityProfile, place_of_residence, link_vacancies])
                 res.json({ loggedIn: true, username: req.body.username });
             }
             else {
@@ -124,7 +129,7 @@ class userController {
 
     async getoneUser(req, res) {
         const id = req.params.id
-            const user = await client.query('SELECT users.planned_release_date,users.nomination_status, users.user_name,users.email,users.department_id,COALESCE(users.main_department, users.department_id) AS main_department,users.isadmin,users.id,users.admin_department_id,users.status,users.see_child,users.phone_number,users.additional_contact,users.distribution_group,users.activity_profile,users.city_id,users.place_of_residence, vacancies.vacancy_code,vacancies.id as vacancy_id,vacancies.grade,vacancies.description,vacancies.status_id as vacancies_status_id,vacancies.company_id,vacancies.name as vacancies_name,vacancies.project_id,vacancies.team_id as vacancies_department_id FROM users LEFT JOIN vacancies ON users.vacancy_id = vacancies.id WHERE users.id = $1', [id])
+            const user = await client.query('SELECT users.planned_release_date,users.nomination_status, users.user_name,users.email,users.department_id,COALESCE(users.main_department, users.department_id) AS main_department,users.isadmin,users.id,users.admin_department_id,users.status,users.see_child,users.phone_number,users.additional_contact,users.distribution_group,users.activity_profile,users.city_id,users.place_of_residence,users.role_id, vacancies.vacancy_code,vacancies.id as vacancy_id,vacancies.grade,vacancies.description,vacancies.status_id as vacancies_status_id,vacancies.company_id,vacancies.name as vacancies_name,vacancies.project_id,vacancies.team_id as vacancies_department_id FROM users LEFT JOIN vacancies ON users.vacancy_id = vacancies.id WHERE users.id = $1', [id])
             res.json(user.rows[0])
     }
 
@@ -205,26 +210,10 @@ class userController {
         const count = await client.query('SELECT get_statistics_all_users($1)::json',[id])
         res.json(count.rows)
     }
-
-
-    /*        async get_statistics(req,res){
-                const {id}=req.body
-                const count = await client.query('SELECT get_statistics($1)::json',[id])
-                res.json(count.rows)
-            }*/
-
-    /*    async getdeleteUser(req, res) {
-        const id = req.params.id
-        const users = await client.query('DELETE FROM users where id = $1', [id])
-        res.json({user: "delete"})
-    }*/
-
-    /*    async get_users_by_users(req, res) {
-        const {id}=req.body
-        const users = await client.query('SELECT get_users_by_users($1)::json',[id])
-        res.json(users.rows)
-    }*/
-
+    async get_Roles(req,res){
+        const roles = await client.query('SELECT get_roles()')
+        res.json(roles.rows)
+    }
 }
 
 module.exports = new userController()

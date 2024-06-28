@@ -4,11 +4,7 @@ import axios from "axios";
 
 
 function ResetPassword({modalResetPassword,setModalResetPassword,username}) {
-
-
-
     const handleResetPassword = async () => {
-
         const resetPassword = {
             userId: username,
             newPassword: 'qwerty123'

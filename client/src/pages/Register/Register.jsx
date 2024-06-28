@@ -217,7 +217,6 @@ export default function Register() {
         setError("Такая ИТС Уже существует")}
 
         else {
-          console.log('log=',user)
           await axios.post('/api/Register/', user);
           history.push('/login');
         }
@@ -280,9 +279,7 @@ export default function Register() {
   return (
 
       <div className="register">
-        <br/>
         <div className="registerWrapper">
-          <div className="registerCenter">
             <form className="registerBox" onSubmit={handleClick}>
               {error &&
               <div className='errorRegister'>
@@ -320,7 +317,7 @@ export default function Register() {
                   onChange={handleInputChangeCities}
                   onMouseDown={handleClickSubmit}
               />
-              <div>
+              <div className='center'>
                 {filteredCities.length > 0 && (
                     <div className='divSelectRegister'>
                       {filteredCities.map((city, id) => (
@@ -359,7 +356,7 @@ export default function Register() {
                   onChange={handleInputChangeVacancies}
                   onMouseDown={handleClickSubmit}
               />
-              <div>
+              <div className='center'>
                 {filteredVacancies.length > 0 && (
                     <div className='divSelectRegister'>
                       {filteredVacancies.map((vac, id) => (
@@ -454,12 +451,16 @@ export default function Register() {
               minLength='6'
               onMouseDown={handleClickSubmit}
             />
+
+              <div style={{width:'100%'}}>
             <button className="registerButton" type='submit'>Зарегистрироваться</button>
-            <Link to='/login' style={{width:'167%'}}>
+              </div>
+              <div style={{width:'100%'}}>
+            <Link to='/login'>
               <button className="registerLoginButton">Войти в аккаунт</button>
             </Link>
+              </div>
           </form>
-        </div>
       </div>
     </div>
   );

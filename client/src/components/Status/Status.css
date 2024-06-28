@@ -131,7 +131,7 @@ font-size: 20px;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
-  width: 101%;
+  width: 100%;
 }
 .ModalButtonChangePassword{
   margin-top: 200px;
@@ -153,4 +153,14 @@ font-size: 20px;
   border: 1px solid gray;
   font-size: 18px;
   font-weight:bold;
+}
+
+.textArea{
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 99.5%;
+  height: 200px;
+  border-radius: 10px;
+  resize: none;
 }

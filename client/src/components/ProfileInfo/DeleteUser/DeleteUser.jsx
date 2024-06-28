@@ -22,7 +22,6 @@ function DeleteUser({modalActiveDelete,setModalActiveDelete,username,user}) {
         }
     }
         return (
-            <div>
                 <Modal active={modalActiveDelete} setActive={setModalActiveDelete}>
                     <h1>Изменение информации:</h1>
                     <hr/>
@@ -33,7 +32,6 @@ function DeleteUser({modalActiveDelete,setModalActiveDelete,username,user}) {
                         </button>
                     </form>
                 </Modal>
-            </div>
         );
 
 }

@@ -12,6 +12,7 @@ import {useParams} from "react-router-dom";
 
 
 export default function HistoryInfo() {
+    const [newPosts, setNewPosts] = useState([])
     const [posts, setPosts] = useState([])
     const [vacationPosts, setVacationPosts] = useState([])
     const [isFetching, setIsFetching] = useState(false)
@@ -32,7 +33,6 @@ export default function HistoryInfo() {
     const historyStartWork = useRef(null)
     const historyEndWork = useRef(null)
     const [isFilter, setIsFilter] = useState(false)
-    const [newPosts, setNewPosts] = useState([])
     const [error, setError] = useState('')
     const [modalError, setModalError] = useState('')
     const username=useParams()
@@ -247,7 +247,7 @@ export default function HistoryInfo() {
             }
 
             {isJob
-                ? isFetching
+                ? ''
                     ? <div className='isFatching'>Загрузка...</div>
                     : isFilter
                         ? newPosts.map((post, id) => <InfoPost key={id} post={post} username={username}/>)
@@ -324,9 +324,9 @@ export default function HistoryInfo() {
                         style={{'marginRight': '10px'}}
                     />
                     </div>
-                    <input
+                    <textarea
                         placeholder="Комментарий"
-                        className="ModalInputInfoVacanciesComment"
+                        className="textAreaHistory"
                         ref={modalComment}
                     />
 

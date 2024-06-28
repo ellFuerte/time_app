@@ -107,8 +107,8 @@ export default function Status() {
   }, [localUser._id])
 
   // начало работы.
-  const handlerStart = async (e) => {
-    e.preventDefault()
+  const handlerStart = async () => {
+
     if (+modalName === 0 && modalComment.current.value === '') {
       setError('Заполните комментарий')
       return
@@ -116,7 +116,6 @@ export default function Status() {
     if (+modalName !== 0 && +modalName !== 1) {
       setError('Заполните состояние здоровья')
     } else {
-      setIsFetching(true)
 
       const newPost = {
         userId: localUser._id,
@@ -130,8 +129,9 @@ export default function Status() {
         const res = await axios.post("/api/post/", newPost)
         /*await axios.post("/api/status/")*/
         /*await axios.put('/api/user/'+user._id, {status:1, userId: user._id})*/
-        localStorage.setItem('user', JSON.stringify({...localUser, status: 1}))
+        localStorage.setItem('user', JSON.stringify({...localUser, status: 1}));
         window.location.reload()
+
       } catch (error) {
         console.log(error)
       }
@@ -140,8 +140,7 @@ export default function Status() {
 
 
   // конец работы
-  const handlerEnd = async (e) => {
-    e.preventDefault();
+  const handlerEnd = async () => {
 
     if (+modalName === 0 && modalComment.current.value === '') {
       setError('Заполните комментарий');
@@ -151,7 +150,6 @@ export default function Status() {
     if (+modalName !== 0 && +modalName !== 1) {
       setError('Заполните состояние здоровья');
     } else {
-      setIsFetching(true);
 
       try {
         const res = await axios.get('/api/vacation?id=' + localUser._id);
@@ -176,7 +174,7 @@ export default function Status() {
         await axios.put("/api/post/", newPost);
         /*await axios.put('/api/user/'+user._id, {status:2, userId: user._id})*/
         localStorage.setItem('user', JSON.stringify({...localUser, status: 2}));
-        window.location.reload();
+        window.location.reload()
       } catch (error) {
         console.log(error);
       }
@@ -351,7 +349,6 @@ export default function Status() {
           <h1>Изменение информации:</h1>
           <hr/>
           {error && <div className='modalError'>{error}</div>}
-          <form className="modalLoginBox" onSubmit={user.status === 1 ? handlerEnd : handlerStart}>
             <div className='statusCheckbox'>
               <label htmlFor='sickLeave'>
                 <input
@@ -372,18 +369,20 @@ export default function Status() {
                     checked={+modalName === 0}
                 />Болен</label>
             </div>
-            <input
+          <div>
+            <textarea
                 placeholder="Комментарий"
-                className="ModalInputStatus"
+                className="textArea"
                 ref={modalComment}
             />
-            <button className="ModalButton" type="submit" disabled={isFetching}>
+            <button className="ModalButton" type="submit" onClick={user.status === 1 ? handlerEnd : handlerStart}>
               {user.status !== 1
                   ? 'Начать'
                   : 'Закончить'
               }
             </button>
-          </form>
+          </div>
+
         </Modal>
         <Modal active={modalActiveReserve} setActive={setModalActiveReserve}>
           <h1 style={{textAlign: 'center'}}>Зарезервировать рабочее место</h1>
@@ -430,13 +429,12 @@ export default function Status() {
             </div>
           </div>
           <br/>
-          <button className="ModalButton" onClick={clickReserve} type="submit" disabled={isFetching}>
+          <button className="ModalButton" onClick={clickReserve} type="submit">
             Зарезервировать место
           </button>
           <br/>
           <br/>
           <hr/>
-
           <div className='divreserve'>
             {workplace.map((array, id) =>
                 <div className='place'>Дата: {array.booking_date} Место: {array.place} Офис:{array.location}

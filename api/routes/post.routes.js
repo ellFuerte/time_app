@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const postController = require('../models/post.controller')
+const userController = require("../models/user.controller");
 
 router.post('/post', postController.CreatePost) //Начать
 router.put('/post', postController.Updatepost) //Закончит

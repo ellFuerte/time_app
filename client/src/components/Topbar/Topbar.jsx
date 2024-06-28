@@ -84,8 +84,7 @@ export default function Topbar() {
       setIsBlock(true)
     }
   }
-  if (user.main_department === departId) {
-  }
+
 
 
 
@@ -120,16 +119,12 @@ export default function Topbar() {
 
               {
                 localUser.isAdmin
-                    ? <div className='vr'></div>
-                    :''
-              }
-
-              {
-                localUser.isAdmin
-                    ?
+                    ?<>
+                    <div className='vr'></div>
                   <div className='topPage'>
                     <Link to='/Reports' className="topbarLink"><span className='link'>Отчеты</span></Link>
                   </div>
+                    </>
                     : ''
               }
 

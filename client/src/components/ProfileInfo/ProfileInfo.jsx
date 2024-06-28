@@ -1,11 +1,10 @@
 import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from "react-router-dom";
 import { Create, Delete, Settings, Message } from '@material-ui/icons'
 
-
 import Skills from '../ProfileInfo/Skills/Skills'
-import Modal from '../Templates/Modal/Modal'
+
 import ModalVacanciesItem from "../VacanciesItem/ModalVacanciesItem/ModalVacanciesItem";
 import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies";
 import Editing from "./Editing/Editing"
@@ -19,30 +18,34 @@ import ChangePassword from "./СhangePassword/СhangePassword";
 import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
-
     const [timeZone, setTimeZone] = useState([])
-
-
+    const [hasImage, setHasImage] = useState(false);
     const [allDateUser, setAllDateUser] = useState()
 
     const [modalVacancies, setModalVacancies] = useState(false)
 
-
-
     const [depsName, setDepsName] = useState([])
+
     const [cityName, setCityName] = useState([])
 
     const [user, setUser] = useState([])
 
-
     const [isFetching, setIsFetching] = useState(false)
+
     const [modalActive, setModalActive] = useState(false)
+
     const [modalActivePass, setModalActivePass] = useState(false)
+
     const [modalActiveVote, setModalActiveVote] = useState(false)
+
     const [modalVote, setModalVote] = useState(false)
+
     const [modalResetPassword, setModalResetPassword] = useState(false)
+
     const [modalFinishTime, setModalFinishTime] = useState(false)
+
     const [modalActiveDelete, setModalActiveDelete] = useState(false)
+
     const [modalActiveSkills, setModalActiveSkills] = useState(false)
 
     const username = useParams()
@@ -50,9 +53,6 @@ export default function ProfileInfo() {
 
     let localUser = !!username ? {_id: username.username, email: ""} : JSON.parse(localStorage.getItem('user'))
     const localUse = JSON.parse(localStorage.getItem('user'))
-
-
-
 
 
     const usersStatuses = {
@@ -76,6 +76,10 @@ export default function ProfileInfo() {
 
     useEffect(() => {
 
+        const hasImageStatus = Object.keys(images).some(key =>
+            user.nomination_status === key || user.nomination_status === parseInt(key)
+        );
+        setHasImage(hasImageStatus);
 
         const getNameDeps = async () => {
             const deps = {
@@ -114,7 +118,6 @@ export default function ProfileInfo() {
     const name = localUser.email.toLowerCase()
 
 
-
     const images = {
         '1': {src: '../images/1.png', title: 'Тучка'},
         '2': {src: '../images/2.png', title: 'Аркадий Паровозов'},
@@ -127,7 +130,6 @@ export default function ProfileInfo() {
         '9': {src: '../images/9.png', title: 'Хома(Голосуем среди коллег из внедрения)'},
         '10': {src: '../images/10.png', title: 'Симка и нолик'}
     };
-
 
 
 
@@ -161,7 +163,7 @@ export default function ProfileInfo() {
 
             {isFetching ? <div className='isFatching'>Загрузка...</div> :
                 <div className={'employeePI ' + (findStatus(user.status))}>
-                    <div className='ProfileName'>
+                    <div className='ProfileName' style={{ paddingTop: hasImage ? '10px' : '0px' }}>
 
                         {user.user_name}
 
@@ -173,7 +175,6 @@ export default function ProfileInfo() {
                                 <Editing modalActive={modalActive} setModalActive={setModalActive}/>
                             </>
                             : ''}
-
 
                         {localUse.isAdmin ?
                             <>
@@ -271,23 +272,14 @@ export default function ProfileInfo() {
                                                updateNominationStatus={updateNominationStatus}/>
                             </> : ''
                     }
-
                     <div className="changePass" onClick={() => setModalActiveSkills(true)}>Навыки</div>
                     <Skills modalActiveSkills={modalActiveSkills} setModalActiveSkills={setModalActiveSkills}/>
-
                 </div>
             }
-
-
             <ModalVacancies active={modalVacancies} setActive={setModalVacancies}>
-                <ModalVacanciesItem
-                    allDateUser={allDateUser}
-                />
+                <ModalVacanciesItem allDateUser={allDateUser}/>
             </ModalVacancies>
-
-
             <Skills/>
-
         </div>
     )
 }

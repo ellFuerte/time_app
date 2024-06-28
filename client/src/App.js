@@ -1,4 +1,4 @@
-import {useContext,useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,15 +20,31 @@ import VacanciesView from "./components/VacanciesView/VacanciesView"
 import VacanciesAdd from "./components/VacanciesAdd/VacanciesAdd"
 import AdminPanel from './components/ProfileInfo/AdminPanel/AdminPanel'
 import Layout from "./components/Layout/Layout";
+import axios from "axios";
+import Role from "./components/ProfileInfo/AdminPanel/Role/Role";
 
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+
+  const [users, setUser] = useState([])
+
+  const userStorage = JSON.parse(localStorage.getItem('user'))
+  useEffect(() => {
+    const fetchUserName = async () => {
+      if(userStorage!==null) {
+        const res = await axios.get('/api/user/' + userStorage._id)
+        setUser(res.data)
+      }
+    }
+
+
+    fetchUserName()
+  },[])
+
+
 
   const {user} = useContext(AuthContext)
-  const userStorage = JSON.parse(localStorage.getItem('user'))
-
   const authUser = user || userStorage
 
 
@@ -80,7 +96,7 @@ function App() {
               {authUser && userStorage.isAdmin ? <Layout><AdminPanel /></Layout> : <Error />}
             </Route>
             <Route path="/reports">
-              {authUser && userStorage.isAdmin ? <Layout><Reports /></Layout> : <Error />}
+              {authUser && userStorage.isAdmin  ? <Layout><Reports /></Layout> : <Error />}
             </Route>
             <Route path="/information">
               {authUser ? <Layout><Information /></Layout> : <Error />}
@@ -93,6 +109,9 @@ function App() {
             </Route>
           <Route path="/vacanciesadd">
             {authUser && userStorage.isAdmin ? <Layout><VacanciesAdd /></Layout> : <Error />}
+          </Route>
+          <Route path="/role">
+            {authUser && userStorage.isAdmin ? <Layout><Role /></Layout> : <Error />}
           </Route>
           <Route path="*">
             <Error />

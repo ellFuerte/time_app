@@ -4,12 +4,12 @@ import axios from "axios";
 
 
 function VoteNominations({modalActiveVote,setModalActiveVote,username}) {
+    const [searchTermCities, setSearchTermCities] = useState('');
     const localUse = JSON.parse(localStorage.getItem('user'))
     const [er, setErr] = useState('')
     const [vote, setVote] = useState([])
     const [inputValues, setInputValues] = useState('');
     const [selectedInputIndex, setSelectedInputIndex] = useState(null);
-    const [searchTermCities, setSearchTermCities] = useState('');
     const [userVote, setUserVote] = useState([])
     const [filteredCities, setFilteredCities] = useState([]);
     const [votearray, setVotearray] = useState([])

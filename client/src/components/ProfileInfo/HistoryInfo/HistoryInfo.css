@@ -168,3 +168,13 @@ div{
 .inputVacanciesDiv{
     text-align: center;
 }
+
+.textAreaHistory{
+    font-size: 18px;
+    margin-top: 50px;
+    width: 99.5%;
+    height: 200px;
+    border-radius: 10px;
+    resize: none;
+    margin-bottom: 100px;
+}

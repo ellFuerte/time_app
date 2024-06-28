@@ -78,7 +78,7 @@ function Editing({modalActive,setModalActive}) {
             setCitiesId('');
             setFilteredCities([]);
             setCityName('');
-            return; // Добавьте это, чтобы избежать выполнения нижестоящего кода при пустом termCities
+            return;
         }
 
         const filtered = cities.filter(city =>

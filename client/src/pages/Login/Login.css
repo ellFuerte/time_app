@@ -5,7 +5,12 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+    background: url('../../img/logo.jpg'); /* Укажите путь к вашему изображению */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
 
 .loginWrapper {
   width: 35%;
