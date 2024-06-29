@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect, useParams
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import Error from "./pages/Error/Error";
@@ -26,7 +26,6 @@ import Role from "./components/ProfileInfo/AdminPanel/Role/Role";
 
 
 function App() {
-
   const [users, setUser] = useState([])
 
   const userStorage = JSON.parse(localStorage.getItem('user'))

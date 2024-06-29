@@ -100,6 +100,7 @@ function VoteNominations({modalActiveVote,setModalActiveVote,username}) {
         }
     }
 
+
     return (
         <Modal active={modalActiveVote} setActive={setModalActiveVote}>
             <h1>Номинации:</h1>
@@ -126,7 +127,7 @@ function VoteNominations({modalActiveVote,setModalActiveVote,username}) {
                             />
                             {selectedInputIndex === id + 1 && filteredCities.length > 0 && (
                                 <div className='divVoteNomination'>
-                                    {filteredCities.map((city, cityId) => (
+                                    {filteredCities.slice(0, 15).map((city, cityId) => (
                                         <div
                                             className='selectNameDiv'
                                             key={cityId}

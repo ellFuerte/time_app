@@ -18,6 +18,7 @@ import ChangePassword from "./СhangePassword/СhangePassword";
 import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
+
     const [timeZone, setTimeZone] = useState([])
     const [hasImage, setHasImage] = useState(false);
     const [allDateUser, setAllDateUser] = useState()

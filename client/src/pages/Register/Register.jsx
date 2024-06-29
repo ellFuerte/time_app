@@ -318,7 +318,7 @@ export default function Register() {
               />
                 {filteredCities.length > 0 && (
                     <div className="dropdown">
-                      {filteredCities.slice(0, 15).map((city, id) => (
+                      {filteredCities.slice(0, 10).map((city, id) => (
                           <div className='selectNameDiv' key={id} value={city.id} onClick={() => handleUserClickCities(city.city_name, city.id)}>
                             {city.city_name}
                           </div>
@@ -359,7 +359,7 @@ export default function Register() {
                 />
                 {filteredVacancies.length > 0 && (
                     <div className="dropdown">
-                      {filteredVacancies.slice(0, 15).map((vac, id) => (
+                      {filteredVacancies.map((vac, id) => (
                           <div
                               className="selectNameDiv"
                               key={id}
@@ -467,6 +467,7 @@ export default function Register() {
               </div>
           </form>
       </div>
+
     </div>
   );
 }
