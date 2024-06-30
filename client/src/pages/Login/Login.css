@@ -28,8 +28,7 @@
 .loginBox{
     height: 300px;
     padding: 20px;
-    /*background: linear-gradient(45deg, rgba(157, 208, 250, 0.7), rgba(51, 51, 51, 0.7));*/
-    background: white;
+    background: linear-gradient(45deg, rgba(157, 208, 250, 0.7), rgba(157, 208, 250, 0.6));
     border-radius: 10px;
     display: flex;
     flex-direction: column;

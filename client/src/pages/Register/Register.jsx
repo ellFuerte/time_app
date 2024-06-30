@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import {Link,useHistory} from 'react-router-dom'
+import { HelpOutline } from '@material-ui/icons'
 
 import "./Register.css";
+import Modal from "../../components/Templates/Modal/Modal";
 
 export default function Register() {
   const email = useRef()
@@ -20,12 +22,11 @@ export default function Register() {
   const activity_profile=useRef()
   const place_of_residence=useRef()
   const companyName=useRef()
+  const [active, setActive] = useState(false)
 
   const [grade, setGrade] = useState([]);
 
   const [project, setProject] = useState([])
-
-
 
   const [options, setOptions] = useState([]);
 
@@ -167,6 +168,7 @@ export default function Register() {
     // Проверка паролей
     if (password.current.value !== passwordAgain.current.value) {
       passwordAgain.current.setCustomValidity('Пароли не совпадают');
+      setError('Пароли не совпадают')
       return;
     }
 
@@ -200,11 +202,11 @@ export default function Register() {
       grade: grade,
       project: project
     };
-
+    console.log('log=',user)
     try {
       const res = await axios.post('/api/Register/', user);
       if (res.data.status === "Username user taken") {
-        setError("Пользователь закреплен за такой ИТС");
+        setError("Пользователь закреплен за выбранной ИТС");
       } else {
         if (res.data.status === "Username taken") {
           setError("Такой email уже существует");
@@ -274,10 +276,13 @@ export default function Register() {
   }
 
 
+
+
+
   return (
 
       <div className="register">
-        <div className="registerWrapper">
+{/*        <div className="registerWrapper">
             <form className="registerBox" onSubmit={handleClick}>
               {error &&
               <div className='errorRegister'>
@@ -296,7 +301,6 @@ export default function Register() {
                   className="registerInput"
                   onMouseDown={handleClickSubmit}
               />
-
               <input
                   placeholder="Телефон"
                   type='text'
@@ -326,7 +330,6 @@ export default function Register() {
                     </div>
                 )}
               </div>
-
               <input
                   placeholder="Адрес фактического проживания"
                   type='text'
@@ -372,7 +375,6 @@ export default function Register() {
                     </div>
                 )}
               </div>
-
               <input
                   placeholder="Профиль деятельности"
                   required ref={activity_profile}
@@ -466,8 +468,297 @@ export default function Register() {
             </Link>
               </div>
           </form>
-      </div>
 
+
+      </div>*/}
+
+
+
+      <div className='registerBox'>
+       <table border="0" className='tableRegister'>
+         {error &&
+         <div className='errorRegister'>
+           {error}
+         </div>
+         }
+          <thead>
+          </thead>
+          <tbody>
+          <tr>
+            <td><input
+                placeholder="Имя"
+                required ref={username}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+            />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input
+                placeholder="Фамилия"
+                required ref={firstname}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+            />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input
+                placeholder="Телефон"
+                type='text'
+                required
+                ref={telephone}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+                onChange={handleChange}
+                value={inputValue}
+            />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <div className="inputContainer">
+                <input
+                    placeholder="Город"
+                    ref={city}
+                    className="registerInput"
+                    value={searchTermCities}
+                    onChange={handleInputChangeCities}
+                    onMouseDown={handleClickSubmit}
+                />
+                {filteredCities.length > 0 && (
+                    <div className="dropdown">
+                      {filteredCities.slice(0, 10).map((city, id) => (
+                          <div className='selectNameDiv' key={id} value={city.id} onClick={() => handleUserClickCities(city.city_name, city.id)}>
+                            {city.city_name}
+                          </div>
+                      ))}
+                    </div>
+                )}
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input
+                placeholder="Адрес фактического проживания"
+                type='text'
+                required ref={place_of_residence}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+            />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input
+                placeholder="Доп контакт(Номер телефона,ФИО,статус человека)"
+                type='text'
+                required ref={additional_contact}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+            /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                  placeholder="Группа рассылки"
+                  required ref={distribution_group}
+                  className="registerInput"
+                  onMouseDown={handleClickSubmit}
+              />
+            </td>
+            <td><HelpOutline onClick={()=>setActive(true)} style={{cursor:'pointer'}}/></td>
+          </tr>
+          <tr>
+            <td>
+              <div className="inputContainer">
+                <input
+                    placeholder="Ссылка на вакансию"
+                    required
+                    ref={link_vacancies}
+                    className="registerInput"
+                    value={searchTerm}
+                    onChange={handleInputChangeVacancies}
+                    onMouseDown={handleClickSubmit}
+                />
+                {filteredVacancies.length > 0 && (
+                    <div className="dropdown">
+                      {filteredVacancies.map((vac, id) => (
+                          <div
+                              className="selectNameDiv"
+                              key={id}
+                              value={id}
+                              onClick={() => handleUserClick(vac.vacancy_code, vac.id)}
+                          >
+                            {vac.vacancy_code}
+                          </div>
+                      ))}
+                    </div>
+                )}
+              </div>
+            </td>
+            <td><HelpOutline onClick={()=>setActive(true)} style={{cursor:'pointer'}}/></td>
+                <Modal active={active} setActive={setActive}>
+                  <div>
+                    <center>Информацию можно получить у своего руководителя</center>
+                  </div>
+                </Modal>
+          </tr>
+          <tr>
+            <td>
+              <input
+                placeholder="Профиль деятельности"
+                required ref={activity_profile}
+                className="registerInput"
+                onMouseDown={handleClickSubmit}
+            />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                  placeholder="Грейд"
+                  type='text'
+                  required
+                  className="registerInput"
+                  onMouseDown={handleClickSubmit}
+                  onChange={onChangeGrade}
+                  value={grade}
+              />
+            </td>
+            <td></td>
+          </tr>
+           <tr>
+            <td>
+              <select ref={companyName} className='selectDeps' >
+                <option value=''>Выберите компанию</option>
+                {company.map((company, name) => <option key={name} value={company.id}>{company.name}</option>)}
+              </select>
+            </td>
+            <td></td>
+          </tr>
+            <tr>
+            <td>
+              <input
+                  placeholder="Код проекта(Нет проекта=0)"
+                  type='text'
+                  required
+                  className="registerInput"
+                  onMouseDown={handleClickSubmit}
+                  onChange={onChangeProject}
+                  value={project}
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                  placeholder="Email в формате IvanoIA@vtb.ru"
+                  type='email'
+                  required ref={email}
+                  className="registerInput"
+                  onMouseDown={handleSubmit}
+                  onInput={handleSubmit}
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style={{ width: '100%' }}>
+              <select
+                  ref={department}
+                  className='selectDeps'
+              >
+                <option value=''>Выберите подразделение</option>
+                {options.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                ))}
+              </select>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                Начальник отдела?
+                <label htmlFor='trueAdmin'>
+                  <input
+                      type='radio'
+                      value={true}
+                      name='trueAdmin'
+                      checked={checkVal}
+                      onChange={changeVal}
+                      onMouseDown={handleClickSubmit}
+                  />Да</label>
+                <label htmlFor='falseAdmin'>
+                  <input
+                      type='radio'
+                      value={false}
+                      name='falseAdmin'
+                      checked={!checkVal}
+                      onChange={changeVal}
+                      onMouseDown={handleClickSubmit}
+                  />Нет</label>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                  placeholder="Пароль"
+                  type='password'
+                  required ref={password}
+                  className="registerInput"
+                  minLength='6'
+                  onMouseDown={handleClickSubmit}
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                  placeholder="Пароль ещё раз"
+                  type='password'
+                  required ref={passwordAgain}
+                  className="registerInput"
+                  minLength='6'
+                  onMouseDown={handleClickSubmit}
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <div style={{width:'100%'}}>
+                <button className="registerButton" type='submit' onClick={handleClick}>Зарегистрироваться</button>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <div style={{width:'100%'}}>
+                <Link to='/login'>
+                  <button className="registerLoginButton">Войти в аккаунт</button>
+                </Link>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -11,10 +11,11 @@ function Statistics () {
     const [countSick_yesterday, setCountSick_yesterday] = useState(0)
     const [countVacation_today, setCountVacation_today] = useState(0)
     const [countVacation_yesterday, setCountVacation_yesterday] = useState(0)
-
+    const [typeworkColors, setTypeworkColors] = useState([]);
     useEffect(() => {
         const typework = async () => {
             const res = await axios.get('/api/typework_status/')
+            setTypeworkColors(res.data.user_typework.map(item => item.color));
         }
 
         const get_statistics_all_users = async () => {
@@ -80,17 +81,23 @@ function Statistics () {
                     <div className='statistics'>
                         <Link className="topbarLinkCount" onClick={() => window.location.href = `/all_users/`}
                               title="Всего сотрудников">{countAll_users}</Link> /
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/not_working_today/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[1]}} onClick={() => window.location.href = `/not_working_today/`}
                               title="Сегодня не работают">{countWorked_today}</Link> /
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/not_worked_yesterday/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[1]}} onClick={() => window.location.href = `/not_worked_yesterday/`}
                               title="Вчера не работали">{countWorked_yesterday}</Link> /
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/sick_today/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[2]}} onClick={() => window.location.href = `/sick_today/`}
                               title="Сегодня болеют">{countSickLeave_today}</Link> /
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/sick_yesterday/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[2]}} onClick={() => window.location.href = `/sick_yesterday/`}
                               title="Вчера болели">{countSick_yesterday}</Link> /
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/vacation_today/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[5]}} onClick={() => window.location.href = `/vacation_today/`}
                               title="Сегодня в отпуске">{countVacation_today}</Link>/
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/vacation_yesterday/`}
+
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[5]}} onClick={() => window.location.href = `/vacation_yesterday/`}
                               title="Вчера в отпуске">{countVacation_yesterday}</Link>
                     </div> : ''
                 }

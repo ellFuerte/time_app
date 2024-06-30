@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import './Layout.css'
 import { useParams } from "react-router-dom";
 
-export default function Layout({ children}) {
+export default function Layout({children}) {
     const username = useParams().username
 
     return (
