@@ -79,7 +79,7 @@ function Statistics () {
             <div className="topbarCenter">
                 {localUser.isAdmin ?
                     <div className='statistics'>
-                        <Link className="topbarLinkCount" onClick={() => window.location.href = `/all_users/`}
+                        <Link className="topbarLinkCount" style={{color: typeworkColors[0]}} onClick={() => window.location.href = `/all_users/`}
                               title="Всего сотрудников">{countAll_users}</Link> /
 
                         <Link className="topbarLinkCount" style={{color: typeworkColors[1]}} onClick={() => window.location.href = `/not_working_today/`}
