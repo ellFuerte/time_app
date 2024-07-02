@@ -19,6 +19,7 @@ import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
 
+
     const [timeZone, setTimeZone] = useState([])
     const [hasImage, setHasImage] = useState(false);
     const [allDateUser, setAllDateUser] = useState()
@@ -199,7 +200,7 @@ export default function ProfileInfo() {
 
                     <div>
                         <label style={{cursor: 'pointer'}} onClick={getChangeVacancies}
-                               className='ProfileLinkVacancies'>{user.vacancy_code}</label>
+                               className='ProfileLinkVacancies'>{user.vacancy_code===null && user.nomination_status!==null ? <br/>:user.vacancy_code}</label>
                     </div>
 
 

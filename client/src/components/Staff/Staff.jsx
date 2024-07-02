@@ -25,108 +25,87 @@ export default function Staff() {
 
         //Вывод статистики для админов
         const get_statistics_all_users = async () => {
-
             if (localUser.isAdmin === true) {
                 const getUsers = {
                     id: localUser._id
-                }
-                const res = await axios.post('/api/get_statistics_all_users', getUsers)
-                const all = res.data[0].get_statistics_all_users[0]['all_users'].sort((a, b) => a.user_name.localeCompare(b.user_name))
+                };
 
-                let all_users = filterUsersFoo(all)
+                try {
+                    const res = await axios.post('/api/get_statistics_all_users', getUsers);
+                    const statistics = res.data[0]?.get_statistics_all_users[0];
 
-                if (res.data[0].get_statistics_all_users[0]['all_users'] === null && !!~document.location.href.indexOf('/all_users/')) {
-                    alert('Нет не одного пользователя в работе')
-                }
-                if (res.data[0].get_statistics_all_users[0]['not_working_today'] === null && !!~document.location.href.indexOf('/not_working_today/')) {
-                    alert('Сегодня все в работе')
-                    window.location.href = `/department/${localUser.departmentId}`
-                }
-                if (res.data[0].get_statistics_all_users[0]['not_worked_yesterday'] === null && !!~document.location.href.indexOf('/not_worked_yesterday/')) {
-                    alert('Вчера все работали')
-                    window.location.href = `/department/${localUser.departmentId}`
-                }
-                if (res.data[0].get_statistics_all_users[0]['sick_today'] === null && !!~document.location.href.indexOf('/sick_today/')) {
-                    alert('Нет болеющих сегодня')
-                    window.location.href = `/department/${localUser.departmentId}`
-                }
-                if (res.data[0].get_statistics_all_users[0]['sick_yesterday'] === null && !!~document.location.href.indexOf('/sick_yesterday')) {
-                    alert('Вчера не было сотрудников на больничном')
-                    window.location.href = `/department/${localUser.main_department}`
-                }
-                if (res.data[0].get_statistics_all_users[0]['vacation_today'] === null && !!~document.location.href.indexOf('/vacation_today')) {
-                    alert('На сегодня нет сотрудников в отпуске')
-                    window.location.href = `/department/${localUser.main_department}`
-                }
-                if (res.data[0].get_statistics_all_users[0]['vacation_yesterday'] === null && !!~document.location.href.indexOf('/vacation_yesterday')) {
-                    alert('Вчера не было сотрудников в отпуске')
-                    window.location.href = `/department/${localUser.main_department}`
-                }
-                if (!!~document.location.href.indexOf('/all_users/')) {
-                    setIsJob(isJob)
-                    setStatisticsWork(all_users)
-                }
-                if (!!~document.location.href.indexOf('/not_working_today/')) {
-                    if (res.data[0].get_statistics_all_users[0]['not_working_today'] === null) {
+                    if (statistics) {
+                        const allUsers = statistics.all_users ? statistics.all_users.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                        let all_users = filterUsersFoo(allUsers);
 
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['not_working_today'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
+                        if (!statistics.all_users && document.location.href.includes('/all_users/')) {
+                            alert('Нет ни одного пользователя в работе');
+                        }
+                        if (!statistics.not_working_today && document.location.href.includes('/not_working_today/')) {
+                            alert('Сегодня все в работе');
+                            window.location.href = `/department/${localUser.departmentId}`;
+                        }
+                        if (!statistics.not_worked_yesterday && document.location.href.includes('/not_worked_yesterday/')) {
+                            alert('Вчера все работали');
+                            window.location.href = `/department/${localUser.departmentId}`;
+                        }
+                        if (!statistics.sick_today && document.location.href.includes('/sick_today/')) {
+                            alert('Нет болеющих сегодня');
+                            window.location.href = `/department/${localUser.departmentId}`;
+                        }
+                        if (!statistics.sick_yesterday && document.location.href.includes('/sick_yesterday')) {
+                            alert('Вчера не было сотрудников на больничном');
+                            window.location.href = `/department/${localUser.main_department}`;
+                        }
+                        if (!statistics.vacation_today && document.location.href.includes('/vacation_today')) {
+                            alert('На сегодня нет сотрудников в отпуске');
+                            window.location.href = `/department/${localUser.main_department}`;
+                        }
+                        if (!statistics.vacation_yesterday && document.location.href.includes('/vacation_yesterday')) {
+                            alert('Вчера не было сотрудников в отпуске');
+                            window.location.href = `/department/${localUser.main_department}`;
+                        }
+
+                        if (document.location.href.includes('/all_users/')) {
+                            setIsJob(isJob);
+                            setStatisticsWork(all_users);
+                        }
+                        if (document.location.href.includes('/not_working_today/')) {
+                            const notWorkingToday = statistics.not_working_today ? statistics.not_working_today.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(notWorkingToday));
+                        }
+                        if (document.location.href.includes('/not_worked_yesterday/')) {
+                            const notWorkedYesterday = statistics.not_worked_yesterday ? statistics.not_worked_yesterday.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(notWorkedYesterday));
+                        }
+                        if (document.location.href.includes('/sick_today/')) {
+                            const sickToday = statistics.sick_today ? statistics.sick_today.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(sickToday));
+                        }
+                        if (document.location.href.includes('/sick_yesterday/')) {
+                            const sickYesterday = statistics.sick_yesterday ? statistics.sick_yesterday.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(sickYesterday));
+                        }
+                        if (document.location.href.includes('/vacation_today/')) {
+                            const vacationToday = statistics.vacation_today ? statistics.vacation_today.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(vacationToday));
+                        }
+                        if (document.location.href.includes('/vacation_yesterday/')) {
+                            const vacationYesterday = statistics.vacation_yesterday ? statistics.vacation_yesterday.sort((a, b) => a.user_name.localeCompare(b.user_name)) : [];
+                            setIsJob(isJob);
+                            setStatisticsWork(filterUsersFoo(vacationYesterday));
+                        }
                     }
-                }
-
-                if (!!~document.location.href.indexOf('/not_worked_yesterday/')) {
-                    if (res.data[0].get_statistics_all_users[0]['not_worked_yesterday'] === null) {
-
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['not_worked_yesterday'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
-                    }
-                }
-
-                if (!!~document.location.href.indexOf('/sick_today/')) {
-                    if (res.data[0].get_statistics_all_users[0]['sick_today'] === null) {
-
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['sick_today'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
-                    }
-                }
-
-                if (!!~document.location.href.indexOf('/sick_yesterday/')) {
-                    if (res.data[0].get_statistics_all_users[0]['sick_yesterday'] === null) {
-
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['sick_yesterday'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
-                    }
-                }
-
-                if (!!~document.location.href.indexOf('/vacation_today/')) {
-                    if (res.data[0].get_statistics_all_users[0]['vacation_today'] === null) {
-
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['vacation_today'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
-                    }
-                }
-
-                if (!!~document.location.href.indexOf('/vacation_yesterday/')) {
-                    if (res.data[0].get_statistics_all_users[0]['vacation_yesterday'] === null) {
-
-                    } else {
-                        setIsJob(isJob)
-                        const sort = res.data[0].get_statistics_all_users[0]['vacation_yesterday'].sort((a, b) => a.user_name.localeCompare(b.user_name))
-                        setStatisticsWork(filterUsersFoo(sort))
-                    }
+                } catch (error) {
+                    console.error('Error fetching statistics:', error);
                 }
             }
-        }
+        };
 
 
         // функция показывает нажата ли галочка показать дочернии

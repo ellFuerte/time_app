@@ -159,13 +159,14 @@ div{
   font-weight:bold;
 }
 .ModalInputUpdateSelect{
+
   margin-bottom: 10px;
   height: 30px;
   border-radius: 10px;
   border: 1px solid gray;
   font-size: 18px;
   font-weight:bold;
-  width: 101%;
+  width: 101%
 }
 
 .ModalInput:focus{

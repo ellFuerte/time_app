@@ -87,7 +87,7 @@ class userController {
                     global.ITCID = vacanciesID.rows[0].id
                     const salt = await bcrypt.genSalt(10)
                     const hashedPassword = await bcrypt.hash(req.body.password, salt)
-                    const newUser = await client.query('INSERT INTO users (user_name, password,email,isadmin,department_id,status,phone_number,city_id,additional_contact,distribution_group,activity_profile,place_of_residence,vacancy_id) values ($1, $2, $3, $4,$5,2,$6,$7,$8,$9,$10,$11,$12) RETURNING *',
+                    const newUser = await client.query('INSERT INTO users (user_name, password,email,isadmin,department_id,status,phone_number,city_id,additional_contact,distribution_group,activity_profile,place_of_residence,vacancy_id,role_id) values ($1, $2, $3, $4,$5,2,$6,$7,$8,$9,$10,$11,$12,1) RETURNING *',
                         [user_name, hashedPassword, email, isadmin, department_id, phone_number, city_id, additionalContact, distributionGroup, activityProfile, place_of_residence, global.ITCID])
                     res.json({loggedIn: true, username: req.body.username});
                 } else {
@@ -212,6 +212,13 @@ class userController {
     }
     async get_Roles(req,res){
         const roles = await client.query('SELECT get_roles()')
+        res.json(roles.rows)
+    }
+
+    async get_Permissions(req,res){
+        const id=req.params.id
+        console.log('log=',id)
+        const roles = await client.query('select get_permissions($1)',[id])
         res.json(roles.rows)
     }
 }

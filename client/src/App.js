@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect, useParams
+  Redirect
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import Error from "./pages/Error/Error";
@@ -26,25 +26,32 @@ import Role from "./components/ProfileInfo/AdminPanel/Role/Role";
 
 
 function App() {
+
   const [users, setUser] = useState([])
 
   const userStorage = JSON.parse(localStorage.getItem('user'))
+
+
+
+  const {user} = useContext(AuthContext)
+
+
+  const authUser = user || userStorage
+
+
   useEffect(() => {
+
     const fetchUserName = async () => {
+
       if(userStorage!==null) {
         const res = await axios.get('/api/user/' + userStorage._id)
         setUser(res.data)
       }
     }
 
-
     fetchUserName()
   },[])
 
-
-
-  const {user} = useContext(AuthContext)
-  const authUser = user || userStorage
 
 
   return (
@@ -94,17 +101,26 @@ function App() {
             <Route path="/adminpanel">
               {authUser && userStorage.isAdmin ? <Layout><AdminPanel /></Layout> : <Error />}
             </Route>
+
+
+
+
+
             <Route path="/reports">
-              {authUser && userStorage.isAdmin  ? <Layout><Reports /></Layout> : <Error />}
+              {authUser ? <Layout><Reports /></Layout> : <Error />}
             </Route>
+
+
+
+
             <Route path="/information">
               {authUser ? <Layout><Information /></Layout> : <Error />}
             </Route>
             <Route path="/reportsnominations">
-              {authUser && userStorage.isAdmin ? <Layout><ReportsNominations /></Layout> : <Error />}
+              {authUser || users.role_id==='2'? <Layout><ReportsNominations /></Layout> : <Error />}
             </Route>
             <Route path="/reportshistory">
-              {authUser && userStorage.isAdmin ? <Layout><ReportsHistory /></Layout> : <Error />}
+              {authUser ? <Layout><ReportsHistory /></Layout> : <Error />}
             </Route>
           <Route path="/vacanciesadd">
             {authUser && userStorage.isAdmin ? <Layout><VacanciesAdd /></Layout> : <Error />}

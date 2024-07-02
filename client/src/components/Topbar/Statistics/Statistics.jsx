@@ -12,17 +12,27 @@ function Statistics () {
     const [countVacation_today, setCountVacation_today] = useState(0)
     const [countVacation_yesterday, setCountVacation_yesterday] = useState(0)
     const [typeworkColors, setTypeworkColors] = useState([]);
+    const [user, setUser] = useState([]);
+
+
+
     useEffect(() => {
+        const getUser = async () => {
+            const res = await axios.get('/api/user/' + localUser._id)
+            console.log('resUser=',res.data)
+            setUser(res.data)
+        }
         const typework = async () => {
             const res = await axios.get('/api/typework_status/')
             setTypeworkColors(res.data.user_typework.map(item => item.color));
         }
 
+
         const get_statistics_all_users = async () => {
             const getUsers = {
                 id: localUser._id
             }
-            if (localUser.isAdmin === true) {
+            if (user.isadmin===true) {
                 const res = await axios.post('/api/get_statistics_all_users', getUsers)
 
 
@@ -71,13 +81,14 @@ function Statistics () {
                 }
             }
         }
+        getUser()
         typework()
         get_statistics_all_users()
-}, [])
+}, [user.isadmin])
 
         return (
             <div className="topbarCenter">
-                {localUser.isAdmin ?
+                {user.isadmin===true ?
                     <div className='statistics'>
                         <Link className="topbarLinkCount" style={{color: typeworkColors[0]}} onClick={() => window.location.href = `/all_users/`}
                               title="Всего сотрудников">{countAll_users}</Link> /

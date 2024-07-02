@@ -4,10 +4,8 @@ import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies"
 import axios from "axios";
 import './VacanciesView.css'
 import VacanciesItem from "../VacanciesItem/VacanciesItem";
-import Topbar from "../Topbar/Topbar";
-import Sidebar from "../Sidebar/Sidebar";
 import VacanciesAdd from "../VacanciesAdd/VacanciesAdd";
-
+import Select from 'react-select';
 
 function VacanciesView(departId) {
     const localUser = JSON.parse(localStorage.getItem('user'))
@@ -218,6 +216,28 @@ function VacanciesView(departId) {
 
         }
     }
+    const transformVacanciesToOptions = (vacancies) => {
+        return vacancies.map((dep) => ({
+            value: dep.department_id,
+            label: dep.department,
+        }));
+    };
+
+        const [options, setOptions] = useState([]);
+        const [selectedOption, setSelectedOption] = useState(null);
+
+        useEffect(() => {
+            if (vacancies && vacancies.length > 0) {
+                const transformedOptions = transformVacanciesToOptions(vacancies);
+                setOptions(transformedOptions);
+                setSelectedOption(transformedOptions[0]); // Установить первый элемент как выбранный по умолчанию
+            }
+        }, [vacancies]);
+
+        const handleChange = (option) => {
+            setSelectedOption(option);
+            handleClickFilter('department', option.value); // Вызываем handleClickFilter с новым значением
+        };
 
     return (
         <>
@@ -262,7 +282,7 @@ function VacanciesView(departId) {
                                 <br/>
                                 <div>
                                     <div style={{display:'flex'}}>
-                                        <div>
+                                        <div style={{width:'50%'}}>
                                             <select
                                                 className="ModalInputUpdateSelect"
                                                 onChange={(e) => handleClickFilter('department', e.target.value)}
@@ -276,13 +296,17 @@ function VacanciesView(departId) {
                                                     </option>
                                                 ))}
                                             </select>
+                                            {/*<Select
+                                                options={options}
+                                                value={selectedOption}
+                                                onChange={handleChange}
+                                            />*/}
                                         </div>
                                         <div style={{paddingLeft:'20px',paddingTop:'5px'}}>Проект:</div>
                                        <div>
                                                <select
                                                    className='ModalInputUpdateSelect'
                                                    onChange={(e) => handleClickFilter('project', e.target.value)}
-
                                                >
                                                    {projectIds.map((projectId, id) => (
                                                        <option

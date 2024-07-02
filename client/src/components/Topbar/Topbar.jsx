@@ -12,12 +12,15 @@ import Statistics from "./Statistics/Statistics";
 
 export default function Topbar() {
   const [user, setUser] = useState([])
+  const [admin, setAdmin] = useState([])
   const [searchValue, setSearchValue] = useState("")
   const [allUsers, setAllUsers] = useState([])
   const [findUsers, setFindUsers] = useState([])
   const [isBlock, setIsBlock] = useState(false)
   const localUser = JSON.parse(localStorage.getItem('user'))
-  const departId = useParams().username
+
+  const [userRole, setUserRole] = useState(null);
+
 
 
   useEffect(() => {
@@ -27,7 +30,6 @@ export default function Topbar() {
       res.data.sort((a, b) => a.user_name.localeCompare(b.user_name))
       let filterUsers = filterUser(res.data)
       setAllUsers(filterUsers)
-
     }
 
     const typework = async () => {
@@ -39,8 +41,19 @@ export default function Topbar() {
       const res = await axios.get('/api/user/' + localUser._id)
       setUser(res.data)
     }
+    const getRole = async () => {
+      try {
+        const response = await axios.get('/api/user/' + localUser._id);
+        const roleId = response.data.role_id;
+        setUserRole(roleId);
+        setAdmin(response.data.isadmin)
 
 
+      } catch (error) {
+        console.error('Error fetching user or permissions:', error);
+      }
+    };
+    getRole()
     typework()
     fetchUserName()
     fetchUser()
@@ -118,8 +131,10 @@ export default function Topbar() {
               </div>
 
               {
-                localUser.isAdmin
-                    ?<>
+                admin && userRole==='2' || !admin && userRole==='2' || admin && userRole==='3' || admin && userRole==='4'
+               || admin && userRole==='1' || !admin && userRole==='4'
+                    ?
+                    <>
                     <div className='vr'></div>
                   <div className='topPage'>
                     <Link to='/Reports' className="topbarLink"><span className='link'>Отчеты</span></Link>

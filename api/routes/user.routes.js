@@ -17,6 +17,7 @@ router.put('/resetPassword' , userController.resetPassword)
 router.put('/newPassword' , userController.newPassword)
 router.post('/get_statistics_all_users' , userController.get_statistics_all_users)
 router.get('/roles' , userController.get_Roles)
+router.get('/permission/:id' , userController.get_Permissions)
 
 
 /*router.post('/get_users_by_users', userController.get_users_by_users)*/

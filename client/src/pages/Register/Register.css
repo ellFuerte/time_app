@@ -35,14 +35,12 @@
     display: flex;
     align-items: center;
     padding: 20px 0px 20px 30px;
-    background: linear-gradient(45deg, rgb(157, 208, 250), rgb(157, 208, 250));
-
+    background: white;
     border-radius: 10px;
     width: 100%;
     max-width: 800px; /* Примерная максимальная ширина */
     margin: 0 auto; /* Центрирует блок на странице */
     box-sizing: border-box; /* Учет padding и border в общей ширине */
-
 }
 
 

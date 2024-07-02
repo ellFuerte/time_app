@@ -159,7 +159,7 @@ export default function Register() {
     e.preventDefault();
 
     // Проверка формата ссылки на вакансию
-    const regex = /^ИТС-[\d\W]+$/;
+    const regex = /^ИТС-\d{2,5}-\d{2,5}-\d{2,20}$/i;
     if (!regex.test(searchTerm)) {
       setError('Пожалуйста, введите значение в формате ИТС-XX-XXХ-ХХХXXXX');
       return;

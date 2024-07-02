@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthContext'
 import './Login.css'
 
 
+
 export default function Login() {
 
     const [errorMessage, setErrorMessage] = useState();
@@ -30,9 +31,9 @@ export default function Login() {
   const password = useRef()
 
   const {isFetching, error, dispatch } = useContext(AuthContext)
-  const handleClick = (e) => {
-    e.preventDefault()
-    loginCall({email:email.current.value.toUpperCase(), password:password.current.value}, dispatch)
+
+  const handleClick = () => {
+      loginCall({email:email.current.value.toUpperCase(), password:password.current.value}, dispatch)
   }
 
   return (
@@ -52,7 +53,11 @@ export default function Login() {
 
       <div className="loginWrapper">
         <div className="loginCenter">
-          <form className="loginBox" onSubmit={handleClick}>
+          <form className="loginBox" >
+              <div className='imgLogin'>
+                  <img src={'../images/2!.png'} width='40px' height='40px'/>
+                  Вход на портал
+              </div>
             <input 
               placeholder="Email"
               className="loginInput" 
@@ -68,7 +73,7 @@ export default function Login() {
               required
               minLength='6'
             />
-            <button  className="loginButton" type="submit" disabled={isFetching}>
+            <button  className="loginButton" type="submit" disabled={isFetching} onClick={handleClick}>
 
               {isFetching ? <CircularProgress style={{color:'white'}}/> : 'Войти'}
 
