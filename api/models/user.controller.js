@@ -217,7 +217,6 @@ class userController {
 
     async get_Permissions(req,res){
         const id=req.params.id
-        console.log('log=',id)
         const roles = await client.query('select get_permissions($1)',[id])
         res.json(roles.rows)
     }
