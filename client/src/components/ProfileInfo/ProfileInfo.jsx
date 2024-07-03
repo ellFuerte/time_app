@@ -18,7 +18,7 @@ import ChangePassword from "./СhangePassword/СhangePassword";
 import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
-
+    const [admin, setAdmin] = useState([]);
     const [accessData, setAccessData] = useState([]);
     const [timeZone, setTimeZone] = useState([])
     const [hasImage, setHasImage] = useState(false);
@@ -98,6 +98,7 @@ export default function ProfileInfo() {
             localUser._id = !!username ? username.username : localUser._id
             const res = await axios.get('/api/user/' + username.username)
             const resUser = await axios.get('/api/user/' + localUse._id)
+            setAdmin(resUser.data.isadmin)
             const roleId = resUser.data.role_id;
             const resPermission = await axios.get('/api/permission/' + roleId);
             setAccessData(resPermission.data[0].get_permissions);
@@ -167,9 +168,6 @@ export default function ProfileInfo() {
         return accessData.some(item => item.tool_id === toolId && item.is_accessible);
     }
 
-
-
-
     return (
 
         <div className='profileInfo'>
@@ -191,17 +189,16 @@ export default function ProfileInfo() {
 
                         {user.user_name}
 
-                        {localUse.isAdmin || localUse._id === username.username
-                            ?
+                        {localUse.isAdmin || localUse._id === username.username ?
                             <>
                             {hasAccess(7) && <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}} onClick={() => setModalActive(true)}/>}
                                 <Editing modalActive={modalActive} setModalActive={setModalActive}/>
                             </>
                             : ''}
 
-                        {localUse.isAdmin ?
+                        {admin || hasAccess(15) ?
                             <>
-                            {hasAccess(15) && <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>}
+                              <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>
                                 <DeleteUser modalActiveDelete={modalActiveDelete}
                                             setModalActiveDelete={setModalActiveDelete} username={username.username}
                                             user={user.id}/>
@@ -209,7 +206,7 @@ export default function ProfileInfo() {
                             : ''}
 
 
-                        {localUse.isAdmin === true && localUse._id === user.id ?
+                        {admin && localUse._id === username.username ?
                             <Link to={`/AdminPanel`}>
                                 <Settings
                                     style={{cursor: 'pointer', fontSize: '20px', paddingTop: '5px', color: 'black'}}/>
@@ -282,7 +279,7 @@ export default function ProfileInfo() {
                     }
 
                     {
-                        localUse.isAdmin ?
+                        admin ?
                             <>
                                 <div className="changePass" onClick={() => setModalVote(true)}>Закрепить номинацию</div>
                                 <AddNomination modalVote={modalVote} setModalVote={setModalVote} username={username}

@@ -137,27 +137,21 @@ export default function Topbar() {
 
               </div>
 
-              {
-                admin && userRole==='2' || !admin && userRole==='2' || admin && userRole==='3' || admin && userRole==='4'
-               || admin && userRole==='1' || !admin && userRole==='4'
-                    ?
-                    <>
+              {admin || (userRole === '2' || userRole === '3' || userRole === '4') && (
+                  <>
                     <div className='vr'></div>
-                  <div className='topPage'>
-                    <Link to='/Reports' className="topbarLink"><span className='link'>Отчеты</span></Link>
-                  </div>
-                    </>
-                    : ''
-              }
-
+                    <div className='topPage'>
+                      <Link to='/Reports' className="topbarLink"><span className='link'>Отчеты</span></Link>
+                    </div>
+                  </>
+              )}
               <div className='vr'></div>
-
               <div className='topPage'>
                 <Link to='/Information' className="topbarLink">?</Link>
               </div>
             </div>
 
-            {(hasAccess(3) || user.isadmin) &&
+            {(hasAccess(3) || admin) &&
               <div className="search">
               <input onKeyPress={handleKeyPress} value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
                      type="search" name="" placeholder="поиск пользователя" className="input"/>
