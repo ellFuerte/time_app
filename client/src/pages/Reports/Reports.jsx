@@ -39,8 +39,19 @@ export default function Reports() {
 
 
     const hasAccess = (toolId) => {
+        // Проверяем, что accessData не null и не undefined
+        if (!accessData) {
+            return false;
+        }
+
+        // Проверяем, что accessData - это массив
+        if (!Array.isArray(accessData)) {
+            return false;
+        }
+
         return accessData.some(item => item.tool_id === toolId && item.is_accessible);
-    };
+    }
+
 
     return (
         <div className="ReportsButton">

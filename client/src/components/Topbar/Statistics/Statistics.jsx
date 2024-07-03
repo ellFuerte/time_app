@@ -19,7 +19,6 @@ function Statistics () {
     useEffect(() => {
         const getUser = async () => {
             const res = await axios.get('/api/user/' + localUser._id)
-            console.log('resUser=',res.data)
             setUser(res.data)
         }
         const typework = async () => {
@@ -32,9 +31,8 @@ function Statistics () {
             const getUsers = {
                 id: localUser._id
             }
-            if (user.isadmin===true) {
-                const res = await axios.post('/api/get_statistics_all_users', getUsers)
 
+                const res = await axios.post('/api/get_statistics_all_users', getUsers)
 
                 if(res.data[0]['get_statistics_all_users'][0]['all_users']===null){
                     res.data[0]['get_statistics_all_users'][0]['all_users']=0
@@ -80,7 +78,6 @@ function Statistics () {
                     setCountVacation_yesterday(res.data[0]['get_statistics_all_users'][0]['vacation_yesterday'].length)
                 }
             }
-        }
         getUser()
         typework()
         get_statistics_all_users()
@@ -88,7 +85,6 @@ function Statistics () {
 
         return (
             <div className="topbarCenter">
-                {user.isadmin===true ?
                     <div className='statistics'>
                         <Link className="topbarLinkCount" style={{color: typeworkColors[0]}} onClick={() => window.location.href = `/all_users/`}
                               title="Всего сотрудников">{countAll_users}</Link> /
@@ -110,8 +106,7 @@ function Statistics () {
 
                         <Link className="topbarLinkCount" style={{color: typeworkColors[5]}} onClick={() => window.location.href = `/vacation_yesterday/`}
                               title="Вчера в отпуске">{countVacation_yesterday}</Link>
-                    </div> : ''
-                }
+                    </div>
             </div>
         )
 }

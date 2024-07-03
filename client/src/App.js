@@ -28,7 +28,6 @@ import Role from "./components/ProfileInfo/AdminPanel/Role/Role";
 function App() {
 
   const [users, setUser] = useState([])
-
   const userStorage = JSON.parse(localStorage.getItem('user'))
 
 
@@ -38,20 +37,20 @@ function App() {
 
   const authUser = user || userStorage
 
-
   useEffect(() => {
-
     const fetchUserName = async () => {
-
-      if(userStorage!==null) {
-        const res = await axios.get('/api/user/' + userStorage._id)
-        setUser(res.data)
+      if (userStorage !== null) {
+        try {
+          const res = await axios.get(`/api/user/${userStorage._id}`);
+          setUser(res.data);
+        } catch (error) {
+          console.error('Ошибка при получении данных пользователя:', error);
+        }
       }
-    }
+    };
 
-    fetchUserName()
-  },[])
-
+    fetchUserName();
+  }, []);
 
 
   return (
@@ -110,18 +109,21 @@ function App() {
               {authUser ? <Layout><Reports /></Layout> : <Error />}
             </Route>
 
+          <Route path="/reportsnominations">
+              {authUser && userStorage.isAdmin? <Layout><ReportsNominations /></Layout> : <Error />}
+          </Route>
+
+          <Route path="/reportshistory">
+             {authUser && userStorage.isAdmin  ? <Layout><ReportsHistory /></Layout> : <Error />}
+          </Route>
 
 
 
             <Route path="/information">
               {authUser ? <Layout><Information /></Layout> : <Error />}
             </Route>
-            <Route path="/reportsnominations">
-              {authUser || users.role_id==='2'? <Layout><ReportsNominations /></Layout> : <Error />}
-            </Route>
-            <Route path="/reportshistory">
-              {authUser ? <Layout><ReportsHistory /></Layout> : <Error />}
-            </Route>
+
+
           <Route path="/vacanciesadd">
             {authUser && userStorage.isAdmin ? <Layout><VacanciesAdd /></Layout> : <Error />}
           </Route>

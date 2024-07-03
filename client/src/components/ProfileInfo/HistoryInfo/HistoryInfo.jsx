@@ -37,9 +37,15 @@ export default function HistoryInfo() {
     const [modalError, setModalError] = useState('')
     const username=useParams()
 
+
+
+
+
+
     let localUser = !!username ? {_id:username.username,email:""} : JSON.parse(localStorage.getItem('user'))
-
-
+    const localStore = JSON.parse(localStorage.getItem('user'))
+    const [user, setUser] = useState([])
+    const [accessData, setAccessData] = useState([]);
 
     const [isJob, setIsJob] = useState(true)
     const [modalActive, setModalActive] = useState(false)
@@ -51,10 +57,40 @@ export default function HistoryInfo() {
     // получение всех постов работы от послелнего к первому
 
     useEffect(() => {
+        const getRole = async () => {
+            const res = await axios.get('/api/user/' + localStore._id)
+            const roleId = res.data.role_id;
+            const resPermission = await axios.get('/api/permission/' + roleId);
+            setAccessData(resPermission.data[0].get_permissions);
+            setUser(res.data)
+        }
+        getRole()
+    }, [localStore._id])
+
+    const hasAccess = (toolId) => {
+        // Проверяем, что accessData не null и не undefined
+        if (!accessData) {
+            return false;
+        }
+
+        // Проверяем, что accessData - это массив
+        if (!Array.isArray(accessData)) {
+            return false;
+        }
+
+        return accessData.some(item => item.tool_id === toolId && item.is_accessible);
+    }
+
+
+
+    useEffect(() => {
         setIsFetching(true)
 
         fetchUserpost()
     }, [username])
+
+
+
 
     const fetchUserpost = async () => {
         const res = await axios.get('/api/post?type=1&id='+localUser._id)
@@ -197,7 +233,7 @@ export default function HistoryInfo() {
             <div className='historyInfoTop'>
                 <span className='historyInfoTitle'>История</span>
                 <span className='workVacation' onClick={handleWorkVacation}>
-          {isJob ? <button className="filterButton" style={{width:'155px'}}>Отпуск/Больничный</button> : <button className="filterButton">Работа</button> }
+          {isJob ? (hasAccess(4) ||  localStore.isAdmin || user.isadmin) && <button className="filterButton" style={{width:'155px'}}>Отпуск/Больничный</button> : <button className="filterButton">Работа</button> }
         </span>
 
                 {!isJob && (localUser || username === localUser._id)

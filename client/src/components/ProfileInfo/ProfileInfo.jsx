@@ -19,7 +19,7 @@ import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
 
-
+    const [accessData, setAccessData] = useState([]);
     const [timeZone, setTimeZone] = useState([])
     const [hasImage, setHasImage] = useState(false);
     const [allDateUser, setAllDateUser] = useState()
@@ -97,10 +97,14 @@ export default function ProfileInfo() {
             localUser._id = !!localUser._id ? localUser._id : localUser.id
             localUser._id = !!username ? username.username : localUser._id
             const res = await axios.get('/api/user/' + username.username)
+            const resUser = await axios.get('/api/user/' + localUse._id)
+            const roleId = resUser.data.role_id;
+            const resPermission = await axios.get('/api/permission/' + roleId);
+            setAccessData(resPermission.data[0].get_permissions);
             setUser(res.data)
             setIsFetching(false)
-
         }
+
         fetchUser()
         getNameDeps()
     }, [
@@ -148,6 +152,24 @@ export default function ProfileInfo() {
         }));
     };
 
+
+    const hasAccess = (toolId) => {
+        // Проверяем, что accessData не null и не undefined
+        if (!accessData) {
+            return false;
+        }
+
+        // Проверяем, что accessData - это массив
+        if (!Array.isArray(accessData)) {
+            return false;
+        }
+
+        return accessData.some(item => item.tool_id === toolId && item.is_accessible);
+    }
+
+
+
+
     return (
 
         <div className='profileInfo'>
@@ -172,16 +194,14 @@ export default function ProfileInfo() {
                         {localUse.isAdmin || localUse._id === username.username
                             ?
                             <>
-                                <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}}
-                                        onClick={() => setModalActive(true)}/>
+                            {hasAccess(7) && <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}} onClick={() => setModalActive(true)}/>}
                                 <Editing modalActive={modalActive} setModalActive={setModalActive}/>
                             </>
                             : ''}
 
                         {localUse.isAdmin ?
                             <>
-                                <Delete style={{cursor: 'pointer', fontSize: '20px'}}
-                                        onClick={() => setModalActiveDelete(true)}/>
+                            {hasAccess(15) && <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>}
                                 <DeleteUser modalActiveDelete={modalActiveDelete}
                                             setModalActiveDelete={setModalActiveDelete} username={username.username}
                                             user={user.id}/>
@@ -228,7 +248,7 @@ export default function ProfileInfo() {
 
                     {
                         localUse.isAdmin || localUse._id === username.username ? <>
-                            <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>
+                        {hasAccess(5) && <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>}
                             <ChangePassword modalActivePass={modalActivePass} setModalActivePass={setModalActivePass}/>
                         </> : ''
 
@@ -237,12 +257,8 @@ export default function ProfileInfo() {
                     {
                         localUse.isAdmin ?
                             <>
-                                <div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить
-                                    пароль
-                                </div>
-                                <ResetPassword modalResetPassword={modalResetPassword}
-                                               setModalResetPassword={setModalResetPassword}
-                                               username={username.username}/>
+                            {hasAccess(13) &&<div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить пароль</div>}
+                                <ResetPassword modalResetPassword={modalResetPassword} setModalResetPassword={setModalResetPassword} username={username.username}/>
                             </>
                             : ''
                     }
@@ -250,7 +266,7 @@ export default function ProfileInfo() {
                     {
                         localUse.isAdmin ?
                             <>
-                                <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>
+                            {hasAccess(14) && <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>}
                                 <FinishTime modalFinishTime={modalFinishTime} setModalFinishTime={setModalFinishTime}
                                             user={user.id} status={user.status}/>
                             </>
@@ -259,8 +275,7 @@ export default function ProfileInfo() {
 
                     {
                         localUse._id === user.id ?<>
-                            <div className='changePass'
-                                 onClick={() => setModalActiveVote(true)}>Проголосовать</div>
+                        {hasAccess(6) && <div className='changePass' onClick={() => setModalActiveVote(true)}>Проголосовать</div>}
                             <VoteNominations modalActiveVote={modalActiveVote} setModalActiveVote={setModalActiveVote} username={username}/>
                             </>
                             : ''

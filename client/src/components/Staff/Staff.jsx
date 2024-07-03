@@ -9,7 +9,7 @@ import Modal from '../Templates/Modal/Modal'
 
 export default function Staff() {
     const [checked, setChecked] = useState(false)
-
+    const [accessData, setAccessData] = useState([]);
     const [statisticsWork, setStatisticsWork] = useState([])
     const [users, setUsers] = useState([])
     const [UsersDep, setUsersDeps] = useState([])
@@ -22,10 +22,22 @@ export default function Staff() {
 
 
     useEffect(() => {
+        const statusChild = async () => {
+            try {
+                const user = await axios.get('/api/user/' + localUser._id)
+                const roleId = user.data.role_id;
+                const res = await axios.get('/api/permission/' + roleId);
+                setAccessData(res.data[0].get_permissions);
 
+                setChecked(user.data.see_child)
+                setUser(user.data)
+            } catch (error) {
+                console.error('Error fetching user or permissions:', error);
+            }
+        }
         //Вывод статистики для админов
         const get_statistics_all_users = async () => {
-            if (localUser.isAdmin === true) {
+
                 const getUsers = {
                     id: localUser._id
                 };
@@ -105,15 +117,13 @@ export default function Staff() {
                     console.error('Error fetching statistics:', error);
                 }
             }
-        };
+
+
+
 
 
         // функция показывает нажата ли галочка показать дочернии
-        const statusChild = async () => {
-            const user = await axios.get('/api/user/' + localUser._id)
-            setChecked(user.data.see_child)
-            setUser(user.data)
-        }
+
 
         const fetchUsers = async () => {
             const res = await axios.get('/api/user');
@@ -167,7 +177,7 @@ export default function Staff() {
         statusChild()
 
 
-    }, [departId,user.main_department])
+    }, [departId,user.main_department,localUser._id])
 
 
 
@@ -222,6 +232,19 @@ export default function Staff() {
         }
     }
 
+    const hasAccess = (toolId) => {
+        // Проверяем, что accessData не null и не undefined
+        if (!accessData) {
+            return false;
+        }
+
+        // Проверяем, что accessData - это массив
+        if (!Array.isArray(accessData)) {
+            return false;
+        }
+
+        return accessData.some(item => item.tool_id === toolId && item.is_accessible);
+    }
 
     return (
 
@@ -238,8 +261,9 @@ export default function Staff() {
                                 Скрыть дочерние
                             </button>
                         }
-                        <button onClick={() => setModalMain(true)} className='btnStaff' style={{ float: 'right' }}>Сделать главной</button>
-                        {localUser.isAdmin ? <Link to={`/VacanciesView/`}><button className="btnStaff">Показать вакансии</button></Link> : ''}
+                        {(hasAccess(8) || localUser.isAdmin) && <button onClick={() => setModalMain(true)} className='btnStaff' style={{ float: 'right' }}>Сделать главной</button>}
+
+                        {(hasAccess(16) || user.isadmin || localUser.isAdmin) && <Link to={`/VacanciesView/`}><button className="btnStaff">Показать вакансии</button></Link>}
                     </>
                 )}
             </>

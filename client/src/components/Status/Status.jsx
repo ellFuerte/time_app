@@ -26,7 +26,7 @@ function findStatus(k) {
 
 export default function Status() {
   const localUser = JSON.parse(localStorage.getItem('user'))
-
+  const [accessData, setAccessData] = useState([]);
   const [places, setplaces] = useState([])
   const [office, setoffice] = useState([])
   const [workplace, setworkplace] = useState([])
@@ -47,10 +47,12 @@ export default function Status() {
   // получение данных пользователя о работе
   useEffect(() => {
 
-
     const fetchUser = async () => {
 
       const res = await axios.get('/api/user/' + localUser._id)
+      const roleId = res.data.role_id;
+      const resPermission = await axios.get('/api/permission/' + roleId);
+      setAccessData(resPermission.data[0].get_permissions);
       setUser(res.data)
 
       const work = await axios.get('/api/workplace_logs_get/' + localUser._id)
@@ -320,15 +322,27 @@ export default function Status() {
     setworkplace(filter)
   }
 
+  const hasAccess = (toolId) => {
+    // Проверяем, что accessData не null и не undefined
+    if (!accessData) {
+      return false;
+    }
 
+    // Проверяем, что accessData - это массив
+    if (!Array.isArray(accessData)) {
+      return false;
+    }
+
+    return accessData.some(item => item.tool_id === toolId && item.is_accessible);
+  }
 
   return (
       <>
         <table border="0">
           <tr>
             <td>
-              <button type='submit' onClick={() => setModalActive(true)}
-                      className={'statusBtn ' + (findStatus(user.status))}>
+              {
+                ( hasAccess(1) || user.isadmin) && <button type='submit' onClick={() => setModalActive(true)} className={'statusBtn ' + (findStatus(user.status))}>
                 {isFetching
                     ? <CircularProgress style={{color: 'white', size: '20px', width: '20px', height: '20px'}}/>
                     : user.status !== 1
@@ -336,11 +350,15 @@ export default function Status() {
                         : 'Закончить'
                 }
               </button>
+              }
             </td>
             <td>
+              {
+                (hasAccess(2) || user.isadmin) &&
               <button type='submit' onClick={() => setModalActiveReserve(true)} className='statusBtn'>
                 <h5>Зарезервировать место</h5>
               </button>
+              }
             </td>
           </tr>
         </table>

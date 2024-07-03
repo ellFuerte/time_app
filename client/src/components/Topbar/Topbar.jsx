@@ -11,14 +11,14 @@ import Statistics from "./Statistics/Statistics";
 
 
 export default function Topbar() {
+  const localUser = JSON.parse(localStorage.getItem('user'))
   const [user, setUser] = useState([])
   const [admin, setAdmin] = useState([])
   const [searchValue, setSearchValue] = useState("")
   const [allUsers, setAllUsers] = useState([])
   const [findUsers, setFindUsers] = useState([])
   const [isBlock, setIsBlock] = useState(false)
-  const localUser = JSON.parse(localStorage.getItem('user'))
-
+  const [accessData, setAccessData] = useState([]);
   const [userRole, setUserRole] = useState(null);
 
 
@@ -39,27 +39,20 @@ export default function Topbar() {
 
     const fetchUserName = async () => {
       const res = await axios.get('/api/user/' + localUser._id)
+      const roleId = res.data.role_id;
+      const resPermission = await axios.get('/api/permission/' + roleId);
+      setAccessData(resPermission.data[0].get_permissions);
+      setUserRole(roleId);
+      setAdmin(res.data.isadmin)
       setUser(res.data)
     }
-    const getRole = async () => {
-      try {
-        const response = await axios.get('/api/user/' + localUser._id);
-        const roleId = response.data.role_id;
-        setUserRole(roleId);
-        setAdmin(response.data.isadmin)
 
 
-      } catch (error) {
-        console.error('Error fetching user or permissions:', error);
-      }
-    };
-    getRole()
     typework()
     fetchUserName()
     fetchUser()
 
   }, [])
-
 
   function filterUser(users) {
     return users.filter(user => user.status === 1)
@@ -108,7 +101,19 @@ export default function Topbar() {
     setIsOpen(!isOpen);
   }
 
+  const hasAccess = (toolId) => {
+    // Проверяем, что accessData не null и не undefined
+    if (!accessData) {
+      return false;
+    }
 
+    // Проверяем, что accessData - это массив
+    if (!Array.isArray(accessData)) {
+      return false;
+    }
+
+    return accessData.some(item => item.tool_id === toolId && item.is_accessible);
+  }
 
   return (
       <div>
@@ -116,7 +121,9 @@ export default function Topbar() {
           <div className="topbarLeft">
             <Status/>
           </div>
-          <Statistics/>
+          <div style={{width:'100%'}}>
+            {(hasAccess(12) || user.isadmin) && <Statistics />}
+          </div>
           <div className="topbarRight">
             <div className="topbarLinks">
               <div>
@@ -150,12 +157,14 @@ export default function Topbar() {
               </div>
             </div>
 
-            <div className="search">
+            {(hasAccess(3) || user.isadmin) &&
+              <div className="search">
               <input onKeyPress={handleKeyPress} value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
                      type="search" name="" placeholder="поиск пользователя" className="input"/>
               <button onClick={handleClick} value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
                       type="submit" className="submit"/>
             </div>
+            }
 
 {/*            <div className="notification">
               <div onClick={togglePopup} className='image-container'>
