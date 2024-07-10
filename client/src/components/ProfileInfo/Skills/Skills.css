@@ -18,17 +18,20 @@ user-select: none;
 }
 
 .skills-table {
+    border: none;
     width: 100%; /* Ширина таблицы по ширине родительского контейнера */
 }
 
 .skills-header th, .skill-item td {
-    padding: 15px; /* Добавляем отступы вокруг текста */
+    border: none;
+    padding: 15px 15px 15px 15px; /* Добавляем отступы вокруг текста */
     text-align: center; /* Выравниваем текст по центру */
     vertical-align: middle; /* Вертикальное выравнивание по центру */
     border-bottom: 1px solid #ccc; /* Горизонтальная линия между строками */
 }
 
 .skills-header th {
+    border: none;
     font-weight: bold; /* Полужирный шрифт для заголовков */
 }
 

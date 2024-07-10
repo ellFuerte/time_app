@@ -18,6 +18,8 @@ import ChangePassword from "./СhangePassword/СhangePassword";
 import VoteNominations from "./VoteNominations/VoteNominations";
 
 export default function ProfileInfo() {
+
+    const [idDepartment, setIdDepartment] = useState('');
     const [admin, setAdmin] = useState([]);
     const [accessData, setAccessData] = useState([]);
     const [timeZone, setTimeZone] = useState([])
@@ -88,6 +90,7 @@ export default function ProfileInfo() {
                 user: username.username
             }
             const res = await axios.post('/api/departments/', deps)
+            setIdDepartment(res.data[0]['id'])
             setTimeZone(res.data[0]['timezone'])
             setDepsName(res.data[0]['department_name'])
             setCityName(res.data[0]['city_name'])
@@ -141,7 +144,7 @@ export default function ProfileInfo() {
 
 
     const getChangeVacancies = () => {
-        if (localUse.isAdmin) {
+        if (admin) {
             setModalVacancies(true)
             setAllDateUser(user)
         }
@@ -189,24 +192,23 @@ export default function ProfileInfo() {
 
                         {user.user_name}
 
-                        {localUse.isAdmin || localUse._id === username.username ?
+                        {admin || localUse._id === username.username ?
                             <>
                             {hasAccess(7) && <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}} onClick={() => setModalActive(true)}/>}
                                 <Editing modalActive={modalActive} setModalActive={setModalActive}/>
                             </>
                             : ''}
 
+
                         {admin || hasAccess(15) ?
                             <>
                               <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>
                                 <DeleteUser modalActiveDelete={modalActiveDelete}
-                                            setModalActiveDelete={setModalActiveDelete} username={username.username}
-                                            user={user.id}/>
+                                            setModalActiveDelete={setModalActiveDelete} user={user}/>
                             </>
                             : ''}
 
-
-                        {admin && localUse._id === username.username ?
+                        {hasAccess(17)  && localUse._id === username.username || (admin && localUse._id === username.username)  ?
                             <Link to={`/AdminPanel`}>
                                 <Settings
                                     style={{cursor: 'pointer', fontSize: '20px', paddingTop: '5px', color: 'black'}}/>
@@ -219,6 +221,7 @@ export default function ProfileInfo() {
                         <label style={{cursor: 'pointer'}} onClick={getChangeVacancies}
                                className='ProfileLinkVacancies'>{user.vacancy_code===null && user.nomination_status!==null ? <br/>:user.vacancy_code}</label>
                     </div>
+
 
 
 {/*                    {
@@ -237,14 +240,14 @@ export default function ProfileInfo() {
                         <div className='ProfileInfoCard'>Профиль деятельности: {user.activity_profile}</div>
                         <div className='ProfileInfoCard'>Город проживания: {cityName}</div>
                         <div className='ProfileInfoCard'>
-                            {localUse.isAdmin !== false || localUse._id === username.username ? 'Адрес фактического проживания: ' : ''}
-                            {localUse.isAdmin !== false || localUse._id === username.username ? user.place_of_residence : ''}
+                            {localUse.isAdmin || localUse._id === username.username ? 'Адрес фактического проживания: ' : ''}
+                            {localUse.isAdmin || localUse._id === username.username ? user.place_of_residence : ''}
                         </div>
-                        <div className='ProfileInfoCard'>Подразделение: {depsName}</div>
+                        <div className='ProfileInfoCard'>Подразделение: <Link to={`/department/${idDepartment}`} className='linkDepartmentName'>{depsName}</Link></div>
                     </div>
 
                     {
-                        localUse.isAdmin || localUse._id === username.username ? <>
+                        admin || localUse._id === username.username ? <>
                         {hasAccess(5) && <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>}
                             <ChangePassword modalActivePass={modalActivePass} setModalActivePass={setModalActivePass}/>
                         </> : ''
@@ -252,22 +255,21 @@ export default function ProfileInfo() {
                     }
 
                     {
-                        localUse.isAdmin ?
                             <>
-                            {hasAccess(13) &&<div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить пароль</div>}
+                            {admin && localUse._id!==username.username && (hasAccess(13) || admin!==username.username)&&<div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить пароль</div>}
                                 <ResetPassword modalResetPassword={modalResetPassword} setModalResetPassword={setModalResetPassword} username={username.username}/>
                             </>
-                            : ''
+
                     }
 
                     {
-                        localUse.isAdmin ?
-                            <>
-                            {hasAccess(14) && <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>}
+
+                        <>
+                            {admin && localUse._id!==username.username && (hasAccess(14) || admin!==username.username) && <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>}
                                 <FinishTime modalFinishTime={modalFinishTime} setModalFinishTime={setModalFinishTime}
                                             user={user.id} status={user.status}/>
                             </>
-                            : ''
+
                     }
 
                     {

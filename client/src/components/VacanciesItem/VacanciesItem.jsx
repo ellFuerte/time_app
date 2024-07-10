@@ -270,10 +270,6 @@ const VacanciesItem =({department,vacancies,status})=> {
                             <div id="div13">{vac.company_name}</div>
                         </div>
                     </div>
-
-
-
-
                 ))}
 
 

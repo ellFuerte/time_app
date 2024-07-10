@@ -127,6 +127,7 @@ export default function Status() {
         commentStart: modalComment.current.value || '-',
         workStart: new Date(Date.now())
       }
+
       try {
         const res = await axios.post("/api/post/", newPost)
         /*await axios.post("/api/status/")*/

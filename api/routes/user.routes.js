@@ -12,11 +12,12 @@ router.post('/login', userController.Login)      // Авторизация
 router.get('/user/:id' , userController.getoneUser) // Вывод конкретного пользователя
 router.get('/user' , userController.getUser) // Вывод всех пользователей
 router.put('/user' , userController.getupdateUser)
-router.put('/deluser' , userController.delUser) // Удаление пользователя по статусу
+router.post('/deluser' , userController.delUser)      // Удаление пользователя по статусу
 router.put('/resetPassword' , userController.resetPassword)
 router.put('/newPassword' , userController.newPassword)
 router.post('/get_statistics_all_users' , userController.get_statistics_all_users)
 router.get('/roles' , userController.get_Roles)
+router.post('/roles' , userController.get_Roles)
 router.get('/permission/:id' , userController.get_Permissions)
 
 

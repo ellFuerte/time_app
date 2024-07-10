@@ -1,6 +1,5 @@
 import './AdminPanel.css'
 import React, { useState } from "react";
-import Role from "./Role/Role";
 import DictionarySkills from "./DictionarySkills/DictionarySkills";
 import { Link } from "react-router-dom";
 
@@ -16,8 +15,7 @@ export default function  AdminPanel() {
                                    <Link to='/Role' className='linkReports'>Назначить роль</Link>
                                </div>
                                <div className="tile">
-                                   <button className='linkReports' onClick={() => setModalDictionarySkills(true)}>Справочник</button>
-                                   <DictionarySkills modalDictionarySkills={modalDictionarySkills} setModalDictionarySkills={setModalDictionarySkills}/>
+                                   <Link to='/DictionarySkills' className='linkReports'>Справочник умений</Link>
                                </div>
                            </div>
                        </div>

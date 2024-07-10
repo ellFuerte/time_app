@@ -8,10 +8,12 @@ import 'react-treeview/react-treeview.css'
 
 
 
-const Sidebar = () => {
-    const username = useParams()
+const Sidebar = (username) => {
 
-
+/*    if (~document.location.href.includes('/profile/'))
+    {
+        console.log('log=',username.username)
+    }*/
 
     const [dep, setDep] = useState([]);
     const [openPath, setOpenPath] = useState([]);
@@ -46,13 +48,6 @@ const Sidebar = () => {
             const res = await axios.get('/api/department_tree_to_json/');
 
 
-/*            if(~document.location.href.indexOf('/profile/')){
-                const res = await axios.get('/api/user/' + username.username)
-                setUser(res.data)
-
-            }*/
-
-
             if (res.data[0].department_tree_to_json.length === 0) {
                 setDep([]);
             } else {
@@ -64,6 +59,7 @@ const Sidebar = () => {
         };
         getDeps();
     }, []);
+
 
     const isNodeOpen = (id) => openPath.includes(id);
 

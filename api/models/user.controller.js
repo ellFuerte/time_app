@@ -1,5 +1,6 @@
 const client = require('../connect')
 const bcrypt = require("bcrypt");
+const {log} = require("nodemon/lib/utils");
 
 
 
@@ -11,7 +12,7 @@ class userController {
             const depart = await client.query('SELECT id,department_name,parent_department,is_accessible from departments ORDER BY id')
             res.json(depart.rows)
         } else {
-            const dep = await client.query('SELECT departments.department_name, cities.city_name,cities.timezone  FROM users INNER JOIN departments ON users.department_id = departments.id LEFT JOIN cities ON cities.id = users.city_id WHERE users.id = $1', [user])
+            const dep = await client.query('SELECT departments.department_name, cities.city_name,cities.timezone,departments.id FROM users INNER JOIN departments ON users.department_id = departments.id LEFT JOIN cities ON cities.id = users.city_id WHERE users.id = $1', [user])
             if (dep.rows.length === 0) {
 
             } else {
@@ -123,7 +124,7 @@ class userController {
     }
 
     async getUser(req, res) {
-        const users = await client.query('SELECT nomination_status, user_name,email,department_id,isadmin,id,admin_department_id,status,main_department,see_child FROM users')
+        const users = await client.query('SELECT users.nomination_status, users.user_name,users.email,users.department_id,users.isadmin,users.id,users.admin_department_id,users.status,users.main_department,users.see_child,users.role_id FROM users ')
         res.json(users.rows)
     }
 
@@ -180,7 +181,7 @@ class userController {
     async delUser(req, res) {
         const {userId,status} = req.body
         const users = await client.query('UPDATE users set status=$1 where id = $2 RETURNING *', [status, userId ])
-        res.json(users.rows[0])
+        res.json(users.rows)
     }
 
     async resetPassword(req, res) {
@@ -211,7 +212,8 @@ class userController {
         res.json(count.rows)
     }
     async get_Roles(req,res){
-        const roles = await client.query('SELECT get_roles()')
+        const {role_id,user_id} = req.body
+        const roles = await client.query('SELECT get_roles($1,$2)',[user_id,role_id])
         res.json(roles.rows)
     }
 

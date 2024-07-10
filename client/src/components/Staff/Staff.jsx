@@ -245,7 +245,6 @@ export default function Staff() {
 
         return accessData.some(item => item.tool_id === toolId && item.is_accessible);
     }
-
     return (
 
         <div className='staff'>
@@ -261,9 +260,13 @@ export default function Staff() {
                                 Скрыть дочерние
                             </button>
                         }
-                        {(hasAccess(8) || localUser.isAdmin) && <button onClick={() => setModalMain(true)} className='btnStaff' style={{ float: 'right' }}>Сделать главной</button>}
+                        {hasAccess(8) && <button onClick={() => setModalMain(true)} className='btnStaff' style={{ float: 'right' }}>Сделать главной</button>}
 
-                        {(hasAccess(16) || user.isadmin || localUser.isAdmin) && <Link to={`/VacanciesView/`}><button className="btnStaff">Показать вакансии</button></Link>}
+                        { (hasAccess(16) || user.isadmin) && (
+                            <Link to={`/VacanciesView/`}>
+                                <button className="btnStaff">Показать вакансии</button>
+                            </Link>
+                        )}
                     </>
                 )}
             </>

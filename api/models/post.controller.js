@@ -348,6 +348,14 @@ class PostController {
         try {
             const id = req.params.id;
             let getSkills;
+
+            const {skill_name,skill_description} = req.body
+
+            if(skill_name) {
+                getSkills = await client.query('SELECT get_all_skills_json($1,$2)',[skill_name,skill_description])
+                res.json(getSkills.rows);
+            }
+
             // Проверка на наличие id в параметрах запроса
             if (id) {
                 getSkills = await client.query('SELECT get_user_skills_json($1)', [id]);
@@ -359,6 +367,9 @@ class PostController {
                 await client.query('SELECT add_user_skill($1, $2, $3, $4, $5,$6,$7)', [user_id, skill_id, self_grade, head_grade, is_active, newGradeSelf,newGradeHead]);
             getSkills = await client.query('SELECT get_all_skills_json()');
             res.json(getSkills.rows);
+
+
+
         } catch (error) {
             console.error(error);
             res.status(500).json({error: 'Internal Server Error'});

@@ -292,7 +292,7 @@ function Editing({modalActive,setModalActive}) {
             city_id: citiesId,
             cityPlaceChange:modalCityPlace.current.value
         }
-
+        console.log('log=',newInfo)
         if (localUse._id !== username.username) {
             const newInfo2 = {
                 departmentId: modalDep.current.value || user.department_id,
@@ -308,7 +308,7 @@ function Editing({modalActive,setModalActive}) {
             }
 
             await axios.put('/api/user/', newInfo2)
-            window.location.reload()
+            /*window.location.reload()*/
         } else {
             await axios.put('/api/user/', newInfo)
             delete newInfo.phone_number

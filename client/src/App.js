@@ -22,6 +22,7 @@ import AdminPanel from './components/ProfileInfo/AdminPanel/AdminPanel'
 import Layout from "./components/Layout/Layout";
 import axios from "axios";
 import Role from "./components/ProfileInfo/AdminPanel/Role/Role";
+import DictionarySkills from "./components/ProfileInfo/AdminPanel/DictionarySkills/DictionarySkills";
 
 
 
@@ -101,22 +102,22 @@ function App() {
               {authUser && userStorage.isAdmin ? <Layout><AdminPanel /></Layout> : <Error />}
             </Route>
 
-
-
-
-
             <Route path="/reports">
               {authUser ? <Layout><Reports /></Layout> : <Error />}
             </Route>
 
           <Route path="/reportsnominations">
-              {authUser && userStorage.isAdmin? <Layout><ReportsNominations /></Layout> : <Error />}
+              {authUser && userStorage.isAdmin ? <Layout><ReportsNominations /></Layout> : <Error />}
           </Route>
 
           <Route path="/reportshistory">
-             {authUser && userStorage.isAdmin  ? <Layout><ReportsHistory /></Layout> : <Error />}
+             {authUser && userStorage.isAdmin ? <Layout><ReportsHistory /></Layout> : <Error />}
           </Route>
 
+
+          <Route path="/DictionarySkills">
+            {authUser && userStorage.isAdmin ? <Layout><DictionarySkills /></Layout> : <Error />}
+          </Route>
 
 
             <Route path="/information">

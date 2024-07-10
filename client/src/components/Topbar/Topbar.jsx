@@ -92,8 +92,6 @@ export default function Topbar() {
   }
 
 
-
-
   const [notificationCount, setNotificationCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -137,7 +135,7 @@ export default function Topbar() {
 
               </div>
 
-              {admin || (userRole === '2' || userRole === '3' || userRole === '4') && (
+              {(user.isadmin || userRole === '2' || userRole === '3' || userRole === '4') && (
                   <>
                     <div className='vr'></div>
                     <div className='topPage'>
@@ -145,13 +143,15 @@ export default function Topbar() {
                     </div>
                   </>
               )}
+
+
               <div className='vr'></div>
               <div className='topPage'>
                 <Link to='/Information' className="topbarLink">?</Link>
               </div>
             </div>
 
-            {(hasAccess(3) || admin) &&
+            {(hasAccess(3) || user.isadmin) &&
               <div className="search">
               <input onKeyPress={handleKeyPress} value={searchValue} onChange={(e) => setSearchValue(e.target.value)}
                      type="search" name="" placeholder="поиск пользователя" className="input"/>

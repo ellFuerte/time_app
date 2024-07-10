@@ -12,9 +12,7 @@
     border: none;
     position: absolute;
     background-color: white;
-
     z-index: 1000;
-    width: 100%;
 }
 .ModalInputUpdate1 {
     position: relative;
