@@ -38,10 +38,8 @@ function DictionarySkills() {
 
     const addSkills = async () => {
         const addSkills = {
-
         skill_name:nameSkill,
         skill_description:descriptionSkill
-
         }
 
         await axios.post('/api/Skills/', addSkills);

@@ -1,11 +1,9 @@
 import './AdminPanel.css'
-import React, { useState } from "react";
-import DictionarySkills from "./DictionarySkills/DictionarySkills";
+import React from "react";
 import { Link } from "react-router-dom";
 
 export default function  AdminPanel() {
 
-    const [modalDictionarySkills, setModalDictionarySkills] = useState(false)
        return (
                <div className="content">
                    <div className="main-content">
