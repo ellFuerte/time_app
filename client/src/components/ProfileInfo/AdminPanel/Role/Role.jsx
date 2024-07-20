@@ -106,7 +106,6 @@ function Roles() {
                                         {user.user_name}
                                     </div>
                                 ))}
-
                             </div>
                         )}
 

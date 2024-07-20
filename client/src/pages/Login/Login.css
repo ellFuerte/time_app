@@ -43,9 +43,14 @@
     padding-left: 20px;
 }
 
-.loginInput:focus{
-    outline: none;
+.loginInput:focus {
+    border-color: #007BFF; /* Цвет обводки при фокусировании */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тень вокруг инпута */
+    outline: none; /* Убираем стандартное выделение */
 }
+
+
+
 
 .loginButton{
     height: 50px;

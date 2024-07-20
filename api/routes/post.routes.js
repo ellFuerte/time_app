@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const postController = require('../models/post.controller')
-const userController = require("../models/user.controller");
 
 router.post('/post', postController.CreatePost) //Начать
 router.put('/post', postController.Updatepost) //Закончит
@@ -18,7 +17,7 @@ router.get('/workplace_logs_get/:id' , postController.workplace_logs_get)
 router.post('/workplace_logs_post/' , postController.workplace_logs_post)
 router.post('/workplace_logs_clear/' , postController.workplace_logs_clear)
 router.get('/office_get/' , postController.office_get)
-router.post('/Vacations_function/' , postController.Vacancies_get_function)
+router.post('/Vacations_function/' , postController.Vacancies_get_function_and_trigger)
 router.get('/Vacations/' , postController.Vacancies_get)
 router.get('/Cities/' , postController.Cities_get)
 router.get('/Skills/' , postController.Skills)
@@ -27,6 +26,12 @@ router.post('/Skills/' , postController.Skills)
 router.put('/Vacations/' , postController.Vacancies_update)
 router.post('/Vacations/' , postController.Vacancies_post)
 router.get('/typework_status/' , postController.Typework_status)
+router.get('/Vacancies_get_trigger/:id' , postController.Vacancies_get_function_and_trigger)
+
+
+
+
+
 
 
 module.exports = router

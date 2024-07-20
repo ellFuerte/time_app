@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { Create, Delete, Settings, Message } from '@material-ui/icons'
 
 import Skills from '../ProfileInfo/Skills/Skills'
+import Role from '../ProfileInfo/Role/Role'
+
 
 import ModalVacanciesItem from "../VacanciesItem/ModalVacanciesItem/ModalVacanciesItem";
 import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies";
@@ -20,7 +22,7 @@ import VoteNominations from "./VoteNominations/VoteNominations";
 export default function ProfileInfo() {
 
     const [idDepartment, setIdDepartment] = useState('');
-    const [admin, setAdmin] = useState([]);
+    const [isRole, setRole] = useState([]);
     const [accessData, setAccessData] = useState([]);
     const [timeZone, setTimeZone] = useState([])
     const [hasImage, setHasImage] = useState(false);
@@ -51,6 +53,8 @@ export default function ProfileInfo() {
     const [modalActiveDelete, setModalActiveDelete] = useState(false)
 
     const [modalActiveSkills, setModalActiveSkills] = useState(false)
+
+    const [modalActiveRole, setModalActiveRole] = useState(false)
 
     const username = useParams()
 
@@ -101,7 +105,7 @@ export default function ProfileInfo() {
             localUser._id = !!username ? username.username : localUser._id
             const res = await axios.get('/api/user/' + username.username)
             const resUser = await axios.get('/api/user/' + localUse._id)
-            setAdmin(resUser.data.isadmin)
+            setRole(resUser.data)
             const roleId = resUser.data.role_id;
             const resPermission = await axios.get('/api/permission/' + roleId);
             setAccessData(resPermission.data[0].get_permissions);
@@ -144,7 +148,7 @@ export default function ProfileInfo() {
 
 
     const getChangeVacancies = () => {
-        if (admin) {
+        if (isRole.isadmin) {
             setModalVacancies(true)
             setAllDateUser(user)
         }
@@ -170,7 +174,7 @@ export default function ProfileInfo() {
 
         return accessData.some(item => item.tool_id === toolId && item.is_accessible);
     }
-
+    console.log('isRole.isadmin=',isRole.isadmin)
     return (
 
         <div className='profileInfo'>
@@ -192,23 +196,16 @@ export default function ProfileInfo() {
 
                         {user.user_name}
 
-                        {admin || localUse._id === username.username ?
-                            <>
-                            {hasAccess(7) && <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}} onClick={() => setModalActive(true)}/>}
+
+                            {(hasAccess(7) && localUse._id===username.username  || (hasAccess(5) && localUse._id!==username.username && isRole.role_id==='4') || (hasAccess(5) && localUse._id!==username.username && isRole.role_id==='3')) && <Create style={{cursor: 'pointer', fontSize: '20px', paddingLeft: '5px'}} onClick={() => setModalActive(true)}/>}
                                 <Editing modalActive={modalActive} setModalActive={setModalActive}/>
-                            </>
-                            : ''}
 
 
-                        {admin || hasAccess(15) ?
-                            <>
-                              <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>
+                            {hasAccess(15) && <Delete style={{cursor: 'pointer', fontSize: '20px'}} onClick={() => setModalActiveDelete(true)}/>}
                                 <DeleteUser modalActiveDelete={modalActiveDelete}
                                             setModalActiveDelete={setModalActiveDelete} user={user}/>
-                            </>
-                            : ''}
 
-                        {hasAccess(17)  && localUse._id === username.username || (admin && localUse._id === username.username)  ?
+                        {(hasAccess(17)  && localUse._id === username.username) ?
                             <Link to={`/AdminPanel`}>
                                 <Settings
                                     style={{cursor: 'pointer', fontSize: '20px', paddingTop: '5px', color: 'black'}}/>
@@ -233,8 +230,8 @@ export default function ProfileInfo() {
                         <div className='ProfileInfoCard'>Email: {name.charAt(0).toUpperCase() + name.slice(1)}</div>
                         <div className='ProfileInfoCard'>Телефон: {user.phone_number}</div>
                         <div className='ProfileInfoCard'>
-                            {localUse.isAdmin !== false || localUse._id === username.username ? 'Доп.Контакт: ' : ''}
-                            {localUse.isAdmin !== false || localUse._id === username.username ? user.additional_contact : ''}
+                            {isRole.isadmin  || localUse._id === username.username ? 'Доп.Контакт: ' : ''}
+                            {isRole.isadmin  || localUse._id === username.username ? user.additional_contact : ''}
                         </div>
                         <div className='ProfileInfoCard'>Группа рассылки: {user.distribution_group}</div>
                         <div className='ProfileInfoCard'>Профиль деятельности: {user.activity_profile}</div>
@@ -246,51 +243,48 @@ export default function ProfileInfo() {
                         <div className='ProfileInfoCard'>Подразделение: <Link to={`/department/${idDepartment}`} className='linkDepartmentName'>{depsName}</Link></div>
                     </div>
 
-                    {
-                        admin || localUse._id === username.username ? <>
-                        {hasAccess(5) && <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>}
+
+
+                        {(hasAccess(5) && localUse._id===username.username  || (hasAccess(5) && localUse._id!==username.username && isRole.role_id==='4') || (hasAccess(5) && localUse._id!==username.username && isRole.role_id==='3')) && <div className='changePass' onClick={() => setModalActivePass(true)}>Изменить пароль</div>}
                             <ChangePassword modalActivePass={modalActivePass} setModalActivePass={setModalActivePass}/>
-                        </> : ''
 
-                    }
 
-                    {
-                            <>
-                            {admin && localUse._id!==username.username && (hasAccess(13) || admin!==username.username)&&<div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить пароль</div>}
+
+                            {hasAccess(13) && <div className='changePass' onClick={() => setModalResetPassword(true)}>Сбросить пароль</div>}
                                 <ResetPassword modalResetPassword={modalResetPassword} setModalResetPassword={setModalResetPassword} username={username.username}/>
-                            </>
 
-                    }
 
-                    {
 
-                        <>
-                            {admin && localUse._id!==username.username && (hasAccess(14) || admin!==username.username) && <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>}
+
+                            {hasAccess(14) && localUse._id!==username.username && <div className='changePass' onClick={() => setModalFinishTime(true)}>Закончить</div>}
                                 <FinishTime modalFinishTime={modalFinishTime} setModalFinishTime={setModalFinishTime}
                                             user={user.id} status={user.status}/>
-                            </>
 
-                    }
 
-                    {
-                        localUse._id === user.id ?<>
-                        {hasAccess(6) && <div className='changePass' onClick={() => setModalActiveVote(true)}>Проголосовать</div>}
+
+                        {hasAccess(6) && localUse._id===username.username && <div className='changePass' onClick={() => setModalActiveVote(true)}>Проголосовать</div>}
                             <VoteNominations modalActiveVote={modalActiveVote} setModalActiveVote={setModalActiveVote} username={username}/>
-                            </>
-                            : ''
-                    }
 
-                    {
-                        admin ?
-                            <>
-                                <div className="changePass" onClick={() => setModalVote(true)}>Закрепить номинацию</div>
+
+
+                            {hasAccess(19) && <div className="changePass" onClick={() => setModalVote(true)}>Закрепить номинацию</div>}
                                 <AddNomination modalVote={modalVote} setModalVote={setModalVote} username={username}
                                                updateNominationStatus={updateNominationStatus}/>
-                            </> : ''
-                    }
-                    <div className="changePass" onClick={() => setModalActiveSkills(true)}>Навыки</div>
+
+
+
+                    <div className="changePass" onClick={() => setModalActiveSkills(true)}>
+                        Навыки
+                    </div>
+
+                    {hasAccess(18) && <div className="changePass" onClick={() => setModalActiveRole(true)}>
+                        Назначить роль
+                    </div>}
+
                     <Skills modalActiveSkills={modalActiveSkills} setModalActiveSkills={setModalActiveSkills}/>
+                    <Role modalActiveRole={modalActiveRole} setModalActiveRole={setModalActiveRole}  updateNominationStatus={updateNominationStatus} username={username}/>
                 </div>
+
             }
             <ModalVacancies active={modalVacancies} setActive={setModalVacancies}>
                 <ModalVacanciesItem allDateUser={allDateUser}/>

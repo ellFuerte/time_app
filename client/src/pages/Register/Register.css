@@ -122,7 +122,9 @@ input[type=number]::-webkit-outer-spin-button {
     max-width: 100%; /* Максимальная ширина для элементов ввода */
 }
 .registerInput:focus{
-    outline: none;
+    border-color: #007BFF; /* Цвет обводки при фокусировании */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тень вокруг инпута */
+    outline: none; /* Убираем стандартное выделение */
 }
 
 

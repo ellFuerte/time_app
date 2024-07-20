@@ -42,8 +42,6 @@ function VacanciesAdd() {
             const departament = await axios.get('/api/departments/')
             setDeps(departament.data)
 
-
-
             const statuses = await axios.get('/api/Vacations/?status=status')
             statuses.data.unshift(statuses.data.splice(statuses.data.findIndex(status => status.name === "Резерв"), 1)[0]);
             setStatus(statuses.data)
@@ -107,9 +105,7 @@ function VacanciesAdd() {
         );
 
         if (existingVacancy) {
-            setMessageITC('Такая ИТС уже существует');
-            setError('');
-            setMessage('');
+            setError('Такая ИТС уже существует');
             return;
         }
 
@@ -117,6 +113,9 @@ function VacanciesAdd() {
         if (searchTerm !== '') {
             userNameToSend = userId;
         }
+
+
+
         const Vacations = {
             namevacancies: NameVacationRef.current.value,
             description: Description.current.value,
@@ -128,25 +127,31 @@ function VacanciesAdd() {
             grade: Grade.current.value,
             is_checked: checkVal,
             userName: userNameToSend
-        };
+        }
+        console.log('Vacations=',Vacations)
 
-        if (
+        if
+        (
             NameVacationRef.current.value === '' ||
             Description.current.value === '' ||
             TeamRef.current.value === '' ||
-            StatusRef.current.value === '' ||
             codeVacation === '' ||
             CodeProject.current.value === '' ||
-            Grade.current.value === '' ||
-            Company.current.value === ''
+            Grade.current.value === ''
         ) {
             setError('Заполните поле');
-            setIsView(true);
-        } else {
+
+        }
+
+        if(StatusRef.current.value==='50' && userNameToSend.length===0){
+            setError('Выберите пользователя');
+        }
+
+        else {
             const res = await axios.post('/api/Vacations/', Vacations);
             if (res.status === 200) {
                 setError('');
-                setMessage('Вакансия добавлена');
+                setError('Вакансия добавлена');
                 const vacancies_function={
                     departId: localUser.departmentId,
                     user_id: localUser._id
@@ -184,21 +189,10 @@ function VacanciesAdd() {
             <div className="VacationsMainAdd">
                 <h2 style={{textAlign:'center'}}>Добавить вакансию</h2>
                 {
-                    !error && isView && message && !messageITC &&
-                    <div className='error'>Добавленно</div>
+
+                    <div className='error'>{error}</div>
                 }
-                {
-                    message && !error && !isView && !messageITC &&
-                    <div className='error'>Добавленно</div>
-                }
-                {
-                    error && isView && !messageITC &&
-                    <div className='error'>Заполните все поля</div>
-                }
-                {
-                    messageITC && !message &&
-                    <div className='error'>{messageITC}</div>
-                }
+
                 <div>
                 </div>
                 <div>
@@ -262,7 +256,6 @@ function VacanciesAdd() {
                 <div>
                     <div className="InputLabel">Компания</div>
                     <select ref={Company} className='InputVacation' onMouseDown={handleClickSubmit}>
-                        <option value=''>Компания</option>
                         {company.map((company, name) => <option key={name} value={company.id}>{company.name}</option>)}
                     </select>
 

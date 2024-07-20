@@ -96,7 +96,7 @@ function App() {
               {authUser && userStorage.isAdmin ? <Layout><Department /></Layout> : <Error />}
             </Route>
             <Route path="/vacanciesview">
-              {authUser && userStorage.isAdmin ? <Layout><VacanciesView /></Layout> : <Error />}
+              {authUser ? <Layout><VacanciesView /></Layout> : <Error />}
             </Route>
             <Route path="/adminpanel">
               {authUser && userStorage.isAdmin ? <Layout><AdminPanel /></Layout> : <Error />}

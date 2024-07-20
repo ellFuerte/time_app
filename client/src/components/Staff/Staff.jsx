@@ -28,7 +28,6 @@ export default function Staff() {
                 const roleId = user.data.role_id;
                 const res = await axios.get('/api/permission/' + roleId);
                 setAccessData(res.data[0].get_permissions);
-
                 setChecked(user.data.see_child)
                 setUser(user.data)
             } catch (error) {

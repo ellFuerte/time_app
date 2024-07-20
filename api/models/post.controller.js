@@ -9,6 +9,10 @@ cron.schedule('0 */4 * * *', async () => {
         } else {
             console.log('процедура не отработала')
         }
+    }
+)
+
+cron.schedule('0 1-23/2 * * *', async () => {
         const scheduleUpdateStatus = await client.query('CALL update_user_status()')
         if (scheduleUpdateStatus) {
             console.log('Статусы обновленны')
@@ -17,7 +21,6 @@ cron.schedule('0 */4 * * *', async () => {
         }
     }
 )
-
 
 class PostController {
 
@@ -199,6 +202,11 @@ class PostController {
         res.json(office_get.rows)
     }
 
+    async Cities_get(req, res) {
+        const postVacation = await client.query('SELECT * FROM cities')
+        res.json(postVacation.rows)
+    }
+
     async workplace_logs_clear(req, res) {
         const {user_id, canceled, date} = req.body
         const workplace_logs_delete = await client.query('UPDATE workplace_logs SET is_canceled=$2 where user_id = $1 AND booking_date<=$3', [user_id, canceled, date])
@@ -268,8 +276,8 @@ class PostController {
     }
 
     async Vacancies_update(req, res) {
-
         const {
+            user_id,
             namevacancies,
             description,
             grade,
@@ -285,13 +293,12 @@ class PostController {
             planned_release_date
         } = req.body
 
+
         if (users === null) {
-            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id])
+            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9,updated_by_user_id=$10 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id,user_id])
             res.json(postVacation.rows)
         } else {
-
             if (users.length > 1) {
-
                 const update_status = await client.query('SELECT vacancy_id FROM users WHERE id=$1', [users])
                 const update = await client.query('UPDATE vacancies SET status_id = 30 WHERE id = $1', [update_status.rows[0]['vacancy_id']])
 
@@ -317,62 +324,69 @@ class PostController {
             if (search === null && users.length > 0) {
                 const update_vacanciy_null = await client.query('UPDATE users SET vacancy_id = null WHERE id = $1', [old_user])
                 const update_vacanciy_id = await client.query('UPDATE users SET vacancy_id = $1 WHERE id = $2', [namevacanciesId, users])
+
             }
 
+
+/*
             if (users.length === 0 && old_user > 0 || planned_release_date || planned_release_date === null) {
                 const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, old_user])
             }
             if (old_user === null && users.length > 0 || planned_release_date || planned_release_date === null) {
                 const update = await client.query('UPDATE users SET planned_release_date = $1 WHERE id = $2', [planned_release_date, users])
             }
+*/
 
-            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id])
+            const postVacation = await client.query('UPDATE vacancies SET name = $1,description=$2,grade=$3,status_id=$4,team_id=$6,company_id=$7,vacancy_code=$8,project_id=$9,updated_by_user_id=$10,planned_release_date=$11,user_id=$12 WHERE id = $5', [namevacancies, description, grade, statuses, namevacanciesId, deps, company_id, vacancy_code, project_id,user_id,planned_release_date,users])
 
 
             res.json(postVacation.rows)
         }
     }
 
-    async Vacancies_get_function(req, res) {
+    async Vacancies_get_function_and_trigger(req, res) {
         const {departId, user_id} = req.body
-        const postVacation = await client.query('SELECT get_vacancies($1, $2)', [departId, user_id])
-        res.json(postVacation.rows)
+        if(departId) {
+            const postVacation = await client.query('SELECT get_vacancies($1, $2)', [departId, user_id])
+            res.json(postVacation.rows)
+        }else {
+            const vacanciesId = req.params.id
+            if (vacanciesId) {
+                const trigger = await client.query('SELECT get_vacancy_logs($1)', [vacanciesId])
+                res.json(trigger.rows);
+            }
+        }
     }
 
-    async Cities_get(req, res) {
-        const postVacation = await client.query('SELECT * FROM cities')
-        res.json(postVacation.rows)
-    }
 
     async Skills(req, res) {
         try {
             const id = req.params.id;
             let getSkills;
+            const { skill_name, skill_description, user_id, skill_id, self_grade, head_grade, is_active, newGradeSelf, newGradeHead } = req.body;
 
-            const {skill_name,skill_description} = req.body
-
-            if(skill_name) {
-                getSkills = await client.query('SELECT get_all_skills_json($1,$2)',[skill_name,skill_description])
-                res.json(getSkills.rows);
+            // Если предоставлен skill_name, добавляем навык
+            if (skill_name) {
+                getSkills = await client.query('SELECT get_all_skills_json($1,$2)', [skill_name, skill_description]);
+                return res.json(getSkills.rows);
             }
 
             // Проверка на наличие id в параметрах запроса
             if (id) {
                 getSkills = await client.query('SELECT get_user_skills_json($1)', [id]);
-                res.json(getSkills.rows);
-                return; // Возвращаем результат и завершаем функцию
+                return res.json(getSkills.rows);
             }
-            // Параметры для добавления навыка
-            const {user_id, skill_id, self_grade, head_grade, is_active,newGradeSelf,newGradeHead} = req.body;
-                await client.query('SELECT add_user_skill($1, $2, $3, $4, $5,$6,$7)', [user_id, skill_id, self_grade, head_grade, is_active, newGradeSelf,newGradeHead]);
+
+            // Добавляем пользовательский навык
+            await client.query('SELECT add_user_skill($1, $2, $3, $4, $5, $6, $7)', [user_id, skill_id, self_grade, head_grade, is_active, newGradeSelf, newGradeHead]);
+
+            // Возвращаем все навыки
             getSkills = await client.query('SELECT get_all_skills_json()');
-            res.json(getSkills.rows);
-
-
+            return res.json(getSkills.rows);
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({error: 'Internal Server Error'});
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     }
 }

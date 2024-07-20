@@ -23,10 +23,8 @@ function DictionarySkills() {
                 console.error('Error fetching data:', error);
             }
         };
-
         Skills();
     }, []);
-
 
 
     const nameSkillValue = async (e) => {

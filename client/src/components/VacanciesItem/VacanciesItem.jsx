@@ -7,11 +7,19 @@ import ModalVacancies from "../Templates/ModalVacancies/ModalVacancies";
 
 
 const VacanciesItem =({department,vacancies,status})=> {
+
     const localUser = JSON.parse(localStorage.getItem('user'))
+
+    const [showHistory, setShowHistory] = useState(true);
+
+    const [modalVacations, setModalVacations] = useState(false)
+
+    const [triggers, setTriggers] = useState([])
 
     const [selectDep, setSelectDep] = useState("")
 
     const [company, setCompany] = useState([])
+
     const [selectCompany, setSelectCompany] = useState([])
 
 
@@ -26,8 +34,6 @@ const VacanciesItem =({department,vacancies,status})=> {
 
     const [vacanciesId, setVacanciesId] = useState("")
 
-    const [modalVacations, setModalVacations] = useState(false)
-
     const [inputValue, setInputValue] = useState("")
 
     const [old_user, setOld_user] = useState("")
@@ -40,7 +46,7 @@ const VacanciesItem =({department,vacancies,status})=> {
 
     const [user_name, setUser_name] = useState('')
 
-    const date = moment().format('YYYY-MM-DD');
+    const date = moment().format('YYYY-MM-DD HH:mm');
     const [searchTerm, setSearchTerm] = useState('');
     const [userId, setUserId] = useState([])
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -58,17 +64,12 @@ const VacanciesItem =({department,vacancies,status})=> {
     const projectRef = useRef()
     const DateReleaseRef = useRef()
 
-    const searchRef = useRef()
-
-    const [startDate, setStartDate] = useState(''); // начальная дата фильтра
-    const [endDate, setEndDate] = useState(''); // конечная дата фильтра
-
     const [deps, setDeps] = useState([])
 
 
 
     useEffect(() => {
-        const Department = async () => {
+        const fetch = async () => {
 
             const departs = await axios.get('/api/departments/')
             setDeps(departs.data)
@@ -79,7 +80,7 @@ const VacanciesItem =({department,vacancies,status})=> {
 
         }
 
-        Department()
+        fetch()
     }, [])
 
 
@@ -98,6 +99,7 @@ const VacanciesItem =({department,vacancies,status})=> {
         if (/^\d*$/.test(e.target.value)) {
             setInputValueGrade(e.target.value);
         }
+
     };
 
     const selectValueStatus = () => {
@@ -131,6 +133,7 @@ const VacanciesItem =({department,vacancies,status})=> {
     const ChangeDataButton = async () => {
 
         const ChangeData = {
+            user_id:localUser._id,
             namevacanciesId: vacanciesId,
             namevacancies: inputValue,
             description: inputValueDescription,
@@ -142,13 +145,15 @@ const VacanciesItem =({department,vacancies,status})=> {
             deps: selectDep,
             company_id: selectCompany,
             vacancy_code: selectItc,
-            project_id: projectItem,
+            project_id: (projectItem.length === 0 ? 0 : projectItem),
             planned_release_date:(plannedReleaseDate==='' ? null : plannedReleaseDate)
         }
-        console.log('log=',ChangeData)
-
+        console.log('change=',ChangeData)
         if (statusRef.current.value === '3' && old_user===null && userId.length<1) {
             setMessage('Сотрудник не назначен')
+        }
+        if(inputValueGrade.length===0){
+            setMessage('Грейд не может быть пустым')
         }
 
         else {
@@ -178,7 +183,7 @@ const VacanciesItem =({department,vacancies,status})=> {
     }
 
 
-    const handleClick = (name, grade,id,description,status_id,user_name,user_id,department_id,company_id,vacancy_code,project_id,planned_release_date) => {
+    const handleClick = async (name, grade,id,description,status_id,user_name,user_id,department_id,company_id,vacancy_code,project_id,planned_release_date) => {
         if(localUser.isAdmin===true) {
 
             if(user_name===null){
@@ -215,6 +220,10 @@ const VacanciesItem =({department,vacancies,status})=> {
             setProjectItem(project_id)
 
             setPlannedReleaseDate(planned_release_date)
+            const trigger = await axios.get('/api/Vacancies_get_trigger/'+ `${id}`)
+            if(trigger.data[0].get_vacancy_logs!==null) {
+                setTriggers(trigger.data[0].get_vacancy_logs)
+            }
         }
     };
 
@@ -242,9 +251,7 @@ const VacanciesItem =({department,vacancies,status})=> {
 
         }
     }
-
-
-
+    console.log('trigg=',triggers)
     return (
         <>
             <h2 className='departmentName'>{department}</h2>
@@ -273,7 +280,7 @@ const VacanciesItem =({department,vacancies,status})=> {
                 ))}
 
 
-                <ModalVacancies active={modalVacations} setActive={setModalVacations}>
+                <ModalVacancies active={modalVacations} setActive={setModalVacations} setShowHistory={setShowHistory} setTriggers={setTriggers}>
                     <div className='MessageItemVacancies'>
                         <span >{message}</span>
                     </div>
@@ -332,7 +339,6 @@ const VacanciesItem =({department,vacancies,status})=> {
 
                     <div className="container">
                         <div>
-
                             <span>Имя сотрудника:</span><br/>
                             <div className='inputDiv'>
                                 <input
@@ -368,7 +374,7 @@ const VacanciesItem =({department,vacancies,status})=> {
                                 />
                             </div>
                             <div>
-                                <span>ИТС:</span><br/>
+                                <span>Код вакансии:</span><br/>
                                 <input type='text'
                                        ref={ITCRef}
                                        value={selectItc}
@@ -390,7 +396,86 @@ const VacanciesItem =({department,vacancies,status})=> {
                         </div>
                         <br/>
                         <div className='divHistory'>
-                            История
+                            <label onClick={() => setShowHistory(!showHistory)} style={{cursor: 'pointer'}}>
+                                {showHistory ? 'Закрыть историю' : 'Открыть историю'}
+                            </label>
+                            {showHistory && (
+                                <div className='divHistoryContent'>
+                                    {triggers.length > 0 ? (
+                                        <div>
+                                            {triggers.map((trigger, index) => (
+                                                trigger.changed_fields.some(field => field !== null) ? (
+                                                    <div key={index} className='selectNameDiv'>
+                                                        <div id="cssportal-grid-history">
+                                                            <div id="divDate">{moment(trigger.updated_at).format('YYYY-MM-DD HH:mm')}</div>
+                                                            <div id="divUserName">{trigger.updated_by_user_name}</div>
+                                                            <div id="description">
+                                                                {trigger.changed_fields.includes('name') && trigger.name !== null && (
+                                                                    <>
+                                                                        Название: {trigger.old_values && trigger.old_values.name !== null ? (trigger.old_values.name === '' ? 'N/A' : trigger.old_values.name) : ''} ➜ {trigger.name === '' ? 'N/A' : trigger.name} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('status_id') && trigger.status_name !== null && (
+                                                                    <>
+                                                                        Статус: {trigger.old_values && trigger.old_values.status_id !== null ? trigger.old_values.status_id : 'N/A'} ➜ {trigger.status_name} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('description') && trigger.description !== null && (
+                                                                    <>
+                                                                        Описание: {trigger.old_values && trigger.old_values.description !== null ? (trigger.old_values.description === '' ? 'N/A' : trigger.old_values.description) : ''} ➜ {trigger.description === '' ? 'N/A' : trigger.description} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('grade') && trigger.grade !== null && (
+                                                                    <>
+                                                                        Грейд: {trigger.old_values && trigger.old_values.grade !== null ? trigger.old_values.grade : 'N/A'} ➜ {trigger.grade} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('company_id') && trigger.company_name !== null && (
+                                                                    <>
+                                                                        Компания: {trigger.old_values && trigger.old_values.company_id !== null ? trigger.old_values.company_id : 'N/A'} ➜ {trigger.company_name} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('team_id') && trigger.department_name !== null && (
+                                                                    <>
+                                                                        Отдел: {trigger.old_values && trigger.old_values.team_id !== null ? trigger.old_values.team_id : 'N/A'} ➜ {trigger.department_name} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('vacancy_code') && trigger.vacancy_code !== null && (
+                                                                    <>
+                                                                        Код вакансии: {trigger.old_values && trigger.old_values.vacancy_code !== null ? (trigger.old_values.vacancy_code === '' ? 'N/A' : trigger.old_values.vacancy_code) : ''} ➜ {trigger.vacancy_code === '' ? 'N/A' : trigger.vacancy_code} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('project_id') && trigger.project_id !== null && (
+                                                                    <>
+                                                                        Проект: {trigger.old_values && trigger.old_values.project_id !== null ? (trigger.old_values.project_id === 0 ? '0' : trigger.old_values.project_id) : ''} ➜ {trigger.project_id} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('planned_release_date') && trigger.planned_release_date !== null && (
+                                                                    <>
+                                                                        Дата выхода: {trigger.old_values && trigger.old_values.planned_release_date !== null ? trigger.old_values.planned_release_date : 'N/A'} ➜ {trigger.updated_by_user_release_date ===null ? 'N/A' : trigger.updated_by_user_release_date} <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('planned_release_date') && trigger.planned_release_date === null && (
+                                                                    <>
+                                                                        Дата выхода: {trigger.old_values && trigger.old_values.planned_release_date !== null ? trigger.old_values.planned_release_date : 'N/A'} ➜ N/A <br />
+                                                                    </>
+                                                                )}
+                                                                {trigger.changed_fields.includes('user_id') && trigger.user_name !== null && (
+                                                                    <>
+                                                                        Сотрудник: {trigger.old_values && trigger.old_values.user_id === null ? 'N/A' : trigger.old_values.user_id} ➜ {trigger.user_name === '' ? 'N/A' : trigger.user_name} <br />
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ) : null
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p>Нет изменений</p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                         <br/>
                         <div>

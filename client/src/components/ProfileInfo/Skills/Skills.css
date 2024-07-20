@@ -47,5 +47,17 @@ user-select: none;
     color: white;
 }
 
-
+.SkillInput {
+    padding: 15px;
+    width: 100%; /* ширина инпута */
+    box-sizing: border-box; /* учитывает padding и border в общей ширине элемента */
+    position: relative; /* Убедитесь, что позиция установлена */
+    font-size: 18px;
+    height: 20px;
+    border-radius: 10px;
+    max-width: 100%; /* Максимальная ширина для элементов ввода */
+}
+.SkillInput:focus{
+    outline: none; /* Убираем стандартное выделение */
+}
 

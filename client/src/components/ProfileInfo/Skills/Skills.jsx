@@ -172,7 +172,7 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                             <input
                                 placeholder="Начните вводить умение"
                                 ref={skill}
-                                className="registerInput"
+                                className="SkillInput"
                                 value={searchTermSkills}
                                 onChange={handleInputChangeSkills}
                             />

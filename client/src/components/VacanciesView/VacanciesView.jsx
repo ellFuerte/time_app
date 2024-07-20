@@ -5,7 +5,6 @@ import axios from "axios";
 import './VacanciesView.css'
 import VacanciesItem from "../VacanciesItem/VacanciesItem";
 import VacanciesAdd from "../VacanciesAdd/VacanciesAdd";
-import Select from 'react-select';
 
 function VacanciesView(departId) {
     const localUser = JSON.parse(localStorage.getItem('user'))
@@ -171,6 +170,7 @@ function VacanciesView(departId) {
         }
 
         setFilteredVacancies(filtered);
+
     };
 
 
@@ -234,10 +234,7 @@ function VacanciesView(departId) {
             }
         }, [vacancies]);
 
-        const handleChange = (option) => {
-            setSelectedOption(option);
-            handleClickFilter('department', option.value); // Вызываем handleClickFilter с новым значением
-        };
+
 
     return (
         <>
@@ -296,11 +293,6 @@ function VacanciesView(departId) {
                                                     </option>
                                                 ))}
                                             </select>
-                                            {/*<Select
-                                                options={options}
-                                                value={selectedOption}
-                                                onChange={handleChange}
-                                            />*/}
                                         </div>
                                         <div style={{paddingLeft:'20px',paddingTop:'5px'}}>Проект:</div>
                                        <div>
@@ -316,12 +308,8 @@ function VacanciesView(departId) {
                                                            {projectId}
                                                        </option>
                                                    ))}
-
                                                </select>
-
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <br/>
@@ -367,18 +355,7 @@ function VacanciesView(departId) {
                                                        department={vac.department} vacancies={vac.vacancies}/>
                                     </div>
                                 ))
-
                             }
-
-
-                            {/*                               {
-                                   filteredData.map(vac => (
-                                        <div className='VacationsContainer' key={vac.id}>
-                                            <VacanciesItem vac={vac} key={vac.department} status={status} department={vac.department} vacancies={vac.vacancies}/>
-                                        </div>
-                                    ))
-
-                                }*/}
                         </>
                     )}
                 </div>

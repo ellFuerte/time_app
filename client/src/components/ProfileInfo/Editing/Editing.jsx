@@ -308,7 +308,7 @@ function Editing({modalActive,setModalActive}) {
             }
 
             await axios.put('/api/user/', newInfo2)
-            /*window.location.reload()*/
+            window.location.reload()
         } else {
             await axios.put('/api/user/', newInfo)
             delete newInfo.phone_number
