@@ -16,14 +16,13 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
     const [userSkills, setUserSkills] = useState([])
     const [filteredSkills, setFilteredSkills] = useState([]);
     const [selectedNumber, setSelectedNumber] = useState(null);
-    const [selectedNumber2, setSelectedNumber2] = useState(null);
+    const [user, setUser] = useState([])
 
 
     useEffect(() => {
         const getSkills = async () => {
             const res = await axios.get('/api/user/' + username.username)
             const userId=res.data.id
-
 
             const getAllSkills = await axios.get('/api/Skills/')
 
@@ -39,10 +38,15 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                 setUserSkills([])
             }else {
                 setUserSkills(getUserSkills.data[0]['get_user_skills_json'])
-
             }
 
         }
+
+        const getUsers = async () => {
+            const res = await axios.get('/api/user/' + localUser._id)
+            setUser(res.data)
+        }
+        getUsers()
         getSkills()
     }, [])
 
@@ -52,11 +56,6 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
             setSelectedNumber(number1)
         console.log(`You clicked number ${number1}`);
     };
-    const handleClick2 = (number2) => {
-        setSelectedNumber2(number2)
-        console.log(`You clicked number ${number2}`);
-    };
-
 
     const handleInputChangeSkills = (e) => {
         const termCities = e.target.value;
@@ -146,20 +145,15 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
     }
 
 
-
-
     return (
-
         <div>
             <Modal active={modalActiveSkills} setActive={setModalActiveSkills}>
                 <h1>Навыки:</h1>
                 <div className='error'>{error}</div>
                 <br/>
-
                 <div className='modalError'>
-
                 </div>
-
+                {(user.role_id==='3' || user.isadmin || user.role_id==='4' || localUser._id===username.username) ?<>
                 <hr/>
                 <br/>
                 <div className='flex'>
@@ -188,12 +182,9 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                 )}
                             </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div style={{width: '50px'}}></div>
-
                     <div>
                         <div>
                             <label style={{fontWeight: "bold"}}>Оценка сотрудника:</label>
@@ -210,33 +201,15 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                 ))}
                             </div>
                         </div>
-
                     </div>
-{/*                    <div style={{width: '50px'}}></div>
-                    <div>
-                        <div>
-                            <label style={{fontWeight: "bold"}}>Оценка руководителя:</label>
-                        </div>
-                        <div>
-                            <div className='MainContainer'>
-                                {[1, 2, 3, 4, 5].map((number2) => (
-                                    <div className={`WrapperContainer ${selectedNumber2 === number2 ? 'selected' : ''}`}
-                                         key={number2}
-                                         onClick={() => handleClick2(number2)}
-                                    >
-                                        {number2}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                    </div>*/}
 
                 </div>
                 <br/>
                 <button className="ModalButton" type="submit" onClick={ButtonAddSkills}>
                     Добавить умение
                 </button>
+                    </>
+                    :''}
                 <br/>
                 <br/>
                 <div className='divreserve'>
@@ -261,6 +234,7 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                     <select
                                         name='gradeSelf'
                                         defaultValue={array.self_grade}
+                                        disabled={(user.role_id==='1' && !user.isadmin && localUser._id!==username.username || user.role_id==='2' && !user.isadmin)}
                                         onChange={(event) => changeGrade(event, array.id)}
                                     >
                                         {[1, 2, 3, 4, 5].map(number => (
@@ -272,18 +246,25 @@ const Skills = ({ modalActiveSkills, setModalActiveSkills}) => {
                                     <select
                                     name='gradeHead'
                                     defaultValue={array.head_grade}
-                                    disabled={!localUser.isAdmin}
+                                    disabled={(user.role_id==='1' && !user.isadmin || user.role_id==='2' && !user.isadmin)}
                                     onChange={(event) => changeGrade(event, array.id)}
                                 >
-                                    {array.head_grade === null && !localUser.isAdmin ? <option>Нет оценки</option> : ''}
+                                    {array.head_grade === null && !user.isadmin ? <option>Нет оценки</option> : ''}
                                     {array.head_grade === null ? <option>Нет оценки</option> : ''}
                                     {[1, 2, 3, 4, 5].map(number => (
                                         <option key={number} value={number}>{number}</option>
                                     ))}
                                 </select>
                                 </td>
-                                <td><button value={array.id} className='SkillButton' onClick={SkillDelete}>Удалить</button></td>
-                            </tr>
+                                {(user.role_id==='3' || user.role_id==='4' || user.isadmin) ?
+                                    <td>
+                                        <button value={array.id} className='SkillButton' onClick={SkillDelete}>
+                                            Удалить
+                                        </button>
+                                    </td>
+                                    :''
+                                }
+                                </tr>
                         ))}
                         </tbody>
                     </table>

@@ -205,7 +205,7 @@ export default function ProfileInfo() {
                                 <DeleteUser modalActiveDelete={modalActiveDelete}
                                             setModalActiveDelete={setModalActiveDelete} user={user}/>
 
-                        {(hasAccess(17)  && localUse._id === username.username) ?
+                            {(hasAccess(17)  && localUse._id === username.username) ?
                             <Link to={`/AdminPanel`}>
                                 <Settings
                                     style={{cursor: 'pointer', fontSize: '20px', paddingTop: '5px', color: 'black'}}/>
